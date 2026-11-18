@@ -21,12 +21,12 @@ See [live examples of components](docs/components/index.md), explore the [exampl
 
 ## Contact the team
 
-Defra Internal Frontend is maintained by the Defra Developer Enablement team.
+Defra Internal Frontend is maintained by the Defra EPR Regulators team.
 
 If you have questions, want to propose a new component, or need assistance:
 
 - [open an issue or pull request](https://github.com/DEFRA/defra-internal-frontend) in this repository
-- get in touch with the team on Defra Slack
+- get in touch with the team on Slack
 - read our [Design System Documentation](docs/index.md) hosted on GitHub Pages
 
 ## Quick start
