@@ -1,4 +1,4 @@
-# Defra Internal Frontend
+# Waste Regulator Components Frontend
 
 Defra Internal Frontend contains the code you need to start building user interfaces for Defra internal platforms and services, built on top of [GOV.UK Frontend](https://github.com/alphagov/govuk-frontend) v6.
 
