@@ -1,0 +1,38 @@
+{
+  "name": "defra-internal-frontend",
+  "version": "0.1.0",
+  "description": "Reusable Nunjucks components, Sass stylesheets, and static assets for Defra internal services",
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "test": "vitest run --coverage",
+    "test:watch": "vitest",
+    "example:css": "node examples/scripts/build-css.js",
+    "example:start": "node examples/src/index.js",
+    "example:test": "vitest run --config examples/vitest.config.js"
+  },
+  "imports": {
+    "#test-helpers/*": "./tests/helpers/*"
+  },
+  "author": "Defra DDTS",
+  "license": "OGL-UK-3.0",
+  "peerDependencies": {
+    "govuk-frontend": "^6.0.0",
+    "nunjucks": "^3.2.4"
+  },
+  "devDependencies": {
+    "cheerio": "1.2.0",
+    "govuk-frontend": "6.3.0",
+    "lodash": "4.18.1",
+    "nunjucks": "3.2.4",
+    "sass-embedded": "1.100.0",
+    "vite": "8.0.16",
+    "vitest": "4.1.11",
+    "@vitest/coverage-v8": "4.1.11"
+  }
+}

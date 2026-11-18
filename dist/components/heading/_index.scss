@@ -1,0 +1,18 @@
+@use "govuk-frontend" as *;
+
+.wrc-heading {
+  display: flex;
+  margin-bottom: govuk-spacing(4);
+}
+
+.wrc-heading-secondary-info {
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+}
+
+.wrc-heading-entities {
+  display: flex;
+  margin-top: govuk-spacing(2);
+  margin-bottom: govuk-spacing(4);
+}

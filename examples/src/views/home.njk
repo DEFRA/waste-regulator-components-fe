@@ -1,0 +1,180 @@
+{% extends "layouts/page.njk" %}
+
+{% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
+{% from "heading/macro.njk" import wrcHeading %}
+{% from "search/macro.njk" import wrcSearch %}
+{% from "producer-subnavigation/macro.njk" import wrcProducerSubnavigation %}
+{% from "tabs-list/macro.njk" import wrcTabsList %}
+{% from "sorting-column-header/macro.njk" import wrcSortingColumnHeader %}
+{% from "status-tag/macro.njk" import wrcStatusTag %}
+{% from "submission-status-tag/macro.njk" import wrcSubmissionStatusTag %}
+{% from "organisation-link/macro.njk" import wrcOrganisationLink %}
+{% from "csrf-field/macro.njk" import wrcCsrfField %}
+
+{% block content %}
+  {{ wrcHeading({
+    text: "Waste tracking compliance dashboard",
+    caption: "Producer & Scheme Records 2026"
+  }) }}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      {{ govukNotificationBanner({
+        titleText: "Cancelled",
+        classes: "wrc-notification-banner--cancelled",
+        html: "<p class=\"govuk-notification-banner__heading\">Example cancelled submission notification banner</p>"
+      }) }}
+
+      {{ wrcSearch({
+        action: "/",
+        locale: locale,
+        hiddenFields: {
+          type: organisationType | default("all"),
+          sort: sort.column ~ '[' ~ sort.direction ~ ']'
+        },
+        label: "Search by organisation name or ID",
+        searchTerm: searchTerm
+      }) }}
+    </div>
+  </div>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      <p class="govuk-body-l">
+        This example application demonstrates how to install, configure, and render components from
+        <strong>waste-regulator-components-fe</strong> in a Hapi.js and Nunjucks service.
+      </p>
+
+      {% set activeType = organisationType | default("all") %}
+      {{ wrcProducerSubnavigation({
+        ariaLabel: "Filter by organisation type",
+        items: [
+          {
+            text: "All organisations",
+            href: "/?type=all&lang=" ~ (locale | default("en")),
+            current: activeType == "all"
+          },
+          {
+            text: "Direct producers",
+            href: "/?type=producers&lang=" ~ (locale | default("en")),
+            current: activeType == "producers"
+          },
+          {
+            text: "Compliance schemes",
+            href: "/?type=compliance-schemes&lang=" ~ (locale | default("en")),
+            current: activeType == "compliance-schemes"
+          }
+        ]
+      }) }}
+
+      <div class="govuk-tabs">
+        {{ wrcTabsList({
+          items: [
+            {
+              text: "All submissions (" ~ (records | length) ~ ")",
+              href: "/?type=" ~ activeType ~ "&lang=" ~ (locale | default("en")),
+              current: true
+            },
+            {
+              text: "Pending",
+              href: "/?type=" ~ activeType ~ "&lang=" ~ (locale | default("en")),
+              current: false
+            },
+            {
+              text: "Accepted",
+              href: "/?type=" ~ activeType ~ "&lang=" ~ (locale | default("en")),
+              current: false
+            }
+          ]
+        }) }}
+      </div>
+
+      <div class="moj-scrollable-pane" role="region" aria-label="Registered organisations" tabindex="0">
+        <table class="govuk-table v3-compact-table" data-module="govuk-table">
+          <caption class="govuk-table__caption govuk-table__caption--m">Registered organisations &amp; submissions</caption>
+          <thead class="govuk-table__head">
+            <tr class="govuk-table__row">
+              {{ wrcSortingColumnHeader({
+                columnName: "organisationName",
+                columnLabel: "Organisation",
+                firstColumn: true,
+                sortable: true,
+                defaultDirection: "asc",
+                sort: sort
+              }) }}
+              {{ wrcSortingColumnHeader({
+                columnName: "obligationYear",
+                columnLabel: "Year",
+                sortable: true,
+                defaultDirection: "desc",
+                sort: sort
+              }) }}
+              {{ wrcSortingColumnHeader({
+                columnName: "verified",
+                columnLabel: "Verified status",
+                sortable: false,
+                sort: sort
+              }) }}
+              {{ wrcSortingColumnHeader({
+                columnName: "submissionStatus",
+                columnLabel: "Submission",
+                sortable: false,
+                sort: sort
+              }) }}
+            </tr>
+          </thead>
+          <tbody class="govuk-table__body">
+            {% for record in records %}
+              <tr class="govuk-table__row">
+                <td class="govuk-table__cell">
+                  {{ wrcOrganisationLink({
+                    routePrefix: "/organisations",
+                    organisationType: record.organisationType,
+                    activeTab: "overview",
+                    complianceYear: record.obligationYear,
+                    item: {
+                      id: record.documentId,
+                      organisationId: record.organisationId,
+                      organisationName: record.organisationName
+                    }
+                  }) }}
+                </td>
+                <td class="govuk-table__cell">{{ record.obligationYear }}</td>
+                <td class="govuk-table__cell">
+                  {{ wrcStatusTag({
+                    value: record.verified,
+                    trueText: "Verified",
+                    falseText: "Unverified",
+                    noDataText: "Pending review",
+                    locale: locale
+                  }) }}
+                </td>
+                <td class="govuk-table__cell">
+                  {{ wrcSubmissionStatusTag({
+                    status: record.submissionStatus,
+                    locale: locale
+                  }) }}
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+
+      {% include "pagination/template.njk" %}
+
+      <div class="govuk-!-margin-top-8">
+        <h2 class="govuk-heading-m">Test CSRF Field in Form Button Group</h2>
+        <div class="govuk-button-group">
+          <form action="/test-form" method="post">
+            {{ wrcCsrfField(csrfToken, "example-form-csrf") }}
+            <button class="govuk-button" type="submit" data-module="govuk-button">
+              Submit form with CSRF protection
+            </button>
+          </form>
+          <a class="govuk-link" href="/cookies">Manage cookies</a>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

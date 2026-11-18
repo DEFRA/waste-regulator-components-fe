@@ -1,0 +1,13 @@
+{
+  "name": "defra-internal-frontend-example-app",
+  "version": "1.0.0",
+  "description": "Example Hapi.js and Nunjucks application using defra-internal-frontend components",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node src/index.js",
+    "build:css": "node scripts/build-css.js",
+    "test": "vitest run"
+  }
+}
+

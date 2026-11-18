@@ -1,0 +1,83 @@
+{% extends "govuk/template.njk" %}
+
+{% from "defra-internal-header/macro.njk" import defraInternalHeader %}
+{% from "defra-internal-service-header/macro.njk" import wrcInternalServiceHeader %}
+{% from "defra-internal-cookie-banner/macro.njk" import defraInternalCookieBanner %}
+{% from "defra-internal-footer/macro.njk" import defraInternalFooter %}
+{% from "google-analytics/macro.njk" import wrcGoogleAnalytics %}
+
+{% block pageTitle %}{{ pageTitle | default("Waste Tracking Service") }} - GOV.UK{% endblock %}
+
+{% block headIcons %}
+  {{ super() }}
+  <link rel="stylesheet" href="/public/css/application.css">
+  {{ wrcGoogleAnalytics({
+    ga4: ga4 | default("G-DEMO12345"),
+    gtm: gtm | default("GTM-DEMO123"),
+    allowGoogleAnalytics: allowGoogleAnalytics | default(false),
+    cspNonce: cspNonce
+  }) }}
+{% endblock %}
+
+{% block bodyStart %}
+  {{ defraInternalCookieBanner({
+    serviceName: serviceName | default("Waste Tracking Service"),
+    CSRFToken: csrfToken | default("demo-csrf-token"),
+    hideCookieBanner: hideCookieBanner | default(false),
+    cookiePreferenceSet: cookiePreferenceSet | default(false),
+    hasCookiePolicy: hasCookiePolicy | default(false),
+    allowGoogleAnalytics: allowGoogleAnalytics | default(false),
+    bannerActionUrl: "/cookies/banner",
+    hideBannerActionUrl: "/cookies/hide-banner",
+    cookiesUrl: "/cookies",
+    locale: locale | default("en")
+  }) }}
+  {{ wrcGoogleAnalytics({
+    gtm: gtm | default("GTM-DEMO123"),
+    allowGoogleAnalytics: allowGoogleAnalytics | default(false),
+    noscript: true
+  }) }}
+{% endblock %}
+
+{% block header %}
+  {{ defraInternalHeader({
+    organisationName: "Department for Environment,<br>Food &amp; Rural Affairs",
+    navigation: [
+      { text: "Jane Doe", visuallyHiddenText: "Signed in as " },
+      { text: "Sign out", href: "/logout" }
+    ]
+  }) }}
+
+  {{ wrcInternalServiceHeader({
+    serviceName: serviceName | default("Waste Tracking Service"),
+    serviceUrl: "/",
+    locale: locale | default("en"),
+    navigation: [
+      { text: "Dashboard", href: "/", current: currentUrl == "/" },
+      { text: "Cookie policy", href: "/cookies", current: currentUrl == "/cookies" }
+    ],
+    regulatorContext: '<div class="defra-internal-service-navigation__context">Environment Agency</div>',
+    languageSwitcher: {
+      en: "/?lang=en",
+      cy: "/?lang=cy"
+    }
+  }) }}
+{% endblock %}
+
+{% block footer %}
+  {{ defraInternalFooter({
+    meta: "Department for Environment, Food & Rural Affairs",
+    getHelp: {
+      heading: "Get help",
+      email: "waste-tracking-support@defra.gov.uk",
+      telephone: "0300 060 4400",
+      hours: "Monday to Friday, 8:30am to 5pm"
+    },
+    links: [
+      { text: "Privacy", href: "/privacy" },
+      { text: "Cookies", href: "/cookies" },
+      { text: "Accessibility statement", href: "/accessibility" }
+    ]
+  }) }}
+{% endblock %}
+

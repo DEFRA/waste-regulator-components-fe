@@ -1,0 +1,60 @@
+{% extends "layouts/page.njk" %}
+
+{% from "heading/macro.njk" import wrcHeading %}
+{% from "csrf-field/macro.njk" import wrcCsrfField %}
+
+{% block content %}
+  {{ wrcHeading({
+    text: "Cookies on Waste Tracking Service",
+    caption: "Privacy and preferences"
+  }) }}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <p class="govuk-body">
+        Cookies are small files saved on your phone, tablet or computer when you visit a website.
+      </p>
+
+      <h2 class="govuk-heading-m">Essential cookies</h2>
+      <p class="govuk-body">
+        Essential cookies keep your information secure while you use this service. We do not need to ask permission to use them.
+      </p>
+
+      <h2 class="govuk-heading-m">Analytics cookies (Google Analytics)</h2>
+      <p class="govuk-body">
+        With your permission, we use Google Analytics to measure how you use the service so we can make improvements.
+      </p>
+
+      <form action="/cookies/banner" method="post" novalidate>
+        {{ wrcCsrfField(csrfToken, "cookie-settings-csrf") }}
+
+        <div class="govuk-form-group">
+          <fieldset class="govuk-fieldset">
+            <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
+              Do you want to allow analytics cookies?
+            </legend>
+            <div class="govuk-radios" data-module="govuk-radios">
+              <div class="govuk-radios__item">
+                <input class="govuk-radios__input" id="analytics-yes" name="analytics" type="radio" value="yes" {% if allowGoogleAnalytics %}checked{% endif %}>
+                <label class="govuk-label govuk-radios__label" for="analytics-yes">
+                  Yes, accept analytics cookies
+                </label>
+              </div>
+              <div class="govuk-radios__item">
+                <input class="govuk-radios__input" id="analytics-no" name="analytics" type="radio" value="no" {% if not allowGoogleAnalytics %}checked{% endif %}>
+                <label class="govuk-label govuk-radios__label" for="analytics-no">
+                  No, reject analytics cookies
+                </label>
+              </div>
+            </div>
+          </fieldset>
+        </div>
+
+        <button type="submit" class="govuk-button" data-module="govuk-button">
+          Save cookie settings
+        </button>
+      </form>
+    </div>
+  </div>
+{% endblock %}
+

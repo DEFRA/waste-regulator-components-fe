@@ -1,0 +1,7 @@
+{% if params.value == null %}
+  {{ params.noDataText | default(t(params.locale | default('en'), 'compliance.components.statusTag.noData')) }}
+{% elif params.value %}
+  <strong class="govuk-tag govuk-tag--green {{params.fontSize | default('govuk-!-font-size-16')}}">{{ params.trueText }}</strong>
+{% else %}
+  <strong class="govuk-tag govuk-tag--red {{ params.fontSize | default('govuk-!-font-size-16') }}">{{ params.falseText }}</strong>
+{% endif %}
