@@ -1,7 +1,6 @@
 title: Defra Internal Design System
 description: Reusable Nunjucks components, Sass stylesheets, and assets for Defra internal services
 theme: jekyll-theme-primer
-permalink: /:path/
 markdown: kramdown
 kramdown:
   input: GFM

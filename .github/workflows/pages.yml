@@ -28,6 +28,27 @@ jobs:
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
+        with:
+          enablement: true
+
+      - name: Escape Nunjucks tags for Liquid
+        run: |
+          node -e '
+            const fs = require("node:fs");
+            const path = require("node:path");
+            function walk(dir) {
+              for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+                const full = path.join(dir, entry.name);
+                if (entry.isDirectory()) walk(full);
+                else if (entry.name.endsWith(".md")) {
+                  const content = fs.readFileSync(full, "utf8");
+                  const updated = content.replace(/^(---\n[\s\S]*?\n---\n)([\s\S]*)$/, "$1{% raw %}\n$2\n{% endraw %}\n");
+                  fs.writeFileSync(full, updated);
+                }
+              }
+            }
+            walk("docs");
+          '
 
       - name: Build with Jekyll
         uses: actions/jekyll-build-pages@v1
