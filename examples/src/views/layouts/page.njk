@@ -1,9 +1,9 @@
 {% extends "govuk/template.njk" %}
 
-{% from "defra-internal-header/macro.njk" import defraInternalHeader %}
-{% from "defra-internal-service-header/macro.njk" import wrcInternalServiceHeader %}
-{% from "defra-internal-cookie-banner/macro.njk" import defraInternalCookieBanner %}
-{% from "defra-internal-footer/macro.njk" import defraInternalFooter %}
+{% from "header/macro.njk" import wrcHeader %}
+{% from "service-header/macro.njk" import wrcServiceHeader %}
+{% from "cookie-banner/macro.njk" import wrcCookieBanner %}
+{% from "footer/macro.njk" import wrcFooter %}
 {% from "google-analytics/macro.njk" import wrcGoogleAnalytics %}
 
 {% block pageTitle %}{{ pageTitle | default("Waste Tracking Service") }} - GOV.UK{% endblock %}
@@ -20,7 +20,7 @@
 {% endblock %}
 
 {% block bodyStart %}
-  {{ defraInternalCookieBanner({
+  {{ wrcCookieBanner({
     serviceName: serviceName | default("Waste Tracking Service"),
     CSRFToken: csrfToken | default("demo-csrf-token"),
     hideCookieBanner: hideCookieBanner | default(false),
@@ -40,7 +40,7 @@
 {% endblock %}
 
 {% block header %}
-  {{ defraInternalHeader({
+  {{ wrcHeader({
     organisationName: "Department for Environment,<br>Food &amp; Rural Affairs",
     navigation: [
       { text: "Jane Doe", visuallyHiddenText: "Signed in as " },
@@ -48,7 +48,7 @@
     ]
   }) }}
 
-  {{ wrcInternalServiceHeader({
+  {{ wrcServiceHeader({
     serviceName: serviceName | default("Waste Tracking Service"),
     serviceUrl: "/",
     locale: locale | default("en"),
@@ -65,7 +65,7 @@
 {% endblock %}
 
 {% block footer %}
-  {{ defraInternalFooter({
+  {{ wrcFooter({
     meta: "Department for Environment, Food & Rural Affairs",
     getHelp: {
       heading: "Get help",

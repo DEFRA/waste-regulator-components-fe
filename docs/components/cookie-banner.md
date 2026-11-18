@@ -1,9 +1,9 @@
 ---
 layout: default
-title: Defra internal cookie banner
+title: Cookie banner
 ---
 
-# Defra internal cookie banner
+# Cookie banner
 
 The Defra internal cookie banner prompts users to accept or reject Google Analytics cookies and shows a confirmation message after a preference has been selected. It integrates with GOV.UK Cookie Banner components and CSRF token protection.
 
@@ -20,9 +20,9 @@ Use the Defra internal cookie banner at the very top of your page template, dire
 ### Nunjucks macro import
 
 ```njk
-{% from "defra-internal-cookie-banner/macro.njk" import defraInternalCookieBanner %}
+{% from "cookie-banner/macro.njk" import wrcCookieBanner %}
 
-{{ defraInternalCookieBanner({
+{{ wrcCookieBanner({
   serviceName: "Waste Tracking Service",
   CSRFToken: csrfToken,
   cookiePreferenceSet: false,
@@ -85,7 +85,7 @@ Use the Defra internal cookie banner at the very top of your page template, dire
 ### Cookie preference confirmation
 
 ```njk
-{{ defraInternalCookieBanner({
+{{ wrcCookieBanner({
   serviceName: "Waste Tracking Service",
   CSRFToken: csrfToken,
   cookiePreferenceSet: true,
@@ -96,7 +96,7 @@ Use the Defra internal cookie banner at the very top of your page template, dire
 ### Suppressing on cookie policy pages
 
 ```njk
-{{ defraInternalCookieBanner({
+{{ wrcCookieBanner({
   serviceName: "Waste Tracking Service",
   CSRFToken: csrfToken,
   hasCookiePolicy: true

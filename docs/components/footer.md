@@ -1,9 +1,9 @@
 ---
 layout: default
-title: Defra internal footer
+title: Footer
 ---
 
-# Defra internal footer
+# Footer
 
 The Defra internal footer provides standard links, departmental meta information, support contact details, the Open Government Licence (OGL) v3.0 statement, and the Crown copyright crest.
 
@@ -20,9 +20,9 @@ Use the Defra internal footer at the bottom of every page in internal Defra serv
 ### Nunjucks macro import
 
 ```njk
-{% from "defra-internal-footer/macro.njk" import defraInternalFooter %}
+{% from "footer/macro.njk" import wrcFooter %}
 
-{{ defraInternalFooter({
+{{ wrcFooter({
   meta: "Department for Environment, Food & Rural Affairs",
   getHelp: {
     heading: "Get help",

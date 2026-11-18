@@ -3,7 +3,7 @@
 {% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
 {% from "heading/macro.njk" import wrcHeading %}
 {% from "search/macro.njk" import wrcSearch %}
-{% from "producer-subnavigation/macro.njk" import wrcProducerSubnavigation %}
+{% from "subnavigation/macro.njk" import wrcSubnavigation %}
 {% from "tabs-list/macro.njk" import wrcTabsList %}
 {% from "sorting-column-header/macro.njk" import wrcSortingColumnHeader %}
 {% from "status-tag/macro.njk" import wrcStatusTag %}
@@ -46,7 +46,7 @@
       </p>
 
       {% set activeType = organisationType | default("all") %}
-      {{ wrcProducerSubnavigation({
+      {{ wrcSubnavigation({
         ariaLabel: "Filter by organisation type",
         items: [
           {

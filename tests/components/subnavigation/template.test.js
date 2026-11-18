@@ -1,8 +1,8 @@
 import { renderComponent } from '#test-helpers/component-helpers.js'
 
-describe('Producer Subnavigation Component', () => {
+describe('Subnavigation Component', () => {
   test('renders nav with default aria-label and no items when params are empty', () => {
-    const $ = renderComponent('producer-subnavigation', {})
+    const $ = renderComponent('subnavigation', {})
 
     const nav = $(
       'nav.moj-sub-navigation.govuk-\\!-margin-bottom-5.govuk-\\!-margin-top-6'
@@ -14,7 +14,7 @@ describe('Producer Subnavigation Component', () => {
   })
 
   test('renders custom ariaLabel when provided', () => {
-    const $ = renderComponent('producer-subnavigation', {
+    const $ = renderComponent('subnavigation', {
       ariaLabel: 'Filter by producer type'
     })
 
@@ -61,7 +61,7 @@ describe('Producer Subnavigation Component', () => {
   ])(
     'renders %s dynamically from items array',
     (_label, items, expectedCount, expectedCurrentTexts) => {
-      const $ = renderComponent('producer-subnavigation', { items })
+      const $ = renderComponent('subnavigation', { items })
 
       const listItems = $('li.moj-sub-navigation__item')
       expect(listItems).toHaveLength(expectedCount)

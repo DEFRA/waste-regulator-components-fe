@@ -133,7 +133,7 @@ describe('Example Application Hapi Server', () => {
       expect($('tbody').text()).toContain('Acme Recycling Ltd')
     })
 
-    it('supports producer subnavigation organisation type filtering', async () => {
+    it('supports subnavigation organisation type filtering', async () => {
       const response = await server.inject({
         method: 'GET',
         url: '/?type=compliance-schemes'

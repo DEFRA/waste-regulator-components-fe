@@ -1,11 +1,11 @@
 ---
 layout: default
-title: Producer subnavigation
+title: Subnavigation
 ---
 
-# Producer subnavigation
+# Subnavigation
 
-The producer subnavigation component renders an accessible MOJ-styled secondary navigation bar supporting any number of navigation links, plus paired active link colour styles.
+The subnavigation component renders an accessible MOJ-styled secondary navigation bar supporting any number of navigation links, plus paired active link colour styles.
 
 ---
 
@@ -20,9 +20,9 @@ Use this component above tabbed views or filtered datasets to switch between top
 ### Nunjucks macro import
 
 ```njk
-{% from "producer-subnavigation/macro.njk" import wrcProducerSubnavigation %}
+{% from "subnavigation/macro.njk" import wrcSubnavigation %}
 
-{{ wrcProducerSubnavigation({
+{{ wrcSubnavigation({
   ariaLabel: "Filter by producer type",
   items: [
     {
@@ -70,4 +70,4 @@ Use this component above tabbed views or filtered datasets to switch between top
 
 ## Styles
 
-This component includes `dist/components/producer-subnavigation/_index.scss` (imported automatically via `dist/components/_index.scss`), which sets the active `.moj-sub-navigation__link[aria-current="page"]` colour using `--govuk-link-colour`.
+This component includes `dist/components/subnavigation/_index.scss` (imported automatically via `dist/components/_index.scss`), which sets the active `.moj-sub-navigation__link[aria-current="page"]` colour using `--govuk-link-colour`.

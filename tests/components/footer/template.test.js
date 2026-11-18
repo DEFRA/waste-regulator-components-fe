@@ -1,12 +1,10 @@
 import { renderComponent } from '#test-helpers/component-helpers.js'
 
-describe('Defra Internal Footer Component', () => {
+describe('Footer Component', () => {
   let $footer
 
   const renderFooter = (params) => {
-    return renderComponent('defra-internal-footer', params, null, {
-      macroName: 'defraInternalFooter'
-    })
+    return renderComponent('footer', params)
   }
 
   describe('Default', () => {

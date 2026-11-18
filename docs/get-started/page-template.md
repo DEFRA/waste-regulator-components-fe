@@ -26,10 +26,10 @@ Save this layout as `src/server/common/templates/layouts/page.njk` in your proje
 
 {# Import Defra Internal Frontend components #}
 {% from "heading/macro.njk" import wrcHeading %}
-{% from "defra-internal-header/macro.njk" import defraInternalHeader %}
-{% from "defra-internal-service-header/macro.njk" import wrcInternalServiceHeader %}
-{% from "defra-internal-cookie-banner/macro.njk" import defraInternalCookieBanner %}
-{% from "defra-internal-footer/macro.njk" import defraInternalFooter %}
+{% from "header/macro.njk" import wrcHeader %}
+{% from "service-header/macro.njk" import wrcServiceHeader %}
+{% from "cookie-banner/macro.njk" import wrcCookieBanner %}
+{% from "footer/macro.njk" import wrcFooter %}
 {% from "google-analytics/macro.njk" import wrcGoogleAnalytics %}
 
 {% block headIcons %}
@@ -49,11 +49,11 @@ Save this layout as `src/server/common/templates/layouts/page.njk` in your proje
 {% endblock %}
 
 {% block header %}
-  {{ defraInternalHeader({
+  {{ wrcHeader({
     organisationName: t(locale, "common.organisationName") | safe,
     navigation: accountNavigation
   }) }}
-  {{ wrcInternalServiceHeader({
+  {{ wrcServiceHeader({
     serviceName: serviceName,
     serviceUrl: serviceUrl,
     navigationId: "service-navigation",
@@ -71,7 +71,7 @@ Save this layout as `src/server/common/templates/layouts/page.njk` in your proje
     allowGoogleAnalytics: allowGoogleAnalytics,
     noscript: true
   }) }}
-  {{ defraInternalCookieBanner({
+  {{ wrcCookieBanner({
     hideCookieBanner: hideCookieBanner,
     hasCookiePolicy: hasCookiePolicy,
     cookiePreferenceSet: cookiePreferenceSet,
@@ -96,7 +96,7 @@ Save this layout as `src/server/common/templates/layouts/page.njk` in your proje
 {% endblock %}
 
 {% block footer %}
-  {{ defraInternalFooter({
+  {{ wrcFooter({
     getHelp: {
       heading: t(locale, "common.footer.getHelp"),
       email: helpDeskEmail,

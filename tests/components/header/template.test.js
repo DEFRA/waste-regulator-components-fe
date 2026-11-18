@@ -1,12 +1,10 @@
 import { renderComponent } from '#test-helpers/component-helpers.js'
 
-describe('Defra Internal Header Component', () => {
+describe('Header Component', () => {
   let $header
 
   const renderHeader = (params) => {
-    return renderComponent('defra-internal-header', params, null, {
-      macroName: 'defraInternalHeader'
-    })
+    return renderComponent('header', params)
   }
 
   describe('Default', () => {

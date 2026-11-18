@@ -1,10 +1,8 @@
 import { renderComponent } from '#test-helpers/component-helpers.js'
 
-describe('Defra Internal Cookie Banner Component', () => {
+describe('Cookie Banner Component', () => {
   const renderCookieBanner = (params) => {
-    return renderComponent('defra-internal-cookie-banner', params, null, {
-      macroName: 'defraInternalCookieBanner'
-    })
+    return renderComponent('cookie-banner', params)
   }
 
   const baseParams = {

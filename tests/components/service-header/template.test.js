@@ -1,10 +1,8 @@
 import { renderComponent } from '#test-helpers/component-helpers.js'
 
-describe('Defra Internal Service Header Component', () => {
+describe('Service Header Component', () => {
   const renderServiceHeader = (params) => {
-    return renderComponent('defra-internal-service-header', params, null, {
-      macroName: 'wrcInternalServiceHeader'
-    })
+    return renderComponent('service-header', params)
   }
 
   const baseParams = {

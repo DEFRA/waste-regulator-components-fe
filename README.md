@@ -68,17 +68,17 @@ node_modules/defra-internal-frontend/
         ├── _index.scss
         ├── button-group/
         ├── csrf-field/
-        ├── defra-internal-cookie-banner/
-        ├── defra-internal-footer/
-        ├── defra-internal-header/
-        ├── defra-internal-service-header/
+        ├── cookie-banner/
+        ├── footer/
+        ├── header/
+        ├── service-header/
         ├── google-analytics/
         ├── heading/
         ├── moj-scrollable-pane/
         ├── notification-banner/
         ├── organisation-link/
         ├── pagination/
-        ├── producer-subnavigation/
+        ├── subnavigation/
         ├── search/
         ├── service-navigation/
         ├── sorting-column-header/
@@ -147,15 +147,15 @@ The following components are provided in `dist/components/`:
 
 | Component | Description | Macro |
 | --- | --- | --- |
-| [**Defra internal header**](docs/components/defra-internal-header.md) | Top bar displaying Defra lock-up, crest, and account navigation | `defraInternalHeader` |
-| [**Defra internal service header**](docs/components/defra-internal-service-header.md) | Green service navigation band with regulator context and language toggle | `wrcInternalServiceHeader` |
-| [**Defra internal cookie banner**](docs/components/defra-internal-cookie-banner.md) | Cookie consent banner and confirmation alerts with CSRF tokens | `defraInternalCookieBanner` |
-| [**Defra internal footer**](docs/components/defra-internal-footer.md) | Footer with "Get help" block, support links, OGL licence, and Crown copyright | `defraInternalFooter` |
+| [**Header**](docs/components/header.md) | Top bar displaying Defra lock-up, crest, and account navigation | `wrcHeader` |
+| [**Service header**](docs/components/service-header.md) | Green service navigation band with regulator context and language toggle | `wrcServiceHeader` |
+| [**Cookie banner**](docs/components/cookie-banner.md) | Cookie consent banner and confirmation alerts with CSRF tokens | `wrcCookieBanner` |
+| [**Footer**](docs/components/footer.md) | Footer with "Get help" block, support links, OGL licence, and Crown copyright | `wrcFooter` |
 | [**Google Analytics**](docs/components/google-analytics.md) | GA4 (`gtag.js`), Consent Mode v2, and GTM head scripts / `<noscript>` iframe | `wrcGoogleAnalytics` |
 | [**Heading**](docs/components/heading.md) | Page heading (`<h1>`) in two-thirds grid column with optional caption | `wrcHeading` |
 | [**CSRF field**](docs/components/csrf-field.md) | Hidden input for cross-site request forgery prevention tokens | `wrcCsrfField` |
 | [**Search**](docs/components/search.md) | Search form panel with validation support and arbitrary `hiddenFields` | `wrcSearch` |
-| [**Producer subnavigation**](docs/components/producer-subnavigation.md) | Subnavigation link bar supporting dynamic items and active link styles | `wrcProducerSubnavigation` |
+| [**Subnavigation**](docs/components/subnavigation.md) | Subnavigation link bar supporting dynamic items and active link styles | `wrcSubnavigation` |
 | [**Tabs list**](docs/components/tabs-list.md) | GOV.UK tabs list (`<ul class="govuk-tabs__list">`) with dynamic items and active tab state | `wrcTabsList` |
 | [**Pagination**](docs/components/pagination.md) | Numbered pagination navigation with previous/next links and ellipsis | `pagination/template.njk` |
 | [**Sorting column header**](docs/components/sorting-column-header.md) | Table header (`<th>`) with sorting controls and accessible ARIA attributes | `wrcSortingColumnHeader` |

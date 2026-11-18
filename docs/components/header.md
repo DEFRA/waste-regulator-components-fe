@@ -1,9 +1,9 @@
 ---
 layout: default
-title: Defra internal header
+title: Header
 ---
 
-# Defra internal header
+# Header
 
 The Defra internal header displays the departmental identity lock-up, the official Royal Crest, and an optional signed-in user account menu.
 
@@ -11,7 +11,7 @@ The Defra internal header displays the departmental identity lock-up, the offici
 
 ## When to use this component
 
-Use the Defra internal header at the top of all pages in internal Defra services. It pairs with the [Defra internal service header](./defra-internal-service-header.md) directly below it.
+Use the Defra internal header at the top of all pages in internal Defra services. It pairs with the [Service header](./service-header.md) directly below it.
 
 ---
 
@@ -20,9 +20,9 @@ Use the Defra internal header at the top of all pages in internal Defra services
 ### Nunjucks macro import
 
 ```njk
-{% from "defra-internal-header/macro.njk" import defraInternalHeader %}
+{% from "header/macro.njk" import wrcHeader %}
 
-{{ defraInternalHeader({
+{{ wrcHeader({
   organisationName: "Department for Environment,<br>Food &amp; Rural Affairs",
   navigation: [
     { text: "Jane Doe", visuallyHiddenText: "Signed in as " },
@@ -78,5 +78,5 @@ Use the Defra internal header at the top of all pages in internal Defra services
 To import styles for this component individually:
 
 ```scss
-@use "defra-internal-frontend/dist/components/defra-internal-header";
+@use "defra-internal-frontend/dist/components/header";
 ```

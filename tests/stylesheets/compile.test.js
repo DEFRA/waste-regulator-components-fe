@@ -74,13 +74,13 @@ describe('Component stylesheets', () => {
   test.each([
     ['components aggregate', 'dist/components'],
     ['button-group', 'dist/components/button-group'],
-    ['defra-internal-cookie-banner', 'dist/components/defra-internal-cookie-banner'],
-    ['defra-internal-footer', 'dist/components/defra-internal-footer'],
-    ['defra-internal-header', 'dist/components/defra-internal-header'],
+    ['cookie-banner', 'dist/components/cookie-banner'],
+    ['footer', 'dist/components/footer'],
+    ['header', 'dist/components/header'],
     ['heading', 'dist/components/heading'],
     ['moj-scrollable-pane', 'dist/components/moj-scrollable-pane'],
     ['notification-banner', 'dist/components/notification-banner'],
-    ['producer-subnavigation', 'dist/components/producer-subnavigation'],
+    ['subnavigation', 'dist/components/subnavigation'],
     ['service-navigation', 'dist/components/service-navigation'],
     ['sorting-column-header', 'dist/components/sorting-column-header'],
     ['tab-panel', 'dist/components/tab-panel']

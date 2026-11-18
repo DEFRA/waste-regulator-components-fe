@@ -27,15 +27,15 @@ Components are reusable user interface elements created specifically for Defra i
 
 | Component | Description | Macro |
 | --- | --- | --- |
-| [**Defra internal header**](./components/defra-internal-header.md) | Top bar with Defra organisation lock-up, crest, and account navigation | `defraInternalHeader` |
-| [**Defra internal service header**](./components/defra-internal-service-header.md) | Green service navigation band with regulator context slot and English/Welsh language switcher | `wrcInternalServiceHeader` |
-| [**Defra internal cookie banner**](./components/defra-internal-cookie-banner.md) | Analytics cookie consent banner and confirmation alerts with CSRF tokens | `defraInternalCookieBanner` |
-| [**Defra internal footer**](./components/defra-internal-footer.md) | Footer with "Get help" block, support links, OGL v3.0 licence, and Crown copyright | `defraInternalFooter` |
+| [**Header**](./components/header.md) | Top bar with Defra organisation lock-up, crest, and account navigation | `wrcHeader` |
+| [**Service header**](./components/service-header.md) | Green service navigation band with regulator context slot and English/Welsh language switcher | `wrcServiceHeader` |
+| [**Cookie banner**](./components/cookie-banner.md) | Analytics cookie consent banner and confirmation alerts with CSRF tokens | `wrcCookieBanner` |
+| [**Footer**](./components/footer.md) | Footer with "Get help" block, support links, OGL v3.0 licence, and Crown copyright | `wrcFooter` |
 | [**Google Analytics**](./components/google-analytics.md) | GA4 (`gtag.js`), Consent Mode v2 defaults/updates, and GTM head scripts / `<noscript>` iframe | `wrcGoogleAnalytics` |
 | [**Heading**](./components/heading.md) | Page heading (`<h1>`) with optional caption | `wrcHeading` |
 | [**CSRF field**](./components/csrf-field.md) | Hidden input for cross-site request forgery tokens | `wrcCsrfField` |
 | [**Search**](./components/search.md) | Search form panel with validation support and arbitrary `hiddenFields` | `wrcSearch` |
-| [**Producer subnavigation**](./components/producer-subnavigation.md) | Subnavigation link bar accepting dynamic items and active link styles | `wrcProducerSubnavigation` |
+| [**Subnavigation**](./components/subnavigation.md) | Subnavigation link bar accepting dynamic items and active link styles | `wrcSubnavigation` |
 | [**Tabs list**](./components/tabs-list.md) | GOV.UK tabs list (`<ul class="govuk-tabs__list">`) with dynamic items and active tab state | `wrcTabsList` |
 | [**Pagination**](./components/pagination.md) | Numbered pagination with previous/next links and ellipsis truncation | `pagination/template.njk` |
 | [**Sorting column header**](./components/sorting-column-header.md) | Accessible sortable table header (`<th>`) with directional SVG arrows | `wrcSortingColumnHeader` |

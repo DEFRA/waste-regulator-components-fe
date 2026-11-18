@@ -1,9 +1,9 @@
 ---
 layout: default
-title: Defra internal service header
+title: Service header
 ---
 
-# Defra internal service header
+# Service header
 
 The Defra internal service header provides the green service navigation band (wrapping `govukServiceNavigation`) and an English/Welsh language toggle bar directly below it.
 
@@ -11,7 +11,7 @@ The Defra internal service header provides the green service navigation band (wr
 
 ## When to use this component
 
-Use this component directly below the [Defra internal header](./defra-internal-header.md) on every page. It establishes the service identity, current navigation area, the user's regulator organisation, and bilingual switching.
+Use this component directly below the [Header](./header.md) on every page. It establishes the service identity, current navigation area, the user's regulator organisation, and bilingual switching.
 
 ---
 
@@ -20,9 +20,9 @@ Use this component directly below the [Defra internal header](./defra-internal-h
 ### Nunjucks macro import
 
 ```njk
-{% from "defra-internal-service-header/macro.njk" import wrcInternalServiceHeader %}
+{% from "service-header/macro.njk" import wrcServiceHeader %}
 
-{{ wrcInternalServiceHeader({
+{{ wrcServiceHeader({
   serviceName: "pEPR: Regulators' Service",
   serviceUrl: "/home",
   navigationId: "service-navigation",

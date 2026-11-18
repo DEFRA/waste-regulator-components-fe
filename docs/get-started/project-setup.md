@@ -11,7 +11,7 @@ Configure your Nunjucks view engine, Sass compiler, and asset bundler to use `de
 
 ## 1. Configure Nunjucks
 
-Add `node_modules/defra-internal-frontend/dist/components` to your Nunjucks template search paths alongside `govuk-frontend/dist`. This allows templates to import Defra components using standard paths (for example `{% from "defra-internal-header/macro.njk" import defraInternalHeader %}`).
+Add `node_modules/defra-internal-frontend/dist/components` to your Nunjucks template search paths alongside `govuk-frontend/dist`. This allows templates to import Defra components using standard paths (for example `{% from "header/macro.njk" import wrcHeader %}`).
 
 ```js
 // src/config/nunjucks/nunjucks.js
@@ -90,9 +90,9 @@ In your main `application.scss`, import the `defra-internal-frontend` component 
 > [!TIP]
 > If you only need specific components, you can import individual stylesheets instead:
 > ```scss
-> @use "defra-internal-frontend/dist/components/defra-internal-header";
-> @use "defra-internal-frontend/dist/components/defra-internal-footer";
-> @use "defra-internal-frontend/dist/components/defra-internal-cookie-banner";
+> @use "defra-internal-frontend/dist/components/header";
+> @use "defra-internal-frontend/dist/components/footer";
+> @use "defra-internal-frontend/dist/components/cookie-banner";
 > @use "defra-internal-frontend/dist/components/service-navigation";
 > ```
 

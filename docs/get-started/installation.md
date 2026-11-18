@@ -42,17 +42,17 @@ node_modules/defra-internal-frontend/
         ├── _index.scss
         ├── button-group/
         ├── csrf-field/
-        ├── defra-internal-cookie-banner/
-        ├── defra-internal-footer/
-        ├── defra-internal-header/
-        ├── defra-internal-service-header/
+        ├── cookie-banner/
+        ├── footer/
+        ├── header/
+        ├── service-header/
         ├── google-analytics/
         ├── heading/
         ├── moj-scrollable-pane/
         ├── notification-banner/
         ├── organisation-link/
         ├── pagination/
-        ├── producer-subnavigation/
+        ├── subnavigation/
         ├── search/
         ├── service-navigation/
         ├── sorting-column-header/

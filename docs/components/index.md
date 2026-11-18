@@ -11,16 +11,16 @@ Components are reusable user interface elements designed specifically for Defra 
 
 ## Layout and Chrome
 
-- [**Defra internal header**](./defra-internal-header.md)  
+- [**Header**](./header.md)  
   The Defra top bar displaying the organisation lock-up, official crest, and user account menu.
 
-- [**Defra internal service header**](./defra-internal-service-header.md)  
+- [**Service header**](./service-header.md)  
   The green service navigation band paired with an English/Welsh language toggle bar and a regulator context slot.
 
-- [**Defra internal cookie banner**](./defra-internal-cookie-banner.md)  
+- [**Cookie banner**](./cookie-banner.md)  
   Analytics cookie consent banner and preference saved confirmation alert, with CSRF protection.
 
-- [**Defra internal footer**](./defra-internal-footer.md)  
+- [**Footer**](./footer.md)  
   The Defra footer with contact information, support links, OGL v3.0 licence, and Crown copyright.
 
 - [**Google Analytics**](./google-analytics.md)  
@@ -43,7 +43,7 @@ Components are reusable user interface elements designed specifically for Defra 
 - [**Search**](./search.md)  
   Search form panel with configurable action, error summary messaging, Welsh language input, and arbitrary `hiddenFields`.
 
-- [**Producer subnavigation**](./producer-subnavigation.md)  
+- [**Subnavigation**](./subnavigation.md)  
   MOJ subnavigation bar accepting any number of navigation links (`items`) and active link styling.
 
 - [**Tabs list**](./tabs-list.md)  
