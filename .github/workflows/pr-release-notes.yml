@@ -1,0 +1,82 @@
+name: PR Release Notes Preview
+
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  preview:
+    name: Preview Release Notes
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Compute bump and generate preview notes
+        id: release_notes
+        run: |
+          BUMP=$(node scripts/detect-bump.js --bump)
+          NEXT_VERSION=$(node scripts/detect-bump.js --next-version)
+          echo "bump=${BUMP}" >> "$GITHUB_OUTPUT"
+          echo "next_version=${NEXT_VERSION}" >> "$GITHUB_OUTPUT"
+          ./scripts/generate-release-notes.sh --preview > release-notes-preview.md
+
+      - name: Comment PR with release notes preview
+        uses: actions/github-script@v7
+        env:
+          BUMP: ${{ steps.release_notes.outputs.bump }}
+          NEXT_VERSION: ${{ steps.release_notes.outputs.next_version }}
+        with:
+          script: |
+            const fs = require('node:fs');
+            const marker = '<!-- git-cliff-release-notes-preview -->';
+            const notes = fs.readFileSync('release-notes-preview.md', 'utf8').trim();
+            const bump = process.env.BUMP || 'none';
+            const nextVersion = process.env.NEXT_VERSION || 'n/a';
+            const body = [
+              marker,
+              `### Release Notes Preview (bump: \`${bump}\`, next version: \`${nextVersion}\`)`,
+              '',
+              notes
+            ].join('\n');
+
+            const { data: comments } = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number
+            });
+
+            const existing = comments.find((c) => c.body && c.body.includes(marker));
+            if (existing) {
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: existing.id,
+                body
+              });
+            } else {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body
+              });
+            }

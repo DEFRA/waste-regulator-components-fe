@@ -31,6 +31,10 @@ jobs:
       - name: Run unit tests and coverage
         run: npm test
 
+      - name: Sync package version with release tag
+        if: github.event_name == 'release'
+        run: npm version "${GITHUB_REF_NAME#v}" --no-git-tag-version --allow-same-version
+
       - name: Publish to npm
         run: npm publish --provenance --access public
         env:

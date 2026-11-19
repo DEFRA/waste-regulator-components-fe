@@ -10,7 +10,7 @@ export default defineConfig({
       provider: 'v8',
       reporter: ['text', 'lcov'],
       reportsDirectory: './coverage',
-      include: ['tests/helpers/**/*.js'],
+      include: ['tests/helpers/**/*.js', 'scripts/**/*.js'],
       thresholds: {
         lines: 100,
         functions: 100,

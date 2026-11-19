@@ -19,7 +19,7 @@ $defra-internal-link-hover: color.mix(#000000, $defra-internal-link, 40%);
 export function buildCss() {
   const result = sass.compileString(
     `
-    @use 'govuk/index' as govuk;
+    @use 'govuk-frontend' as govuk;
     @use 'dist/index' as defra;
   `,
     {
@@ -42,7 +42,10 @@ export function buildCss() {
               return { contents: mockVariablesScss, syntax: 'scss' }
             }
             if (canonicalUrl.href === 'custom:govuk-frontend') {
-              return { contents: '@forward "pkg:govuk-frontend";', syntax: 'scss' }
+              return {
+                contents: '@forward "pkg:govuk-frontend" with ($govuk-font-family: (arial, sans-serif));',
+                syntax: 'scss'
+              }
             }
             return null
           }

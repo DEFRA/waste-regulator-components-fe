@@ -14,7 +14,11 @@
     "test:watch": "vitest",
     "example:css": "node examples/scripts/build-css.js",
     "example:start": "node examples/src/index.js",
-    "example:test": "vitest run --config examples/vitest.config.js"
+    "example:test": "vitest run --config examples/vitest.config.js",
+    "release-notes": "./scripts/generate-release-notes.sh",
+    "release-notes:preview": "./scripts/generate-release-notes.sh --preview",
+    "release-notes:bump": "node scripts/detect-bump.js --bump",
+    "release-notes:next-version": "node scripts/detect-bump.js --next-version"
   },
   "imports": {
     "#test-helpers/*": "./tests/helpers/*"
@@ -26,13 +30,14 @@
     "nunjucks": "^3.2.4"
   },
   "devDependencies": {
+    "@vitest/coverage-v8": "4.1.11",
     "cheerio": "1.2.0",
+    "git-cliff": "^2.14.2",
     "govuk-frontend": "6.3.0",
     "lodash": "4.18.1",
     "nunjucks": "3.2.4",
     "sass-embedded": "1.100.0",
     "vite": "8.0.16",
-    "vitest": "4.1.11",
-    "@vitest/coverage-v8": "4.1.11"
+    "vitest": "4.1.11"
   }
 }

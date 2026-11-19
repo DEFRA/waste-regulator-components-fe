@@ -212,6 +212,25 @@ We welcome contributions to Defra Internal Frontend!
 4. Update or add documentation under `docs/components/` or `docs/get-started/`.
 5. Submit a pull request with a clear description of your changes.
 
+### Semantic commits and release notes
+
+Release notes and semantic version bumps are automated from [Conventional Commits](https://www.conventionalcommits.org/) using `git-cliff` (`cliff.toml`):
+
+- **Commit prefixes**:
+  - `feat:` — new features (`minor` bump)
+  - `fix:`, `perf:`, `content:`, `style:`, `refactor:`, `security:` — fixes and improvements (`patch` bump)
+  - `docs:` — documentation entries included in release notes
+  - `feat!:` or a `BREAKING CHANGE:` footer — breaking changes (`major` bump)
+  - Optional footer overrides: `bump: major`, `bump: minor`, or `bump: patch`
+- **JIRA ticket tracking**: Include `https://eaflood.atlassian.net/browse/<TICKET>` to list related tickets, or `Fixes https://eaflood.atlassian.net/browse/<TICKET>` / `Closes https://eaflood.atlassian.net/browse/<TICKET>` to list completed tickets.
+- **Commands**:
+  ```bash
+  npm run release-notes:preview       # Preview unreleased changes since the latest tag
+  npm run release-notes               # Generate notes for the latest release tag
+  npm run release-notes:bump          # Print calculated bump (major | minor | patch | none)
+  npm run release-notes:next-version  # Print next semantic version tag
+  ```
+
 ## Licence
 
 Unless stated otherwise, the codebase is released under the [MIT Licence](LICENCE). This covers both the software and any sample code in the documentation.

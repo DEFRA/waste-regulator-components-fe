@@ -1,0 +1,126 @@
+# git-cliff ~ configuration file
+# https://git-cliff.org/docs/configuration
+
+[changelog]
+# A Tera template to be rendered for each release in the changelog.
+# See https://keats.github.io/tera/docs/#introduction
+body = """
+# Release notes for Waste Regulator Components Frontend
+
+{% if version %}\
+    ## [{{ version | trim_start_matches(pat="v") }}] - {{ timestamp | date(format="%Y-%m-%d") }}
+{% elif previous and previous.version %}\
+    Unreleased changes since [{{ previous.version }}](https://github.com/DEFRA/waste-regulator-components-fe/releases/tag/{{ previous.version }})
+
+    - Diff & commits: [{{ previous.version }}...{{ get_env(name="CLIFF_CURRENT_REF", default="HEAD") }}](https://github.com/DEFRA/waste-regulator-components-fe/compare/{{ previous.version }}...{{ get_env(name="CLIFF_CURRENT_REF", default="HEAD") }})
+    - Permalink: [{{ get_env(name="CLIFF_PREVIOUS_SHA_SHORT", default="") }}...{{ get_env(name="CLIFF_CURRENT_SHA_SHORT", default="") }}](https://github.com/DEFRA/waste-regulator-components-fe/compare/{{ get_env(name="CLIFF_PREVIOUS_SHA", default="") }}...{{ get_env(name="CLIFF_CURRENT_SHA", default="") }})
+{% else %}\
+    ## Unreleased
+{% endif %}\
+{% for group, commits in commits | group_by(attribute="group") %}
+    ## {{ group | striptags | trim | upper_first }}
+    {% for commit in commits | sort(attribute="message") %}
+        - {% if commit.scope %}*({{ commit.scope }})* {% endif %}\
+            {% if commit.breaking %}[**breaking**] {% endif %}\
+            {{ commit.message | split(pat="\n") | first | upper_first }}\
+            {% for link in commit.links %} {{ link.href }}{% endfor %}\
+    {% endfor %}
+{% endfor %}
+"""
+# Footer template rendered once at the end of the changelog.
+footer = """
+{% set completed_tickets = [] -%}
+{% set related_tickets = [] -%}
+{% for release in releases -%}
+    {% for commit in release.commits -%}
+        {% for link in commit.links -%}
+            {% if link.href is containing("eaflood.atlassian.net/browse/") -%}
+                {% set body_text = commit.body | default(value="") -%}
+                {% set msg_text = commit.message | default(value="") -%}
+                {% set full_text = msg_text ~ " " ~ body_text -%}
+                {% if full_text is containing("Fixes " ~ link.href) or full_text is containing("Closes " ~ link.href) -%}
+                    {% set_global completed_tickets = completed_tickets | concat(with=[link.href]) -%}
+                {% else -%}
+                    {% set_global related_tickets = related_tickets | concat(with=[link.href]) -%}
+                {% endif -%}
+            {% endif -%}
+        {% endfor -%}
+    {% endfor -%}
+{% endfor -%}
+{% set unique_completed = completed_tickets | unique | sort -%}
+{% set unique_related = related_tickets | unique | sort -%}
+{# Remove completed tickets from related list #}
+{% set filtered_related = [] -%}
+{% for url in unique_related -%}
+    {% if url not in unique_completed -%}
+        {% set_global filtered_related = filtered_related | concat(with=[url]) -%}
+    {% endif -%}
+{% endfor -%}
+{% if unique_completed | length > 0 %}
+
+## ✅ Completed Tickets
+
+{% for url in unique_completed -%}
+- {{ url }}
+{% endfor -%}
+{% endif -%}
+{% if filtered_related | length > 0 %}
+
+## 🎫 Related Tickets
+
+{% for url in filtered_related -%}
+- {{ url }}
+{% endfor -%}
+{% endif -%}
+"""
+# Remove leading and trailing whitespaces from the changelog's body.
+trim = true
+# Render body even when there are no releases to process.
+render_always = true
+
+[git]
+# Parse commits according to the conventional commits specification.
+# See https://www.conventionalcommits.org
+conventional_commits = true
+# Include unconventional commits so ticket-only commits can still match commit_parsers.
+filter_unconventional = false
+# Do not fail on legacy non-conventional commits.
+require_conventional = false
+# Process each commit as a whole.
+split_commits = false
+# Keep breaking commits even if they wouldn't match another parser.
+protect_breaking_commits = true
+# Assign commits to ordered groups using HTML comment prefixes.
+commit_parsers = [
+    { message = "^feat", group = "<!-- 0 -->🚀 Features" },
+    { message = "^fix", group = "<!-- 1 -->🐛 Bug Fixes" },
+    { message = "^content", group = "<!-- 2 -->📝 Content" },
+    { message = "^doc", group = "<!-- 3 -->📚 Documentation" },
+    { message = "^perf", group = "<!-- 4 -->⚡ Performance" },
+    { message = "^style", group = "<!-- 5 -->🎨 Styling" },
+    { message = "^refactor", group = "<!-- 6 -->🚜 Refactor" },
+    { message = "^security", group = "<!-- 7 -->🛡️ Security" },
+    { body = "^security", group = "<!-- 7 -->🛡️ Security" },
+    # Include non-conventional commits only if they reference a JIRA ticket
+    { message = "eaflood\\.atlassian\\.net/browse/[A-Z]+-[0-9]+", group = "<!-- 99 -->📋 Additional changes" },
+    { body = "eaflood\\.atlassian\\.net/browse/[A-Z]+-[0-9]+", group = "<!-- 99 -->📋 Additional changes" },
+    # Skip everything else (no semantic prefix and no ticket)
+    { message = ".*", skip = true },
+]
+# Extract JIRA ticket and GitHub issue links from commit messages and bodies.
+link_parsers = [
+    { pattern = "https://eaflood\\.atlassian\\.net/browse/([A-Z]+-[0-9]+)", href = "https://eaflood.atlassian.net/browse/$1", text = "$1" },
+    { pattern = "#([0-9]+)", href = "https://github.com/DEFRA/waste-regulator-components-fe/issues/$1", text = "#$1" },
+]
+# Include tags across branches matching semantic versions.
+use_branch_tags = false
+# Order releases chronologically by tag.
+topo_order = false
+# Order commits topologically.
+topo_order_commits = true
+# Order commits in each group oldest-first.
+sort_commits = "oldest"
+# Do not recurse into submodules.
+recurse_submodules = false
+# Match semantic version tags.
+tag_pattern = "v[0-9]+\\.[0-9]+\\.[0-9]+"

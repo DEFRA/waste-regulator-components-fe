@@ -259,6 +259,8 @@ describe('Example Application Hapi Server', () => {
       expect(response.payload).toContain('.moj-sub-navigation__item')
       expect(response.payload).toContain('.moj-sub-navigation__link[aria-current=page]')
       expect(response.payload).toContain('.v3-compact-table thead')
+      expect(response.payload).toContain('font-family: arial, sans-serif')
+      expect(response.payload).not.toContain('GDS Transport')
     })
 
     it('serves images', async () => {
