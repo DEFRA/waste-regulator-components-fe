@@ -83,7 +83,6 @@ node_modules/defra-internal-frontend/
             ├── pagination/
             ├── subnavigation/
             ├── search/
-            ├── service-navigation/
             ├── sorting-column-header/
             ├── status-tag/
             ├── submission-status-tag/

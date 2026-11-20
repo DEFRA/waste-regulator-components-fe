@@ -15,7 +15,7 @@ describe('Component test coverage verification', () => {
   test.each(componentDirs)(
     'Component %s should have test coverage in tests/components',
     (componentName) => {
-      // Components with SCSS only (e.g. service-navigation) are covered by stylesheet compilation tests
+      // Components with SCSS only (e.g. button-group) are covered by stylesheet compilation tests
       const componentPath = path.join(distComponentsDir, componentName)
       const hasNunjucks = fs
         .readdirSync(componentPath)

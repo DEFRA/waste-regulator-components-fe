@@ -83,7 +83,7 @@ describe('Component stylesheets', () => {
     ['moj-scrollable-pane', 'dist/wrc/components/moj-scrollable-pane'],
     ['notification-banner', 'dist/wrc/components/notification-banner'],
     ['subnavigation', 'dist/wrc/components/subnavigation'],
-    ['service-navigation', 'dist/wrc/components/service-navigation'],
+    ['service-header', 'dist/wrc/components/service-header'],
     ['sorting-column-header', 'dist/wrc/components/sorting-column-header'],
     ['tab-panel', 'dist/wrc/components/tab-panel']
   ])('Should compile %s stylesheet individually', (_name, importPath) => {

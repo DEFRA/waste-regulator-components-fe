@@ -60,5 +60,5 @@ Use this component directly below the [Header](./header.md) on every page. It es
 To import styles for this component individually:
 
 ```scss
-@use 'defra-internal-frontend/dist/wrc/components/service-navigation';
+@use 'defra-internal-frontend/dist/wrc/components/service-header';
 ```

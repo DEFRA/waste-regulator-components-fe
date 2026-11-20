@@ -94,7 +94,7 @@ In your main `application.scss`, import the `defra-internal-frontend` component 
 > @use 'defra-internal-frontend/dist/wrc/components/header';
 > @use 'defra-internal-frontend/dist/wrc/components/footer';
 > @use 'defra-internal-frontend/dist/wrc/components/cookie-banner';
-> @use 'defra-internal-frontend/dist/wrc/components/service-navigation';
+> @use 'defra-internal-frontend/dist/wrc/components/service-header';
 > ```
 
 ### Configure Sass compiler load paths
