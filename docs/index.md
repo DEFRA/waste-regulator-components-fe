@@ -51,8 +51,14 @@ Components are reusable user interface elements created specifically for Defra i
 
 ---
 
-## Community & Support
+## Contact the team
 
-`defra-internal-frontend` is maintained by the Defra Developer Enablement team. If you find a bug, need help, or want to contribute a new component, open an issue or pull request in the repository.
+Defra Internal Frontend is maintained by the Defra EPR Regulators team.
 
-Read the [Contributing and semantic commits guide](./contributing.md) for local checks, commit conventions, and the automated release process.
+If you have questions, want to propose a new component, or need assistance:
+
+- [open an issue or pull request](https://github.com/DEFRA/waste-regulator-components-fe) in the repository
+- get in touch with the team on Slack
+- read the [Contributing and semantic commits guide](./contributing.md) for local checks, commit conventions, and the automated release process
+
+See [Running documentation locally](./running-locally.md) to preview this documentation site at `http://localhost:1999` with `npm run docs:start`.

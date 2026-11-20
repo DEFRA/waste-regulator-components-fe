@@ -26,6 +26,10 @@ npm run example:test
 
 Husky also runs `npm run git:pre-commit-hook` (`security-audit`, `format:check`, `lint`, and `test`) before each commit via `.husky/pre-commit`.
 
+### Previewing documentation locally
+
+See the [Running documentation locally](./running-locally.md) guide for prerequisites, starting the local server (`npm run docs:start`), overriding the port, and building documentation assets (`npm run docs:build`).
+
 ---
 
 ## Semantic commits and automated release notes
