@@ -12,6 +12,9 @@ import { DEFAULT_ROOT_DIR } from './sass-config.js'
 
 export const DEFAULT_DOCS_PORT = 1999
 
+const HTTP_NOT_FOUND = 404
+const EXTERNAL_LINK_PREFIXES = ['http://', 'https://', 'mailto:', '#']
+
 export function parseFrontmatter(markdown) {
   const normalized = markdown.replaceAll('\r\n', '\n')
   if (!normalized.startsWith('---\n')) {
@@ -36,36 +39,38 @@ export function parseFrontmatter(markdown) {
   return { data, body }
 }
 
+function isExternalOrAnchor(href) {
+  return EXTERNAL_LINK_PREFIXES.some((prefix) => href.startsWith(prefix))
+}
+
+function rewriteMarkdownTarget(targetPath) {
+  if (targetPath === 'index.md' || targetPath === './index.md') {
+    return './'
+  }
+  if (targetPath.endsWith('/index.md')) {
+    return targetPath.slice(0, -'index.md'.length)
+  }
+  return `${targetPath.slice(0, -'.md'.length)}.html`
+}
+
+function rewriteHref(fullMatch, href) {
+  if (isExternalOrAnchor(href)) {
+    return fullMatch
+  }
+
+  const hashIndex = href.indexOf('#')
+  const targetPath = hashIndex === -1 ? href : href.slice(0, hashIndex)
+  const hash = hashIndex === -1 ? '' : href.slice(hashIndex)
+
+  if (!targetPath.endsWith('.md')) {
+    return fullMatch
+  }
+
+  return `href="${rewriteMarkdownTarget(targetPath)}${hash}"`
+}
+
 export function rewriteMarkdownLinks(html) {
-  return html.replaceAll(/href="([^"]+)"/g, (fullMatch, href) => {
-    if (
-      href.startsWith('http://') ||
-      href.startsWith('https://') ||
-      href.startsWith('mailto:') ||
-      href.startsWith('#')
-    ) {
-      return fullMatch
-    }
-
-    const hashIndex = href.indexOf('#')
-    const targetPath = hashIndex === -1 ? href : href.slice(0, hashIndex)
-    const hash = hashIndex === -1 ? '' : href.slice(hashIndex)
-
-    if (!targetPath.endsWith('.md')) {
-      return fullMatch
-    }
-
-    let rewritten
-    if (targetPath === 'index.md' || targetPath === './index.md') {
-      rewritten = './'
-    } else if (targetPath.endsWith('/index.md')) {
-      rewritten = targetPath.slice(0, -'index.md'.length)
-    } else {
-      rewritten = `${targetPath.slice(0, -'.md'.length)}.html`
-    }
-
-    return `href="${rewritten}${hash}"`
-  })
+  return html.replaceAll(/href="([^"]+)"/g, rewriteHref)
 }
 
 function isSafeFile(candidatePath, baseDir) {
@@ -77,48 +82,47 @@ function isSafeFile(candidatePath, baseDir) {
   return fs.existsSync(resolvedTarget) && fs.statSync(resolvedTarget).isFile()
 }
 
+function resolveSafeRoute(docsDir, relativeFilePath, pageUrl) {
+  const filePath = path.resolve(docsDir, relativeFilePath)
+  return isSafeFile(filePath, docsDir) ? { filePath, pageUrl } : null
+}
+
+function resolveHtmlRoute(cleanPath, docsDir) {
+  const relativeMd = `${cleanPath.slice(1, -'.html'.length)}.md`
+  const pageUrl = relativeMd.endsWith('/index.md')
+    ? `/${relativeMd.slice(0, -'index.md'.length)}`
+    : cleanPath
+  return resolveSafeRoute(docsDir, relativeMd, pageUrl)
+}
+
+function resolveBareRoute(cleanPath, docsDir) {
+  const relativePath = cleanPath.slice(1)
+  const dirIndex = path.resolve(docsDir, relativePath, 'index.md')
+  if (isSafeFile(dirIndex, docsDir)) {
+    return { redirect: `${cleanPath}/` }
+  }
+  return resolveSafeRoute(docsDir, `${relativePath}.md`, `${cleanPath}.html`)
+}
+
 export function resolveDocsRoute(requestPath, docsDir) {
   const cleanPath = requestPath.startsWith('/')
     ? requestPath
     : `/${requestPath}`
 
   if (cleanPath === '/' || cleanPath === '/index.html') {
-    const filePath = path.resolve(docsDir, 'index.md')
-    return isSafeFile(filePath, docsDir) ? { filePath, pageUrl: '/' } : null
+    return resolveSafeRoute(docsDir, 'index.md', '/')
   }
 
   if (cleanPath.endsWith('/')) {
-    const relativeDir = cleanPath.slice(1)
-    const filePath = path.resolve(docsDir, relativeDir, 'index.md')
-    return isSafeFile(filePath, docsDir)
-      ? { filePath, pageUrl: cleanPath }
-      : null
+    const relativeIndex = path.join(cleanPath.slice(1), 'index.md')
+    return resolveSafeRoute(docsDir, relativeIndex, cleanPath)
   }
 
   if (cleanPath.endsWith('.html')) {
-    const relativeMd = `${cleanPath.slice(1, -'.html'.length)}.md`
-    const filePath = path.resolve(docsDir, relativeMd)
-    if (!isSafeFile(filePath, docsDir)) {
-      return null
-    }
-    const pageUrl = relativeMd.endsWith('/index.md')
-      ? `/${relativeMd.slice(0, -'index.md'.length)}`
-      : cleanPath
-    return { filePath, pageUrl }
+    return resolveHtmlRoute(cleanPath, docsDir)
   }
 
-  const relativePath = cleanPath.slice(1)
-  const dirIndex = path.resolve(docsDir, relativePath, 'index.md')
-  if (isSafeFile(dirIndex, docsDir)) {
-    return { redirect: `${cleanPath}/` }
-  }
-
-  const pageFile = path.resolve(docsDir, `${relativePath}.md`)
-  if (isSafeFile(pageFile, docsDir)) {
-    return { filePath: pageFile, pageUrl: `${cleanPath}.html` }
-  }
-
-  return null
+  return resolveBareRoute(cleanPath, docsDir)
 }
 
 export function loadSiteContext(docsDir) {
@@ -188,7 +192,7 @@ export async function createDocsServer(options = {}) {
       async handler(request, h) {
         const resolved = resolveDocsRoute(request.path, docsDir)
         if (!resolved) {
-          return h.response('Page not found').code(404)
+          return h.response('Page not found').code(HTTP_NOT_FOUND)
         }
 
         if (resolved.redirect) {
