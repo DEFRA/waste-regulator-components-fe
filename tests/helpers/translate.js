@@ -102,7 +102,7 @@ const dictionaries = {
         submissionStatus: {
           pending: 'Ar y gweill',
           accepted: 'Wedi derbyn',
-          notSubmitted: "Heb ei gyflwyno",
+          notSubmitted: 'Heb ei gyflwyno',
           cancelled: 'Wedi canslo'
         }
       }

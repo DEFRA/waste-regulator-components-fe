@@ -5,7 +5,10 @@ const dirname = path.dirname(fileURLToPath(import.meta.url))
 const publicDir = path.resolve(dirname, '../public')
 const rootDir = path.resolve(dirname, '../../..')
 const defraAssetsDir = path.join(rootDir, 'dist/assets')
-const govukAssetsDir = path.join(rootDir, 'node_modules/govuk-frontend/dist/govuk/assets')
+const govukAssetsDir = path.join(
+  rootDir,
+  'node_modules/govuk-frontend/dist/govuk/assets'
+)
 
 export const staticRoutes = [
   {
@@ -31,4 +34,3 @@ export const staticRoutes = [
     }
   }
 ]
-

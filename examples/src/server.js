@@ -54,4 +54,3 @@ export async function createServer(options = {}) {
 
   return server
 }
-

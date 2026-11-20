@@ -50,13 +50,26 @@ Use this component inside a `<div class="govuk-tabs">` container when tabs navig
 ```html
 <ul class="govuk-tabs__list">
   <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
-    <a class="govuk-tabs__tab" href="?type=direct-producers&amp;tab=pending&amp;clearSort=true" aria-current="page">Pending (4)</a>
+    <a
+      class="govuk-tabs__tab"
+      href="?type=direct-producers&amp;tab=pending&amp;clearSort=true"
+      aria-current="page"
+      >Pending (4)</a
+    >
   </li>
   <li class="govuk-tabs__list-item">
-    <a class="govuk-tabs__tab" href="?type=direct-producers&amp;tab=accepted&amp;clearSort=true">Accepted (2)</a>
+    <a
+      class="govuk-tabs__tab"
+      href="?type=direct-producers&amp;tab=accepted&amp;clearSort=true"
+      >Accepted (2)</a
+    >
   </li>
   <li class="govuk-tabs__list-item">
-    <a class="govuk-tabs__tab" href="?type=direct-producers&amp;tab=not-submitted&amp;clearSort=true">Not submitted (1)</a>
+    <a
+      class="govuk-tabs__tab"
+      href="?type=direct-producers&amp;tab=not-submitted&amp;clearSort=true"
+      >Not submitted (1)</a
+    >
   </li>
 </ul>
 ```
@@ -65,9 +78,9 @@ Use this component inside a `<div class="govuk-tabs">` container when tabs navig
 
 ## Macro options
 
-| Name | Type | Default | Description |
-| --- | --- | --- | --- |
-| `items` | `array` | `[]` | Array of tab link item objects `{ text, href, current }`. |
-| `items[].text` | `string` | — | Display text for the tab link. |
-| `items[].href` | `string` | — | Target URL for the tab link. |
+| Name              | Type      | Default | Description                                                                                                |
+| ----------------- | --------- | ------- | ---------------------------------------------------------------------------------------------------------- |
+| `items`           | `array`   | `[]`    | Array of tab link item objects `{ text, href, current }`.                                                  |
+| `items[].text`    | `string`  | —       | Display text for the tab link.                                                                             |
+| `items[].href`    | `string`  | —       | Target URL for the tab link.                                                                               |
 | `items[].current` | `boolean` | `false` | When `true`, adds `.govuk-tabs__list-item--selected` to the `<li>` and `aria-current="page"` to the `<a>`. |

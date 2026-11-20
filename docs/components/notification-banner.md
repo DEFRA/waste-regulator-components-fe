@@ -34,14 +34,24 @@ GOV.UK Frontend provides default (blue Important) and `govuk-notification-banner
 ### HTML output
 
 ```html
-<div class="govuk-notification-banner wrc-notification-banner--cancelled" role="region" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
+<div
+  class="govuk-notification-banner wrc-notification-banner--cancelled"
+  role="region"
+  aria-labelledby="govuk-notification-banner-title"
+  data-module="govuk-notification-banner"
+>
   <div class="govuk-notification-banner__header">
-    <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
+    <h2
+      class="govuk-notification-banner__title"
+      id="govuk-notification-banner-title"
+    >
       Cancelled
     </h2>
   </div>
   <div class="govuk-notification-banner__content">
-    <p class="govuk-notification-banner__heading">This certificate has been cancelled.</p>
+    <p class="govuk-notification-banner__heading">
+      This certificate has been cancelled.
+    </p>
   </div>
 </div>
 ```

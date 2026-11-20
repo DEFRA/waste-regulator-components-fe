@@ -34,7 +34,7 @@ export function detectCommitBump(commitMessage) {
     return 'none'
   }
 
-  const normalized = commitMessage.replace(/\r\n/g, '\n').trim()
+  const normalized = commitMessage.replaceAll('\r\n', '\n').trim()
 
   if (MAJOR_PATTERNS.some((pattern) => pattern.test(normalized))) {
     return 'major'
@@ -185,15 +185,17 @@ export function runCli(argv = process.argv.slice(2), options = {}) {
   } else if (argv.includes('--next-version')) {
     stdout.write(nextVersion ? `${nextVersion}\n` : '')
   } else {
-    stdout.write(
-      `${JSON.stringify({ currentVersion, bump, nextVersion })}\n`
-    )
+    stdout.write(`${JSON.stringify({ currentVersion, bump, nextVersion })}\n`)
   }
 
   return { currentVersion, bump, nextVersion }
 }
 
-/* v8 ignore next 3 */
-if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+/* v8 ignore start */
+if (
+  process.argv[1] &&
+  path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)
+) {
   runCli()
 }
+/* v8 ignore stop */

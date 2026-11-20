@@ -45,6 +45,7 @@ npm install defra-internal-frontend govuk-frontend
 ```
 
 Ensure your project meets the prerequisites:
+
 - **Node.js** (LTS version recommended)
 - **`govuk-frontend`** (`^6.0.0`)
 - **`nunjucks`** for server-side view templates
@@ -98,15 +99,20 @@ Add the `dist/components` directory and `govuk-frontend/dist` to your Nunjucks v
 import nunjucks from 'nunjucks'
 import path from 'node:path'
 
-const defraInternalPath = path.dirname(require.resolve('defra-internal-frontend/package.json'))
+const defraInternalPath = path.dirname(
+  require.resolve('defra-internal-frontend/package.json')
+)
 const govukPath = path.dirname(require.resolve('govuk-frontend/package.json'))
 
-const env = nunjucks.configure([
-  path.join(defraInternalPath, 'dist', 'components'),
-  path.join(govukPath, 'dist')
-], {
-  autoescape: true
-})
+const env = nunjucks.configure(
+  [
+    path.join(defraInternalPath, 'dist', 'components'),
+    path.join(govukPath, 'dist')
+  ],
+  {
+    autoescape: true
+  }
+)
 ```
 
 #### 2. Import styles in Sass
@@ -114,8 +120,8 @@ const env = nunjucks.configure([
 In your application's main Sass file, import GOV.UK Frontend followed by Defra Internal Frontend:
 
 ```scss
-@use "govuk/index" as govuk;
-@use "defra-internal-frontend/dist/index" as defra;
+@use 'govuk/index' as govuk;
+@use 'defra-internal-frontend/dist/index' as defra;
 ```
 
 #### 3. Copy static assets
@@ -129,9 +135,11 @@ For a complete step-by-step walkthrough, see [Project setup](docs/get-started/pr
 We provide a complete reference application in [`examples/`](examples/README.md) built with **Hapi.js**, **Nunjucks**, and **Dart Sass**, demonstrating all components in action:
 
 - **Start the example app**:
+
   ```bash
   npm run example:start
   ```
+
   Then open `http://localhost:3000` in your browser.
 
 - **Run example app integration tests**:
@@ -145,27 +153,27 @@ See the [Example application guide](examples/README.md) for architecture details
 
 The following components are provided in `dist/components/`:
 
-| Component | Description | Macro |
-| --- | --- | --- |
-| [**Header**](docs/components/header.md) | Top bar displaying Defra lock-up, crest, and account navigation | `wrcHeader` |
-| [**Service header**](docs/components/service-header.md) | Green service navigation band with regulator context and language toggle | `wrcServiceHeader` |
-| [**Cookie banner**](docs/components/cookie-banner.md) | Cookie consent banner and confirmation alerts with CSRF tokens | `wrcCookieBanner` |
-| [**Footer**](docs/components/footer.md) | Footer with "Get help" block, support links, OGL licence, and Crown copyright | `wrcFooter` |
-| [**Google Analytics**](docs/components/google-analytics.md) | GA4 (`gtag.js`), Consent Mode v2, and GTM head scripts / `<noscript>` iframe | `wrcGoogleAnalytics` |
-| [**Heading**](docs/components/heading.md) | Page heading (`<h1>`) in two-thirds grid column with optional caption | `wrcHeading` |
-| [**CSRF field**](docs/components/csrf-field.md) | Hidden input for cross-site request forgery prevention tokens | `wrcCsrfField` |
-| [**Search**](docs/components/search.md) | Search form panel with validation support and arbitrary `hiddenFields` | `wrcSearch` |
-| [**Subnavigation**](docs/components/subnavigation.md) | Subnavigation link bar supporting dynamic items and active link styles | `wrcSubnavigation` |
-| [**Tabs list**](docs/components/tabs-list.md) | GOV.UK tabs list (`<ul class="govuk-tabs__list">`) with dynamic items and active tab state | `wrcTabsList` |
-| [**Pagination**](docs/components/pagination.md) | Numbered pagination navigation with previous/next links and ellipsis | `pagination/template.njk` |
-| [**Sorting column header**](docs/components/sorting-column-header.md) | Table header (`<th>`) with sorting controls and accessible ARIA attributes | `wrcSortingColumnHeader` |
-| [**Status tag**](docs/components/status-tag.md) | Colored tag indicating boolean/binary status with accessible fallback | `wrcStatusTag` |
-| [**Submission status tag**](docs/components/submission-status-tag.md) | Semantic tag for compliance submission states (Pending, Accepted, etc.) | `wrcSubmissionStatusTag` |
-| [**Organisation link**](docs/components/organisation-link.md) | Contextual navigation link for organisation summaries and certificates | `wrcOrganisationLink` |
-| [**Button group**](docs/components/button-group.md) | Aligns `<form>` submit buttons inline inside `.govuk-button-group` | CSS (`_index.scss`) |
-| [**Scrollable pane**](docs/components/moj-scrollable-pane.md) | Enables normal text wrapping inside `.moj-scrollable-pane` tables | CSS (`_index.scss`) |
-| [**Notification banner**](docs/components/notification-banner.md) | Adds `.wrc-notification-banner--cancelled` modifier styling | CSS (`_index.scss`) |
-| [**Tab panel**](docs/components/tab-panel.md) | Provides `.v3-compact-table` compact table styling and normal `tbody th` weight | CSS (`_index.scss`) |
+| Component                                                             | Description                                                                                | Macro                     |
+| --------------------------------------------------------------------- | ------------------------------------------------------------------------------------------ | ------------------------- |
+| [**Header**](docs/components/header.md)                               | Top bar displaying Defra lock-up, crest, and account navigation                            | `wrcHeader`               |
+| [**Service header**](docs/components/service-header.md)               | Green service navigation band with regulator context and language toggle                   | `wrcServiceHeader`        |
+| [**Cookie banner**](docs/components/cookie-banner.md)                 | Cookie consent banner and confirmation alerts with CSRF tokens                             | `wrcCookieBanner`         |
+| [**Footer**](docs/components/footer.md)                               | Footer with "Get help" block, support links, OGL licence, and Crown copyright              | `wrcFooter`               |
+| [**Google Analytics**](docs/components/google-analytics.md)           | GA4 (`gtag.js`), Consent Mode v2, and GTM head scripts / `<noscript>` iframe               | `wrcGoogleAnalytics`      |
+| [**Heading**](docs/components/heading.md)                             | Page heading (`<h1>`) in two-thirds grid column with optional caption                      | `wrcHeading`              |
+| [**CSRF field**](docs/components/csrf-field.md)                       | Hidden input for cross-site request forgery prevention tokens                              | `wrcCsrfField`            |
+| [**Search**](docs/components/search.md)                               | Search form panel with validation support and arbitrary `hiddenFields`                     | `wrcSearch`               |
+| [**Subnavigation**](docs/components/subnavigation.md)                 | Subnavigation link bar supporting dynamic items and active link styles                     | `wrcSubnavigation`        |
+| [**Tabs list**](docs/components/tabs-list.md)                         | GOV.UK tabs list (`<ul class="govuk-tabs__list">`) with dynamic items and active tab state | `wrcTabsList`             |
+| [**Pagination**](docs/components/pagination.md)                       | Numbered pagination navigation with previous/next links and ellipsis                       | `pagination/template.njk` |
+| [**Sorting column header**](docs/components/sorting-column-header.md) | Table header (`<th>`) with sorting controls and accessible ARIA attributes                 | `wrcSortingColumnHeader`  |
+| [**Status tag**](docs/components/status-tag.md)                       | Colored tag indicating boolean/binary status with accessible fallback                      | `wrcStatusTag`            |
+| [**Submission status tag**](docs/components/submission-status-tag.md) | Semantic tag for compliance submission states (Pending, Accepted, etc.)                    | `wrcSubmissionStatusTag`  |
+| [**Organisation link**](docs/components/organisation-link.md)         | Contextual navigation link for organisation summaries and certificates                     | `wrcOrganisationLink`     |
+| [**Button group**](docs/components/button-group.md)                   | Aligns `<form>` submit buttons inline inside `.govuk-button-group`                         | CSS (`_index.scss`)       |
+| [**Scrollable pane**](docs/components/moj-scrollable-pane.md)         | Enables normal text wrapping inside `.moj-scrollable-pane` tables                          | CSS (`_index.scss`)       |
+| [**Notification banner**](docs/components/notification-banner.md)     | Adds `.wrc-notification-banner--cancelled` modifier styling                                | CSS (`_index.scss`)       |
+| [**Tab panel**](docs/components/tab-panel.md)                         | Provides `.v3-compact-table` compact table styling and normal `tbody th` weight            | CSS (`_index.scss`)       |
 
 Browse the full [Components directory](docs/components/index.md) for individual component guidance, macro arguments, and HTML output examples.
 
@@ -202,6 +210,43 @@ npm test -- --coverage
 
 The test suite in `tests/` covers all components, helpers, and Sass compilation with 100% statement, branch, function, and line coverage.
 
+### Formatting and linting
+
+Check or apply formatting and run JavaScript/SCSS linters:
+
+```bash
+npm run format:check
+npm run format
+npm run lint
+npm run lint:js
+npm run lint:js:fix
+npm run lint:scss
+```
+
+### Security audit
+
+Run the npm audit check for critical vulnerabilities:
+
+```bash
+npm run security-audit
+```
+
+### Pre-commit hook
+
+Husky runs `npm run git:pre-commit-hook` (`security-audit`, `format:check`, `lint`, and `test`) automatically before each commit via `.husky/pre-commit`.
+
+### SonarCloud scanning
+
+Pull requests and pushes to `main` run SonarCloud analysis in `.github/workflows/check-pull-request.yml` using `sonar-project.properties`. Ensure the `DEFRA_waste-regulator-components-fe` project exists in the `defra` organisation on SonarCloud and that the `WASTE_PACKAGING_SONAR_TOKEN` secret is available to this repository.
+
+### Building documentation assets
+
+Compile `docs/assets/scss/docs.scss` using the shared Defra/GOV.UK styles and copy `dist/assets/images/` into `docs/assets/images/`:
+
+```bash
+npm run docs:build
+```
+
 ## Contributing
 
 We welcome contributions to Defra Internal Frontend!
@@ -214,7 +259,7 @@ We welcome contributions to Defra Internal Frontend!
 
 ### Semantic commits and release notes
 
-Release notes and semantic version bumps are automated from [Conventional Commits](https://www.conventionalcommits.org/) using `git-cliff` (`cliff.toml`):
+Release notes and semantic version bumps are automated from [Conventional Commits](https://www.conventionalcommits.org/) using `git-cliff` (`cliff.toml`), based on Tim Abell's guide [Automatic release notes with semantic commits and git-cliff](https://0x5.uk/2026/03/12/automatic-release-notes-with-semantic-commits-and-git-cliff/):
 
 - **Commit prefixes**:
   - `feat:` — new features (`minor` bump)
@@ -234,4 +279,3 @@ Release notes and semantic version bumps are automated from [Conventional Commit
 ## Licence
 
 Unless stated otherwise, the codebase is released under the [MIT Licence](LICENCE). This covers both the software and any sample code in the documentation.
-

@@ -47,4 +47,3 @@ export function getNunjucksVisionConfig(env = createNunjucksEnvironment()) {
     path: 'views'
   }
 }
-

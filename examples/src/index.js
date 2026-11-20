@@ -5,11 +5,12 @@ async function start() {
   const server = await createServer({ port })
 
   await server.start()
-  console.log(`Defra Internal Frontend Example App running at: ${server.info.uri}`)
+  console.log(
+    `Defra Internal Frontend Example App running at: ${server.info.uri}`
+  )
 }
 
 start().catch((err) => {
   console.error('Failed to start server:', err)
   process.exit(1)
 })
-

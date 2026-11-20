@@ -148,9 +148,13 @@ describe('Cookie Banner Component', () => {
     })
 
     const banner = $('.govuk-cookie-banner')
-    expect(banner.attr('aria-label')).toBe('Cwcis ar pEPR: Regulators\' Service')
-    expect(banner.find('button').eq(0).text().trim()).toBe('Derbyn cwcis dadansoddi')
-    expect(banner.find('button').eq(1).text().trim()).toBe('Gwrthod cwcis dadansoddi')
+    expect(banner.attr('aria-label')).toBe("Cwcis ar pEPR: Regulators' Service")
+    expect(banner.find('button').eq(0).text().trim()).toBe(
+      'Derbyn cwcis dadansoddi'
+    )
+    expect(banner.find('button').eq(1).text().trim()).toBe(
+      'Gwrthod cwcis dadansoddi'
+    )
 
     const $confirmation = renderCookieBanner({
       ...baseParams,

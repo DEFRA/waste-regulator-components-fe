@@ -1,0 +1,303 @@
+@use "govuk-frontend" as *;
+@use "variables" as *;
+@use "dist/index" as *;
+
+:root {
+  --govuk-brand-colour: #00a33b;
+  --govuk-template-background-colour: #ffffff;
+}
+
+// -----------------------------------------------------------------------------
+// Documentation layout
+// -----------------------------------------------------------------------------
+.wrc-docs-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: govuk-spacing(6);
+
+  @include govuk-media-query($from: desktop) {
+    grid-template-columns: 240px minmax(0, 1fr);
+    gap: govuk-spacing(8);
+    align-items: start;
+  }
+}
+
+.wrc-docs-sidebar {
+  order: 2;
+  padding-top: govuk-spacing(5);
+  border-top: 1px solid $govuk-border-colour;
+
+  @include govuk-media-query($from: desktop) {
+    order: 0;
+    padding-top: 0;
+    padding-right: govuk-spacing(5);
+    border-top: 0;
+    border-right: 1px solid $govuk-border-colour;
+  }
+}
+
+.wrc-docs-sidebar__section {
+  margin-bottom: govuk-spacing(5);
+}
+
+.wrc-docs-sidebar__heading {
+  @include govuk-font($size: 16, $weight: bold);
+  margin: 0 0 govuk-spacing(2);
+  color: $govuk-text-colour;
+}
+
+.wrc-docs-sidebar__list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.wrc-docs-sidebar__item {
+  margin-bottom: govuk-spacing(1);
+}
+
+.wrc-docs-sidebar__link {
+  @include govuk-font($size: 16);
+  @include govuk-link-common;
+  @include govuk-link-style-no-visited-state;
+  @include govuk-link-style-no-underline;
+  display: block;
+  padding: govuk-spacing(1) govuk-spacing(2);
+  border-left: 4px solid $govuk-body-background-colour;
+  color: $defra-internal-link;
+
+  &:hover {
+    color: $defra-internal-link-hover;
+    background-color: govuk-colour("black", $variant: "tint-95");
+  }
+
+  &:focus {
+    color: $govuk-focus-text-colour;
+    background-color: $govuk-focus-colour;
+    border-left-color: $govuk-focus-text-colour;
+  }
+}
+
+.wrc-docs-sidebar__link--current {
+  font-weight: 700;
+  color: $govuk-text-colour;
+  border-left-color: $defra-internal-brand;
+  background-color: $defra-internal-nav-background;
+
+  &:hover {
+    color: $govuk-text-colour;
+    background-color: $defra-internal-nav-background;
+  }
+}
+
+// -----------------------------------------------------------------------------
+// Rendered Markdown content
+// -----------------------------------------------------------------------------
+.wrc-docs-content {
+  min-width: 0;
+
+  h1 {
+    @include govuk-font($size: 48, $weight: bold);
+    margin: 0 0 govuk-spacing(6);
+    color: $govuk-text-colour;
+  }
+
+  h2 {
+    @include govuk-font($size: 27, $weight: bold);
+    margin: govuk-spacing(7) 0 govuk-spacing(4);
+    color: $govuk-text-colour;
+  }
+
+  h3 {
+    @include govuk-font($size: 24, $weight: bold);
+    margin: govuk-spacing(5) 0 govuk-spacing(3);
+    color: $govuk-text-colour;
+  }
+
+  h4 {
+    @include govuk-font($size: 19, $weight: bold);
+    margin: govuk-spacing(4) 0 govuk-spacing(2);
+    color: $govuk-text-colour;
+  }
+
+  p {
+    @include govuk-font($size: 19);
+    margin: 0 0 govuk-spacing(4);
+    color: $govuk-text-colour;
+    max-width: 40em;
+  }
+
+  a {
+    @include govuk-link-common;
+    @include govuk-link-style-default;
+  }
+
+  ul,
+  ol {
+    @include govuk-font($size: 19);
+    margin: 0 0 govuk-spacing(4);
+    padding-left: govuk-spacing(4);
+    color: $govuk-text-colour;
+    max-width: 40em;
+  }
+
+  ul {
+    list-style-type: disc;
+  }
+
+  ol {
+    list-style-type: decimal;
+  }
+
+  li {
+    margin-bottom: govuk-spacing(2);
+  }
+
+  hr {
+    height: 1px;
+    margin: govuk-spacing(6) 0;
+    border: 0;
+    background-color: $govuk-border-colour;
+  }
+
+  blockquote {
+    margin: govuk-spacing(5) 0;
+    padding: govuk-spacing(3);
+    border-left: 10px solid $govuk-border-colour;
+    background-color: govuk-colour("black", $variant: "tint-95");
+    max-width: 40em;
+  }
+
+  code {
+    padding: 2px 6px;
+    font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+    font-size: 0.9em;
+    color: $govuk-text-colour;
+    background-color: govuk-colour("black", $variant: "tint-95");
+  }
+
+  pre {
+    margin: govuk-spacing(4) 0 govuk-spacing(6);
+    padding: govuk-spacing(4);
+    overflow-x: auto;
+    border: 1px solid $govuk-border-colour;
+    border-left: 4px solid $defra-internal-brand;
+    background-color: govuk-colour("black", $variant: "tint-95");
+    @include govuk-font($size: 16);
+  }
+
+  table {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
+    margin: govuk-spacing(4) 0 govuk-spacing(6);
+    border-collapse: collapse;
+    @include govuk-font($size: 16);
+
+    @include govuk-media-query($from: tablet) {
+      display: table;
+    }
+  }
+
+  th,
+  td {
+    padding: govuk-spacing(2) govuk-spacing(4) govuk-spacing(2) 0;
+    border-bottom: 1px solid $govuk-border-colour;
+    text-align: left;
+    vertical-align: top;
+
+    &:last-child {
+      padding-right: 0;
+    }
+  }
+
+  th {
+    font-weight: 700;
+    color: $govuk-text-colour;
+  }
+
+  strong {
+    font-weight: 700;
+  }
+}
+
+.wrc-docs-content pre code {
+  padding: 0;
+  font-size: inherit;
+  color: inherit;
+  background-color: inherit;
+}
+
+.wrc-docs-content blockquote p:last-child {
+  margin-bottom: 0;
+}
+
+.wrc-docs-content h1 + p {
+  @include govuk-font($size: 24);
+  margin-bottom: govuk-spacing(5);
+}
+
+// -----------------------------------------------------------------------------
+// WCAG AA syntax highlighting for Rouge code blocks on light surface
+// -----------------------------------------------------------------------------
+.highlight {
+  .c,
+  .cm,
+  .cp,
+  .c1,
+  .cs {
+    color: #505a5f;
+    font-style: italic;
+  }
+
+  .k,
+  .kc,
+  .kd,
+  .kn,
+  .kp,
+  .kr,
+  .kt,
+  .o,
+  .ow {
+    color: #942514;
+    font-weight: 700;
+  }
+
+  .s,
+  .sb,
+  .sc,
+  .sd,
+  .s2,
+  .se,
+  .sh,
+  .si,
+  .sx,
+  .sr,
+  .s1,
+  .ss {
+    color: #005a30;
+  }
+
+  .m,
+  .mf,
+  .mh,
+  .mi,
+  .mo,
+  .il {
+    color: #1d70b8;
+  }
+
+  .na,
+  .nc,
+  .nf,
+  .nt {
+    color: #4c2c92;
+  }
+
+  .nb,
+  .no,
+  .nv {
+    color: #0b0c0c;
+  }
+}

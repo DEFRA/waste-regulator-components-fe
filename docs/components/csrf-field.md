@@ -34,17 +34,22 @@ Unlike components accepting an options object, `wrcCsrfField` takes positional a
 ### HTML output
 
 ```html
-<input id="csrf-crumb" type="hidden" name="CSRFToken" value="d29b28a9-4670-4e56-8a71-678a1bc9a492">
+<input
+  id="csrf-crumb"
+  type="hidden"
+  name="CSRFToken"
+  value="d29b28a9-4670-4e56-8a71-678a1bc9a492"
+/>
 ```
 
 ---
 
 ## Macro arguments
 
-| Argument | Type | Default | Description |
-| --- | --- | --- | --- |
-| `token` | `string` | *(required)* | The CSRF token value generated for the active session. |
-| `id` | `string` | `"csrf-crumb"` | The HTML element ID attribute for the input element. |
+| Argument | Type     | Default        | Description                                            |
+| -------- | -------- | -------------- | ------------------------------------------------------ |
+| `token`  | `string` | _(required)_   | The CSRF token value generated for the active session. |
+| `id`     | `string` | `"csrf-crumb"` | The HTML element ID attribute for the input element.   |
 
 ---
 
@@ -57,5 +62,10 @@ Unlike components accepting an options object, `wrcCsrfField` takes positional a
 Renders:
 
 ```html
-<input id="custom-form-csrf" type="hidden" name="CSRFToken" value="d29b28a9-4670-4e56-8a71-678a1bc9a492">
+<input
+  id="custom-form-csrf"
+  type="hidden"
+  name="CSRFToken"
+  value="d29b28a9-4670-4e56-8a71-678a1bc9a492"
+/>
 ```

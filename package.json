@@ -15,10 +15,21 @@
     "example:css": "node examples/scripts/build-css.js",
     "example:start": "node examples/src/index.js",
     "example:test": "vitest run --config examples/vitest.config.js",
+    "docs:build": "node scripts/build-docs.js",
     "release-notes": "./scripts/generate-release-notes.sh",
     "release-notes:preview": "./scripts/generate-release-notes.sh --preview",
     "release-notes:bump": "node scripts/detect-bump.js --bump",
-    "release-notes:next-version": "node scripts/detect-bump.js --next-version"
+    "release-notes:next-version": "node scripts/detect-bump.js --next-version",
+    "format": "prettier --write \"**/*.{js,cjs,md,json,config.js,test.js}\"",
+    "format:check": "prettier --check \"**/*.{js,cjs,md,json,config.js,test.js}\"",
+    "lint": "npm run lint:js && npm run lint:scss",
+    "lint:js": "eslint .",
+    "lint:js:fix": "eslint . --fix",
+    "lint:scss": "stylelint \"dist/**/*.scss\" \"docs/assets/scss/**/*.scss\" --cache --cache-location .cache/stylelint --cache-strategy content --color --ignore-path .gitignore",
+    "security-audit": "npm audit --audit-level=critical",
+    "git:pre-commit-hook": "npm run security-audit && npm run format:check && npm run lint && npm test",
+    "prepare": "npm run setup:husky",
+    "setup:husky": "node -e \"try { (await import('husky')).default() } catch (e) { if (e.code !== 'ERR_MODULE_NOT_FOUND') throw e }\" --input-type module"
   },
   "imports": {
     "#test-helpers/*": "./tests/helpers/*"
@@ -32,11 +43,17 @@
   "devDependencies": {
     "@vitest/coverage-v8": "4.1.11",
     "cheerio": "1.2.0",
+    "eslint": "9.39.4",
     "git-cliff": "^2.14.2",
     "govuk-frontend": "6.3.0",
+    "husky": "9.1.7",
     "lodash": "4.18.1",
+    "neostandard": "0.12.1",
     "nunjucks": "3.2.4",
+    "prettier": "3.8.3",
     "sass-embedded": "1.100.0",
+    "stylelint": "16.26.1",
+    "stylelint-config-gds": "2.0.0",
     "vite": "8.0.16",
     "vitest": "4.1.11"
   }

@@ -77,16 +77,28 @@ describe('git-cliff release notes configuration', () => {
     expect(fixesIndex).toBeGreaterThan(featuresIndex)
 
     expect(output).toContain('Unreleased changes since [v0.1.0]')
-    expect(output).toContain('*(tabs)* Add tabs list https://eaflood.atlassian.net/browse/AMCR-678')
+    expect(output).toContain(
+      '*(tabs)* Add tabs list https://eaflood.atlassian.net/browse/AMCR-678'
+    )
     expect(output).toContain('[**breaking**] Rename wrc prefix')
-    expect(output).toContain('Resolve subnav styling https://eaflood.atlassian.net/browse/AMCR-679')
-    expect(output).not.toContain('wip stuff without conventional prefix or ticket')
+    expect(output).toContain(
+      'Resolve subnav styling https://eaflood.atlassian.net/browse/AMCR-679'
+    )
+    expect(output).not.toContain(
+      'wip stuff without conventional prefix or ticket'
+    )
 
-    const completedSection = output.split('## ✅ Completed Tickets')[1].split('## 🎫 Related Tickets')[0]
+    const completedSection = output
+      .split('## ✅ Completed Tickets')[1]
+      .split('## 🎫 Related Tickets')[0]
     const relatedSection = output.split('## 🎫 Related Tickets')[1]
-    expect(completedSection).toContain('https://eaflood.atlassian.net/browse/AMCR-678')
+    expect(completedSection).toContain(
+      'https://eaflood.atlassian.net/browse/AMCR-678'
+    )
     expect(completedSection).not.toContain('AMCR-679')
-    expect(relatedSection).toContain('https://eaflood.atlassian.net/browse/AMCR-679')
+    expect(relatedSection).toContain(
+      'https://eaflood.atlassian.net/browse/AMCR-679'
+    )
     expect(relatedSection).not.toContain('AMCR-678')
   })
 
@@ -98,7 +110,9 @@ describe('git-cliff release notes configuration', () => {
       cwd: dir,
       encoding: 'utf8'
     })
-    expect(taggedOutput).toContain('# Release notes for Waste Regulator Components Frontend')
+    expect(taggedOutput).toContain(
+      '# Release notes for Waste Regulator Components Frontend'
+    )
     expect(taggedOutput).toContain('## [1.0.0] - ')
     expect(taggedOutput).not.toContain('Unreleased changes since')
     expect(taggedOutput).toContain('## 🚀 Features')

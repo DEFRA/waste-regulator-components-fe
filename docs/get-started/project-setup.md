@@ -38,11 +38,11 @@ const nunjucksEnvironment = nunjucks.configure(
 
 Several Defra components rely on standard internationalisation and routing helpers registered in your Nunjucks environment or view context:
 
-| Helper / Context key | Type | Description |
-| --- | --- | --- |
-| `t(locale, key, params)` | Function | Global translation function resolving locale strings from dictionaries. |
-| `localeUrl(path)` | Function | Helper that prefixes or appends active locale and proxy route prefix to URLs. |
-| `locale` | String | Active locale identifier (`'en'` or `'cy'`, defaults to `'en'`). |
+| Helper / Context key     | Type     | Description                                                                   |
+| ------------------------ | -------- | ----------------------------------------------------------------------------- |
+| `t(locale, key, params)` | Function | Global translation function resolving locale strings from dictionaries.       |
+| `localeUrl(path)`        | Function | Helper that prefixes or appends active locale and proxy route prefix to URLs. |
+| `locale`                 | String   | Active locale identifier (`'en'` or `'cy'`, defaults to `'en'`).              |
 
 ---
 
@@ -54,7 +54,7 @@ The Defra header, footer, and service navigation components use `@use "variables
 
 ```scss
 // src/client/stylesheets/variables/_colours.scss
-@use "sass:color";
+@use 'sass:color';
 
 $defra-internal-brand: #00a33b;
 $defra-internal-footer-link: #3b3b3b;
@@ -73,13 +73,13 @@ In your main `application.scss`, import the `defra-internal-frontend` component 
 
 ```scss
 // src/client/stylesheets/application.scss
-@use "govuk-frontend";
-@use "defra-internal-frontend/dist/components" as *;
+@use 'govuk-frontend';
+@use 'defra-internal-frontend/dist/components' as *;
 
-@use "variables";
-@use "helpers";
-@use "core";
-@use "components";
+@use 'variables';
+@use 'helpers';
+@use 'core';
+@use 'components';
 
 :root {
   --govuk-brand-colour: #00a33b;
@@ -89,11 +89,12 @@ In your main `application.scss`, import the `defra-internal-frontend` component 
 
 > [!TIP]
 > If you only need specific components, you can import individual stylesheets instead:
+>
 > ```scss
-> @use "defra-internal-frontend/dist/components/header";
-> @use "defra-internal-frontend/dist/components/footer";
-> @use "defra-internal-frontend/dist/components/cookie-banner";
-> @use "defra-internal-frontend/dist/components/service-navigation";
+> @use 'defra-internal-frontend/dist/components/header';
+> @use 'defra-internal-frontend/dist/components/footer';
+> @use 'defra-internal-frontend/dist/components/cookie-banner';
+> @use 'defra-internal-frontend/dist/components/service-navigation';
 > ```
 
 ### Configure Sass compiler load paths
@@ -112,11 +113,7 @@ export default defineConfig({
       scss: {
         api: 'modern-compiler',
         importers: [new NodePackageImporter()],
-        loadPaths: [
-          '.',
-          'node_modules',
-          'src/client/stylesheets'
-        ],
+        loadPaths: ['.', 'node_modules', 'src/client/stylesheets'],
         quietDeps: true
       }
     }
@@ -159,8 +156,14 @@ export default defineConfig({
 import fs from 'node:fs'
 import path from 'node:path'
 
-const govukAssets = path.join(dirname, 'node_modules/govuk-frontend/dist/govuk/assets')
-const defraAssets = path.join(dirname, 'node_modules/defra-internal-frontend/dist/assets')
+const govukAssets = path.join(
+  dirname,
+  'node_modules/govuk-frontend/dist/govuk/assets'
+)
+const defraAssets = path.join(
+  dirname,
+  'node_modules/defra-internal-frontend/dist/assets'
+)
 const dest = path.join(dirname, 'src/client/static/assets')
 
 fs.cpSync(govukAssets, dest, {

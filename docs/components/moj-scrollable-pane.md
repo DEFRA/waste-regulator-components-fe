@@ -29,7 +29,12 @@ Including `dist/components/moj-scrollable-pane/_index.scss` applies normal text 
 ### Example usage
 
 ```html
-<div class="moj-scrollable-pane" role="region" aria-label="Registered organisations" tabindex="0">
+<div
+  class="moj-scrollable-pane"
+  role="region"
+  aria-label="Registered organisations"
+  tabindex="0"
+>
   <table class="govuk-table">
     <thead class="govuk-table__head">
       <tr class="govuk-table__row">
