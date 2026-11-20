@@ -168,6 +168,8 @@ The documentation site in [`docs/`](docs/index.md) uses the same Defra/GOV.UK st
 
   Compiles `docs/assets/scss/docs.scss` using the shared Defra/GOV.UK styles and copies `dist/wrc/assets/images/` into `docs/assets/images/`.
 
+See the [Running documentation locally guide](docs/running-locally.md) for full details on local previewing, port configuration, and asset builds.
+
 ## Components
 
 The following components are provided in `dist/wrc/components/`:

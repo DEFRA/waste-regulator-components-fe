@@ -1,7 +1,21 @@
+import crypto from 'node:crypto'
 import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { DEFAULT_ROOT_DIR, compileDesignSystemScss } from './sass-config.js'
+
+/**
+ * Writes a file atomically via a temporary sibling file so concurrent readers
+ * never observe a partially written or truncated file.
+ * @param {string} destPath
+ * @param {(tempPath: string) => void} writeTemp
+ */
+function writeFileAtomically(destPath, writeTemp) {
+  fs.mkdirSync(path.dirname(destPath), { recursive: true })
+  const tempPath = `${destPath}.${process.pid}.${crypto.randomUUID()}.tmp`
+  writeTemp(tempPath)
+  fs.renameSync(tempPath, destPath)
+}
 
 export function buildDocsStyles({
   rootDir = DEFAULT_ROOT_DIR,
@@ -15,8 +29,9 @@ export function buildDocsStyles({
     extraLoadPaths: [path.dirname(scssPath)]
   })
 
-  fs.mkdirSync(path.dirname(outputCssPath), { recursive: true })
-  fs.writeFileSync(outputCssPath, css)
+  writeFileAtomically(outputCssPath, (tempPath) => {
+    fs.writeFileSync(tempPath, css)
+  })
   return css
 }
 
@@ -34,10 +49,9 @@ export function copyDocsImages({
     .sort()
 
   for (const fileName of copied) {
-    fs.copyFileSync(
-      path.join(srcImagesDir, fileName),
-      path.join(destImagesDir, fileName)
-    )
+    writeFileAtomically(path.join(destImagesDir, fileName), (tempPath) => {
+      fs.copyFileSync(path.join(srcImagesDir, fileName), tempPath)
+    })
   }
 
   return copied

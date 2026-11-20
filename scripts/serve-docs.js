@@ -156,7 +156,11 @@ export async function createDocsServer(options = {}) {
   const host = options.host ?? 'localhost'
 
   if (options.buildAssets !== false) {
-    buildDocs({ rootDir })
+    buildDocs({
+      rootDir,
+      outputCssPath: path.join(docsDir, 'assets/css/docs.css'),
+      destImagesDir: path.join(docsDir, 'assets/images')
+    })
   }
 
   const server = Hapi.server({ port, host })

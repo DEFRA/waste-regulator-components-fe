@@ -179,6 +179,7 @@ describe('Documentation local server', () => {
     ).toBe('Home')
     expect(homeRes.payload).toContain('href="./get-started/installation.html"')
     expect(homeRes.payload).toContain('href="./components/"')
+    expect(homeRes.payload).toContain('href="./running-locally.html"')
 
     const headerRes = await server.inject({
       method: 'GET',
@@ -197,6 +198,19 @@ describe('Documentation local server', () => {
         .trim()
     ).toBe('Header')
     expect(headerRes.payload).toContain('wrcHeader')
+
+    const runningLocallyRes = await server.inject({
+      method: 'GET',
+      url: '/running-locally.html'
+    })
+    expect(runningLocallyRes.statusCode).toBe(200)
+    const $runningLocally = cheerio.load(runningLocallyRes.payload)
+    expect(
+      $runningLocally('.wrc-docs-sidebar__link--current[aria-current="page"]')
+        .text()
+        .trim()
+    ).toBe('Running documentation locally')
+    expect(runningLocallyRes.payload).toContain('npm run docs:start')
 
     const redirectRes = await server.inject({
       method: 'GET',

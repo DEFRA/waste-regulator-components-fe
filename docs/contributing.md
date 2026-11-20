@@ -28,17 +28,7 @@ Husky also runs `npm run git:pre-commit-hook` (`security-audit`, `format:check`,
 
 ### Previewing documentation locally
 
-Serve the documentation site locally at `http://localhost:1999` without requiring Ruby or Jekyll:
-
-```bash
-npm run docs:start
-```
-
-This builds the documentation assets and starts a local server on port `1999` (set `PORT` to override, e.g. `PORT=8080 npm run docs:start`). To build only `docs/assets/css/docs.css` and copy `dist/wrc/assets/images/` without starting the server, run:
-
-```bash
-npm run docs:build
-```
+See the [Running documentation locally](./running-locally.md) guide for prerequisites, starting the local server (`npm run docs:start`), overriding the port, and building documentation assets (`npm run docs:build`).
 
 ---
 
