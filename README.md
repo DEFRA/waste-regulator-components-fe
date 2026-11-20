@@ -12,6 +12,7 @@ See [live examples of components](docs/components/index.md), explore the [exampl
   - [Package layout](#package-layout)
   - [Setting up your project](#setting-up-your-project)
 - [Example application](#example-application)
+- [Documentation](#documentation)
 - [Components](#components)
 - [Browser and assistive technology support](#browser-and-assistive-technology-support)
 - [Accessibility](#accessibility)
@@ -147,6 +148,26 @@ We provide a complete reference application in [`examples/`](examples/README.md)
 
 See the [Example application guide](examples/README.md) for architecture details, route handlers, and testing patterns.
 
+## Documentation
+
+The documentation site in [`docs/`](docs/index.md) uses the same Defra/GOV.UK styles and layouts as the example application:
+
+- **Start the documentation site locally** (no Ruby or Jekyll installation required):
+
+  ```bash
+  npm run docs:start
+  ```
+
+  This builds the documentation CSS and image assets and serves the site at `http://localhost:1999` (set `PORT` to override, e.g. `PORT=8080 npm run docs:start`).
+
+- **Build documentation assets only**:
+
+  ```bash
+  npm run docs:build
+  ```
+
+  Compiles `docs/assets/scss/docs.scss` using the shared Defra/GOV.UK styles and copies `dist/wrc/assets/images/` into `docs/assets/images/`.
+
 ## Components
 
 The following components are provided in `dist/wrc/components/`:
@@ -236,14 +257,6 @@ Husky runs `npm run git:pre-commit-hook` (`security-audit`, `format:check`, `lin
 ### SonarCloud scanning
 
 Pull requests and pushes to `main` run SonarCloud analysis in `.github/workflows/check-pull-request.yml` using `sonar-project.properties`. Ensure the `DEFRA_waste-regulator-components-fe` project exists in the `defra` organisation on SonarCloud and that the `WASTE_PACKAGING_SONAR_TOKEN` secret is available to this repository.
-
-### Building documentation assets
-
-Compile `docs/assets/scss/docs.scss` using the shared Defra/GOV.UK styles and copy `dist/wrc/assets/images/` into `docs/assets/images/`:
-
-```bash
-npm run docs:build
-```
 
 ## Contributing
 

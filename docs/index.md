@@ -55,4 +55,4 @@ Components are reusable user interface elements created specifically for Defra i
 
 `defra-internal-frontend` is maintained by the Defra Developer Enablement team. If you find a bug, need help, or want to contribute a new component, open an issue or pull request in the repository.
 
-Read the [Contributing and semantic commits guide](./contributing.md) for local checks, commit conventions, and the automated release process.
+Read the [Contributing and semantic commits guide](./contributing.md) for local checks, commit conventions, and the automated release process. You can also preview this documentation site locally at `http://localhost:1999` with `npm run docs:start`.
