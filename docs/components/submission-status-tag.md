@@ -20,7 +20,7 @@ Use this component in summary cards, workflow histories, and data tables to indi
 ### Nunjucks macro import
 
 ```njk
-{% from "submission-status-tag/macro.njk" import wrcSubmissionStatusTag %}
+{% from "wrc/components/submission-status-tag/macro.njk" import wrcSubmissionStatusTag %}
 
 {{ wrcSubmissionStatusTag({
   status: "Accepted"
@@ -29,13 +29,13 @@ Use this component in summary cards, workflow histories, and data tables to indi
 
 ### Supported statuses and colors
 
-| Status Value | Tag Color Class | Rendered Label (EN) | Rendered Label (CY) |
-| --- | --- | --- | --- |
-| `"Pending"` | `govuk-tag--blue` | Pending | Ar y gweill |
-| `"Accepted"` | `govuk-tag--green` | Accepted | Wedi derbyn |
-| `"Cancelled"` | `govuk-tag--yellow` | Cancelled | Wedi canslo |
-| `"Not submitted"` | `govuk-tag--grey` | Not submitted | Heb ei gyflwyno |
-| *Other / Custom* | `govuk-tag--blue` | Custom status text | Custom status text |
+| Status Value      | Tag Color Class     | Rendered Label (EN) | Rendered Label (CY) |
+| ----------------- | ------------------- | ------------------- | ------------------- |
+| `"Pending"`       | `govuk-tag--blue`   | Pending             | Ar y gweill         |
+| `"Accepted"`      | `govuk-tag--green`  | Accepted            | Wedi derbyn         |
+| `"Cancelled"`     | `govuk-tag--yellow` | Cancelled           | Wedi canslo         |
+| `"Not submitted"` | `govuk-tag--grey`   | Not submitted       | Heb ei gyflwyno     |
+| _Other / Custom_  | `govuk-tag--blue`   | Custom status text  | Custom status text  |
 
 ### HTML output
 
@@ -47,7 +47,7 @@ Use this component in summary cards, workflow histories, and data tables to indi
 
 ## Macro options
 
-| Name | Type | Default | Description |
-| --- | --- | --- | --- |
+| Name     | Type     | Default     | Description                                                                               |
+| -------- | -------- | ----------- | ----------------------------------------------------------------------------------------- |
 | `status` | `string` | `undefined` | The status name (`"Pending"`, `"Accepted"`, `"Cancelled"`, `"Not submitted"`, or custom). |
-| `locale` | `string` | `"en"` | Locale code (`"en"` or `"cy"`) for translating standard status strings. |
+| `locale` | `string` | `"en"`      | Locale code (`"en"` or `"cy"`) for translating standard status strings.                   |

@@ -79,4 +79,3 @@ Components are reusable user interface elements designed specifically for Defra 
 
 - [**Tab panel**](./tab-panel.md)  
   Provides compact `16px` table styling (`.v3-compact-table`) and normal-weight `tbody th` headers.
-

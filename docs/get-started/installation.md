@@ -1,3 +1,8 @@
+---
+layout: default
+title: Installation
+---
+
 # Installation
 
 How to install `defra-internal-frontend` in your production project.
@@ -32,33 +37,35 @@ The package exports all compiled assets, Nunjucks macros, and Sass stylesheets o
 node_modules/defra-internal-frontend/
 └── dist/
     ├── index.scss
-    ├── assets/
-    │   └── images/
-    │       ├── apple-touch-icon.png
-    │       ├── favicon.ico
-    │       ├── favicon.svg
-    │       └── govuk-crest.svg
-    └── components/
-        ├── _index.scss
-        ├── button-group/
-        ├── csrf-field/
-        ├── cookie-banner/
-        ├── footer/
-        ├── header/
-        ├── service-header/
-        ├── google-analytics/
-        ├── heading/
-        ├── moj-scrollable-pane/
-        ├── notification-banner/
-        ├── organisation-link/
-        ├── pagination/
-        ├── subnavigation/
-        ├── search/
-        ├── service-navigation/
-        ├── sorting-column-header/
-        ├── status-tag/
-        ├── submission-status-tag/
-        └── tab-panel/
+    └── wrc/
+        ├── index.scss
+        ├── assets/
+        │   └── images/
+        │       ├── apple-touch-icon.png
+        │       ├── favicon.ico
+        │       ├── favicon.svg
+        │       └── govuk-crest.svg
+        └── components/
+            ├── _index.scss
+            ├── button-group/
+            ├── csrf-field/
+            ├── cookie-banner/
+            ├── footer/
+            ├── header/
+            ├── service-header/
+            ├── google-analytics/
+            ├── heading/
+            ├── moj-scrollable-pane/
+            ├── notification-banner/
+            ├── organisation-link/
+            ├── pagination/
+            ├── subnavigation/
+            ├── search/
+            ├── sorting-column-header/
+            ├── status-tag/
+            ├── submission-status-tag/
+            ├── tab-panel/
+            └── tabs-list/
 ```
 
 ---

@@ -17,7 +17,7 @@ Use this stylesheet when placing a POST action `<form>` (such as a submit or can
 
 ## How it works
 
-GOV.UK Frontend's `.govuk-button-group` expects buttons and links to be direct flex children. Wrapping a button inside a `<form>` normally breaks flex alignment. Including `dist/components/button-group/_index.scss` applies:
+GOV.UK Frontend's `.govuk-button-group` expects buttons and links to be direct flex children. Wrapping a button inside a `<form>` normally breaks flex alignment. Including `dist/wrc/components/button-group/_index.scss` applies:
 
 ```scss
 .govuk-button-group > form {
@@ -43,4 +43,4 @@ GOV.UK Frontend's `.govuk-button-group` expects buttons and links to be direct f
 
 ## Stylesheet import
 
-Included automatically via `dist/components/_index.scss` (or imported individually via `@use "dist/components/button-group";`).
+Included automatically via `dist/wrc/components/_index.scss` (or imported individually via `@use "dist/wrc/components/button-group";`).

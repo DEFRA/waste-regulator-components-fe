@@ -17,7 +17,7 @@ Use this component with any `<div class="moj-scrollable-pane">` wrapper around `
 
 ## How it works
 
-Including `dist/components/moj-scrollable-pane/_index.scss` applies normal text wrapping inside scrollable table regions:
+Including `dist/wrc/components/moj-scrollable-pane/_index.scss` applies normal text wrapping inside scrollable table regions:
 
 ```scss
 .moj-scrollable-pane .govuk-table__header,
@@ -29,7 +29,12 @@ Including `dist/components/moj-scrollable-pane/_index.scss` applies normal text 
 ### Example usage
 
 ```html
-<div class="moj-scrollable-pane" role="region" aria-label="Registered organisations" tabindex="0">
+<div
+  class="moj-scrollable-pane"
+  role="region"
+  aria-label="Registered organisations"
+  tabindex="0"
+>
   <table class="govuk-table">
     <thead class="govuk-table__head">
       <tr class="govuk-table__row">
@@ -51,4 +56,4 @@ Including `dist/components/moj-scrollable-pane/_index.scss` applies normal text 
 
 ## Stylesheet import
 
-Included automatically via `dist/components/_index.scss` (or imported individually via `@use "dist/components/moj-scrollable-pane";`).
+Included automatically via `dist/wrc/components/_index.scss` (or imported individually via `@use "dist/wrc/components/moj-scrollable-pane";`).

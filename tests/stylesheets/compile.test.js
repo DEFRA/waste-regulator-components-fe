@@ -72,18 +72,20 @@ describe('Component stylesheets', () => {
   })
 
   test.each([
-    ['components aggregate', 'dist/components'],
-    ['button-group', 'dist/components/button-group'],
-    ['cookie-banner', 'dist/components/cookie-banner'],
-    ['footer', 'dist/components/footer'],
-    ['header', 'dist/components/header'],
-    ['heading', 'dist/components/heading'],
-    ['moj-scrollable-pane', 'dist/components/moj-scrollable-pane'],
-    ['notification-banner', 'dist/components/notification-banner'],
-    ['subnavigation', 'dist/components/subnavigation'],
-    ['service-navigation', 'dist/components/service-navigation'],
-    ['sorting-column-header', 'dist/components/sorting-column-header'],
-    ['tab-panel', 'dist/components/tab-panel']
+    ['root entry (dist/index)', 'dist/index'],
+    ['namespace entry (dist/wrc/index)', 'dist/wrc/index'],
+    ['components aggregate', 'dist/wrc/components'],
+    ['button-group', 'dist/wrc/components/button-group'],
+    ['cookie-banner', 'dist/wrc/components/cookie-banner'],
+    ['footer', 'dist/wrc/components/footer'],
+    ['header', 'dist/wrc/components/header'],
+    ['heading', 'dist/wrc/components/heading'],
+    ['moj-scrollable-pane', 'dist/wrc/components/moj-scrollable-pane'],
+    ['notification-banner', 'dist/wrc/components/notification-banner'],
+    ['subnavigation', 'dist/wrc/components/subnavigation'],
+    ['service-header', 'dist/wrc/components/service-header'],
+    ['sorting-column-header', 'dist/wrc/components/sorting-column-header'],
+    ['tab-panel', 'dist/wrc/components/tab-panel']
   ])('Should compile %s stylesheet individually', (_name, importPath) => {
     const result = sass.compileString(
       `

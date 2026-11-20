@@ -40,11 +40,10 @@ function initTempGitRepo() {
 }
 
 function makeCommit(cwd, message) {
-  execFileSync(
-    gitBin,
-    ['commit', '--allow-empty', '-m', message],
-    { cwd, stdio: 'ignore' }
-  )
+  execFileSync(gitBin, ['commit', '--allow-empty', '-m', message], {
+    cwd,
+    stdio: 'ignore'
+  })
 }
 
 function createBufferStdout() {

@@ -10,7 +10,7 @@ const viewsDir = path.resolve(dirname, '../views')
 export function createNunjucksEnvironment(customPaths = []) {
   const templatePaths = [
     viewsDir,
-    path.join(rootDir, 'dist/components'),
+    path.join(rootDir, 'dist'),
     path.join(rootDir, 'node_modules/govuk-frontend/dist'),
     ...customPaths
   ]
@@ -47,4 +47,3 @@ export function getNunjucksVisionConfig(env = createNunjucksEnvironment()) {
     path: 'views'
   }
 }
-

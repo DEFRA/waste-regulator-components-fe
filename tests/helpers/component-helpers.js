@@ -15,10 +15,7 @@ const govukFrontendDist = path.join(
 )
 
 export const nunjucksTestEnv = nunjucks.configure(
-  [
-    govukFrontendDist,
-    path.normalize(path.resolve(dirname, '../../dist/components'))
-  ],
+  [govukFrontendDist, path.normalize(path.resolve(dirname, '../../dist'))],
   {
     trimBlocks: true,
     lstripBlocks: true
@@ -37,7 +34,7 @@ export function renderComponent(
   callBlock,
   options = {}
 ) {
-  const macroPath = `${componentName}/macro.njk`
+  const macroPath = `wrc/components/${componentName}/macro.njk`
   const macroName =
     options.macroName ||
     `wrc${

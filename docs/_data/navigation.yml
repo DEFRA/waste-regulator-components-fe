@@ -1,0 +1,78 @@
+primary:
+  - title: Home
+    url: /
+  - title: Get started
+    url: /get-started/
+    section_prefix: /get-started/
+  - title: Components
+    url: /components/
+    section_prefix: /components/
+  - title: Contributing
+    url: /contributing.html
+
+sections:
+  - heading: Get started
+    items:
+      - title: Overview
+        url: /get-started/
+      - title: Installation
+        url: /get-started/installation.html
+      - title: Project setup
+        url: /get-started/project-setup.html
+      - title: Page template
+        url: /get-started/page-template.html
+
+  - heading: Layout and Chrome
+    items:
+      - title: Header
+        url: /components/header.html
+      - title: Service header
+        url: /components/service-header.html
+      - title: Cookie banner
+        url: /components/cookie-banner.html
+      - title: Footer
+        url: /components/footer.html
+      - title: Google Analytics
+        url: /components/google-analytics.html
+
+  - heading: Typography and Forms
+    items:
+      - title: Page heading
+        url: /components/heading.html
+      - title: CSRF field
+        url: /components/csrf-field.html
+
+  - heading: Data and Navigation
+    items:
+      - title: Search
+        url: /components/search.html
+      - title: Subnavigation
+        url: /components/subnavigation.html
+      - title: Tabs list
+        url: /components/tabs-list.html
+      - title: Sorting column header
+        url: /components/sorting-column-header.html
+      - title: Pagination
+        url: /components/pagination.html
+      - title: Status tag
+        url: /components/status-tag.html
+      - title: Submission status tag
+        url: /components/submission-status-tag.html
+      - title: Organisation link
+        url: /components/organisation-link.html
+
+  - heading: Stylesheet Components
+    items:
+      - title: Button group
+        url: /components/button-group.html
+      - title: Scrollable pane
+        url: /components/moj-scrollable-pane.html
+      - title: Notification banner
+        url: /components/notification-banner.html
+      - title: Tab panel
+        url: /components/tab-panel.html
+
+  - heading: Contributing
+    items:
+      - title: Contributing & semantic commits
+        url: /contributing.html

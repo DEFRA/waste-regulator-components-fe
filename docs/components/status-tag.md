@@ -20,7 +20,7 @@ Use this component to show quick visual indicators for binary flags such as subm
 ### Nunjucks macro import
 
 ```njk
-{% from "status-tag/macro.njk" import wrcStatusTag %}
+{% from "wrc/components/status-tag/macro.njk" import wrcStatusTag %}
 
 {# Positive boolean state #}
 {{ wrcStatusTag({
@@ -44,10 +44,14 @@ Use this component to show quick visual indicators for binary flags such as subm
 
 ```html
 <!-- value: true -->
-<strong class="govuk-tag govuk-tag--green govuk-!-font-size-16">Complete</strong>
+<strong class="govuk-tag govuk-tag--green govuk-!-font-size-16"
+  >Complete</strong
+>
 
 <!-- value: false -->
-<strong class="govuk-tag govuk-tag--red govuk-!-font-size-16">Action required</strong>
+<strong class="govuk-tag govuk-tag--red govuk-!-font-size-16"
+  >Action required</strong
+>
 
 <!-- value: null -->
 No data
@@ -57,11 +61,11 @@ No data
 
 ## Macro options
 
-| Name | Type | Default | Description |
-| --- | --- | --- | --- |
-| `value` | `boolean \| null \| undefined` | `undefined` | The boolean value to evaluate. |
-| `trueText` | `string` | `undefined` | Text displayed in a green tag (`govuk-tag--green`) when `value` is truthy. |
-| `falseText` | `string` | `undefined` | Text displayed in a red tag (`govuk-tag--red`) when `value` is falsy (but not `null`). |
-| `noDataText` | `string` | `"No data"` | Text displayed when `value == null`. Defaults to translated `"No data"` string. |
-| `fontSize` | `string` | `"govuk-!-font-size-16"` | Font size class applied to the tag element. |
-| `locale` | `string` | `"en"` | Locale passed to translation function if `noDataText` is omitted. |
+| Name         | Type                           | Default                  | Description                                                                            |
+| ------------ | ------------------------------ | ------------------------ | -------------------------------------------------------------------------------------- |
+| `value`      | `boolean \| null \| undefined` | `undefined`              | The boolean value to evaluate.                                                         |
+| `trueText`   | `string`                       | `undefined`              | Text displayed in a green tag (`govuk-tag--green`) when `value` is truthy.             |
+| `falseText`  | `string`                       | `undefined`              | Text displayed in a red tag (`govuk-tag--red`) when `value` is falsy (but not `null`). |
+| `noDataText` | `string`                       | `"No data"`              | Text displayed when `value == null`. Defaults to translated `"No data"` string.        |
+| `fontSize`   | `string`                       | `"govuk-!-font-size-16"` | Font size class applied to the tag element.                                            |
+| `locale`     | `string`                       | `"en"`                   | Locale passed to translation function if `noDataText` is omitted.                      |

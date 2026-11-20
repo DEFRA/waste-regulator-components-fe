@@ -3,7 +3,10 @@ import { nunjucksTestEnv } from '#test-helpers/component-helpers.js'
 
 function renderPagination(pagination, locale = 'en') {
   return load(
-    nunjucksTestEnv.render('pagination/template.njk', { pagination, locale })
+    nunjucksTestEnv.render('wrc/components/pagination/template.njk', {
+      pagination,
+      locale
+    })
   )
 }
 
@@ -193,11 +196,11 @@ describe('Pagination component', () => {
     expect($('nav.govuk-pagination').attr('aria-label')).toBe(
       'Tudalennau canlyniadau'
     )
-    expect($('.govuk-pagination__prev .govuk-pagination__link-title').text().trim()).toBe(
-      'Blaenorol'
-    )
-    expect($('.govuk-pagination__next .govuk-pagination__link-title').text().trim()).toBe(
-      'Nesaf'
-    )
+    expect(
+      $('.govuk-pagination__prev .govuk-pagination__link-title').text().trim()
+    ).toBe('Blaenorol')
+    expect(
+      $('.govuk-pagination__next .govuk-pagination__link-title').text().trim()
+    ).toBe('Nesaf')
   })
 })

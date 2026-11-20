@@ -24,6 +24,8 @@ describe('Component helpers', () => {
     expect(nunjucksTestEnv.getGlobal('govukRebrand')).toBe(true)
     expect(typeof nunjucksTestEnv.getGlobal('t')).toBe('function')
     expect(typeof nunjucksTestEnv.getGlobal('localeUrl')).toBe('function')
-    expect(nunjucksTestEnv.getGlobal('localeUrl')('/test-path')).toBe('/test-path')
+    expect(nunjucksTestEnv.getGlobal('localeUrl')('/test-path')).toBe(
+      '/test-path'
+    )
   })
 })

@@ -63,7 +63,8 @@ export const homeRoutes = [
       const searchTerm = (request.query.search ?? '').trim()
       const currentPage = Math.max(1, parseInt(request.query.page, 10) || 1)
       const totalPages = 3
-      const allowGoogleAnalytics = request.state?.analytics_consent === 'granted'
+      const allowGoogleAnalytics =
+        request.state?.analytics_consent === 'granted'
       const hideCookieBanner = request.state?.hide_cookie_banner === 'true'
 
       const filteredRecords = mockRecords.filter((record) => {

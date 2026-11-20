@@ -114,10 +114,16 @@ describe('Footer Component', () => {
       })
 
       expect($('.govuk-visually-hidden').text()).toBe('Custom Support Links')
-      expect($('.govuk-footer__licence-description').text()).toContain('Prefix OGL')
+      expect($('.govuk-footer__licence-description').text()).toContain(
+        'Prefix OGL'
+      )
       expect($('.govuk-footer__licence-description a').text()).toBe('Link OGL')
-      expect($('.govuk-footer__licence-description').text()).toContain('Suffix OGL')
-      expect($('.govuk-footer__copyright-logo').text()).toContain('Custom Copyright')
+      expect($('.govuk-footer__licence-description').text()).toContain(
+        'Suffix OGL'
+      )
+      expect($('.govuk-footer__copyright-logo').text()).toContain(
+        'Custom Copyright'
+      )
     })
   })
 })

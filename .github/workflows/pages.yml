@@ -6,6 +6,9 @@ on:
       - main
     paths:
       - 'docs/**'
+      - 'dist/**'
+      - 'scripts/build-docs.js'
+      - 'scripts/sass-config.js'
       - '.github/workflows/pages.yml'
   workflow_dispatch:
 
@@ -25,6 +28,17 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Build documentation assets
+        run: |
+          npm ci --ignore-scripts
+          npm run docs:build
 
       - name: Setup Pages
         uses: actions/configure-pages@v5

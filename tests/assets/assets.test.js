@@ -3,7 +3,7 @@ import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 const dirname = path.dirname(fileURLToPath(import.meta.url))
-const imagesDir = path.resolve(dirname, '../../dist/assets/images')
+const imagesDir = path.resolve(dirname, '../../dist/wrc/assets/images')
 
 describe('Static assets', () => {
   const expectedImages = [
@@ -13,13 +13,16 @@ describe('Static assets', () => {
     'govuk-crest.svg'
   ]
 
-  test.each(expectedImages)('Image asset %s should exist and not be empty', (fileName) => {
-    const filePath = path.join(imagesDir, fileName)
-    expect(fs.existsSync(filePath)).toBe(true)
+  test.each(expectedImages)(
+    'Image asset %s should exist and not be empty',
+    (fileName) => {
+      const filePath = path.join(imagesDir, fileName)
+      expect(fs.existsSync(filePath)).toBe(true)
 
-    const stats = fs.statSync(filePath)
-    expect(stats.size).toBeGreaterThan(0)
-  })
+      const stats = fs.statSync(filePath)
+      expect(stats.size).toBeGreaterThan(0)
+    }
+  )
 
   test('SVG images should contain valid SVG markup', () => {
     for (const svgFile of ['favicon.svg', 'govuk-crest.svg']) {

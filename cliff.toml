@@ -1,5 +1,7 @@
 # git-cliff ~ configuration file
 # https://git-cliff.org/docs/configuration
+# Semantic commit & release note workflow inspired by Tim Abell:
+# https://0x5.uk/2026/03/12/automatic-release-notes-with-semantic-commits-and-git-cliff/
 
 [changelog]
 # A Tera template to be rendered for each release in the changelog.

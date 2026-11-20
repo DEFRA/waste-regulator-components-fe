@@ -17,7 +17,7 @@ Apply `.v3-compact-table` to dense regulatory data tables (such as Certificates 
 
 ## How it works
 
-Including `dist/components/tab-panel/_index.scss` applies:
+Including `dist/wrc/components/tab-panel/_index.scss` applies:
 
 - `font-size: 16px` on `.v3-compact-table thead` and `.v3-compact-table tbody`.
 - `font-weight: normal` on `.v3-compact-table tbody th` and `.govuk-table tbody th`.
@@ -45,4 +45,4 @@ Including `dist/components/tab-panel/_index.scss` applies:
 
 ## Stylesheet import
 
-Included automatically via `dist/components/_index.scss` (or imported individually via `@use "dist/components/tab-panel";`).
+Included automatically via `dist/wrc/components/_index.scss` (or imported individually via `@use "dist/wrc/components/tab-panel";`).

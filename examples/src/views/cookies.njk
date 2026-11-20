@@ -1,7 +1,7 @@
 {% extends "layouts/page.njk" %}
 
-{% from "heading/macro.njk" import wrcHeading %}
-{% from "csrf-field/macro.njk" import wrcCsrfField %}
+{% from "wrc/components/heading/macro.njk" import wrcHeading %}
+{% from "wrc/components/csrf-field/macro.njk" import wrcCsrfField %}
 
 {% block content %}
   {{ wrcHeading({
