@@ -2,6 +2,7 @@
   "name": "defra-internal-frontend",
   "version": "0.1.0",
   "description": "Reusable Nunjucks components, Sass stylesheets, and static assets for Defra internal services",
+  "sass": "dist/wrc/index.scss",
   "type": "module",
   "files": [
     "dist"

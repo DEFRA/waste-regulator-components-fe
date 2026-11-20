@@ -20,7 +20,7 @@ Use this component in table rows, list items, and search results where an organi
 ### Nunjucks macro import
 
 ```njk
-{% from "organisation-link/macro.njk" import wrcOrganisationLink %}
+{% from "wrc/components/organisation-link/macro.njk" import wrcOrganisationLink %}
 
 {# Link to organisation overview (item.id is null) #}
 {{ wrcOrganisationLink({

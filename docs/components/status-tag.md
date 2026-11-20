@@ -20,7 +20,7 @@ Use this component to show quick visual indicators for binary flags such as subm
 ### Nunjucks macro import
 
 ```njk
-{% from "status-tag/macro.njk" import wrcStatusTag %}
+{% from "wrc/components/status-tag/macro.njk" import wrcStatusTag %}
 
 {# Positive boolean state #}
 {{ wrcStatusTag({

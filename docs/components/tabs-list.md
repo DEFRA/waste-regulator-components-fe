@@ -20,7 +20,7 @@ Use this component inside a `<div class="govuk-tabs">` container when tabs navig
 ### Nunjucks macro import
 
 ```njk
-{% from "tabs-list/macro.njk" import wrcTabsList %}
+{% from "wrc/components/tabs-list/macro.njk" import wrcTabsList %}
 
 <div class="govuk-tabs">
   {{ wrcTabsList({

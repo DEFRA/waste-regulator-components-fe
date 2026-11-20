@@ -1,15 +1,15 @@
 {% extends "layouts/page.njk" %}
 
 {% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
-{% from "heading/macro.njk" import wrcHeading %}
-{% from "search/macro.njk" import wrcSearch %}
-{% from "subnavigation/macro.njk" import wrcSubnavigation %}
-{% from "tabs-list/macro.njk" import wrcTabsList %}
-{% from "sorting-column-header/macro.njk" import wrcSortingColumnHeader %}
-{% from "status-tag/macro.njk" import wrcStatusTag %}
-{% from "submission-status-tag/macro.njk" import wrcSubmissionStatusTag %}
-{% from "organisation-link/macro.njk" import wrcOrganisationLink %}
-{% from "csrf-field/macro.njk" import wrcCsrfField %}
+{% from "wrc/components/heading/macro.njk" import wrcHeading %}
+{% from "wrc/components/search/macro.njk" import wrcSearch %}
+{% from "wrc/components/subnavigation/macro.njk" import wrcSubnavigation %}
+{% from "wrc/components/tabs-list/macro.njk" import wrcTabsList %}
+{% from "wrc/components/sorting-column-header/macro.njk" import wrcSortingColumnHeader %}
+{% from "wrc/components/status-tag/macro.njk" import wrcStatusTag %}
+{% from "wrc/components/submission-status-tag/macro.njk" import wrcSubmissionStatusTag %}
+{% from "wrc/components/organisation-link/macro.njk" import wrcOrganisationLink %}
+{% from "wrc/components/csrf-field/macro.njk" import wrcCsrfField %}
 
 {% block content %}
   {{ wrcHeading({
@@ -161,7 +161,7 @@
         </table>
       </div>
 
-      {% include "pagination/template.njk" %}
+      {% include "wrc/components/pagination/template.njk" %}
 
       <div class="govuk-!-margin-top-8">
         <h2 class="govuk-heading-m">Test CSRF Field in Form Button Group</h2>

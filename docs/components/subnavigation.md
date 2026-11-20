@@ -20,7 +20,7 @@ Use this component above tabbed views or filtered datasets to switch between top
 ### Nunjucks macro import
 
 ```njk
-{% from "subnavigation/macro.njk" import wrcSubnavigation %}
+{% from "wrc/components/subnavigation/macro.njk" import wrcSubnavigation %}
 
 {{ wrcSubnavigation({
   ariaLabel: "Filter by producer type",
@@ -82,4 +82,4 @@ Use this component above tabbed views or filtered datasets to switch between top
 
 ## Styles
 
-This component includes `dist/components/subnavigation/_index.scss` (imported automatically via `dist/components/_index.scss`), which sets the active `.moj-sub-navigation__link[aria-current="page"]` colour using `--govuk-link-colour`.
+This component includes `dist/wrc/components/subnavigation/_index.scss` (imported automatically via `dist/wrc/components/_index.scss`), which sets the active `.moj-sub-navigation__link[aria-current="page"]` colour using `--govuk-link-colour`.

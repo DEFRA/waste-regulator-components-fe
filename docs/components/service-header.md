@@ -20,7 +20,7 @@ Use this component directly below the [Header](./header.md) on every page. It es
 ### Nunjucks macro import
 
 ```njk
-{% from "service-header/macro.njk" import wrcServiceHeader %}
+{% from "wrc/components/service-header/macro.njk" import wrcServiceHeader %}
 
 {{ wrcServiceHeader({
   serviceName: "pEPR: Regulators' Service",
@@ -60,5 +60,5 @@ Use this component directly below the [Header](./header.md) on every page. It es
 To import styles for this component individually:
 
 ```scss
-@use 'defra-internal-frontend/dist/components/service-navigation';
+@use 'defra-internal-frontend/dist/wrc/components/service-navigation';
 ```

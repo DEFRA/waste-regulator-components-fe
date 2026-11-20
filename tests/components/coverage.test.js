@@ -3,7 +3,7 @@ import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 const dirname = path.dirname(fileURLToPath(import.meta.url))
-const distComponentsDir = path.resolve(dirname, '../../dist/components')
+const distComponentsDir = path.resolve(dirname, '../../dist/wrc/components')
 const testsComponentsDir = path.resolve(dirname, '../../tests/components')
 
 describe('Component test coverage verification', () => {
@@ -34,7 +34,7 @@ describe('Component test coverage verification', () => {
     }
   )
 
-  test('All .njk and .scss files in dist/components should have corresponding tests', () => {
+  test('All .njk and .scss files in dist/wrc/components should have corresponding tests', () => {
     for (const comp of componentDirs) {
       const compPath = path.join(distComponentsDir, comp)
       const files = fs.readdirSync(compPath)

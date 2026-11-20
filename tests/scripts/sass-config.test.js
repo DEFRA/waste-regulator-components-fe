@@ -74,7 +74,7 @@ describe('Shared Sass configuration helper', () => {
   test('compileDesignSystemScss compiles govuk-frontend and dist components', () => {
     const defaultCss = compileDesignSystemScss(`
       @use "govuk-frontend" as *;
-      @use "dist/index" as *;
+      @use "dist/wrc/index" as *;
     `)
 
     expect(defaultCss).toContain('arial, sans-serif')
@@ -86,7 +86,7 @@ describe('Shared Sass configuration helper', () => {
     const relativeCss = compileDesignSystemScss(
       `
       @use "govuk-frontend" as *;
-      @use "dist/index" as *;
+      @use "dist/wrc/index" as *;
     `,
       { assetsPath: '../' }
     )

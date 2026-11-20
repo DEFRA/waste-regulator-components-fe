@@ -22,7 +22,7 @@ Include this macro inside any HTML `<form>` element that submits `POST`, `PUT`, 
 Unlike components accepting an options object, `wrcCsrfField` takes positional arguments `(token, id)`.
 
 ```njk
-{% from "csrf-field/macro.njk" import wrcCsrfField %}
+{% from "wrc/components/csrf-field/macro.njk" import wrcCsrfField %}
 
 <form action="/submit-data" method="post">
   {{ wrcCsrfField(csrfToken) }}

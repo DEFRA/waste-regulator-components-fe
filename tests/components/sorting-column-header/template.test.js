@@ -60,7 +60,7 @@ describe('Sorting Column Header Component', () => {
 
       const html = nunjucksTestEnv.renderString(
         `
-      {% from "sorting-column-header/macro.njk" import wrcSortingColumnHeader %}
+      {% from "wrc/components/sorting-column-header/macro.njk" import wrcSortingColumnHeader %}
       <table><tr>{{ wrcSortingColumnHeader(params) }}</tr></table>
     `,
         { params }
@@ -108,7 +108,7 @@ describe('Sorting Column Header Component', () => {
         }
       }
       const html = nunjucksTestEnv.renderString(
-        '{% from "sorting-column-header/macro.njk" import wrcSortingColumnHeader %}<table><tr>{{ wrcSortingColumnHeader(params) }}</tr></table>',
+        '{% from "wrc/components/sorting-column-header/macro.njk" import wrcSortingColumnHeader %}<table><tr>{{ wrcSortingColumnHeader(params) }}</tr></table>',
         { params }
       )
       return load(html)

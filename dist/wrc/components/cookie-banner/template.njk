@@ -1,5 +1,5 @@
 {% from "govuk/components/cookie-banner/macro.njk" import govukCookieBanner %}
-{% from "csrf-field/macro.njk" import wrcCsrfField %}
+{% from "wrc/components/csrf-field/macro.njk" import wrcCsrfField %}
 {% set locale = params.locale | default('en') %}
 {% set bannerActionUrl = params.bannerActionUrl | default('/cookies/banner') %}
 {% set hideBannerActionUrl = params.hideBannerActionUrl | default('/cookies/hide-banner') %}

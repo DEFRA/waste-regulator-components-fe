@@ -20,7 +20,7 @@ Use this component in summary cards, workflow histories, and data tables to indi
 ### Nunjucks macro import
 
 ```njk
-{% from "submission-status-tag/macro.njk" import wrcSubmissionStatusTag %}
+{% from "wrc/components/submission-status-tag/macro.njk" import wrcSubmissionStatusTag %}
 
 {{ wrcSubmissionStatusTag({
   status: "Accepted"

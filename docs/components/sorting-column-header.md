@@ -20,7 +20,7 @@ Use this component inside table header rows (`<thead><tr>...</tr></thead>`) when
 ### Nunjucks macro import
 
 ```njk
-{% from "sorting-column-header/macro.njk" import wrcSortingColumnHeader %}
+{% from "wrc/components/sorting-column-header/macro.njk" import wrcSortingColumnHeader %}
 
 {{ wrcSortingColumnHeader({
   columnName: "organisationName",

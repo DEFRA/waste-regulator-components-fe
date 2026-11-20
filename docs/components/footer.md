@@ -20,7 +20,7 @@ Use the Defra internal footer at the bottom of every page in internal Defra serv
 ### Nunjucks macro import
 
 ```njk
-{% from "footer/macro.njk" import wrcFooter %}
+{% from "wrc/components/footer/macro.njk" import wrcFooter %}
 
 {{ wrcFooter({
   meta: "Department for Environment, Food & Rural Affairs",

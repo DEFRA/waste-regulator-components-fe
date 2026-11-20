@@ -11,7 +11,7 @@ export function buildCss() {
   const css = compileDesignSystemScss(
     `
     @use 'govuk-frontend' as govuk;
-    @use 'dist/index' as defra;
+    @use 'dist/wrc/index' as defra;
   `,
     { rootDir }
   )

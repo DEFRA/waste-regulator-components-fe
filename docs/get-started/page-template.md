@@ -25,12 +25,12 @@ Save this layout as `src/server/common/templates/layouts/page.njk` in your proje
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 
 {# Import Defra Internal Frontend components #}
-{% from "heading/macro.njk" import wrcHeading %}
-{% from "header/macro.njk" import wrcHeader %}
-{% from "service-header/macro.njk" import wrcServiceHeader %}
-{% from "cookie-banner/macro.njk" import wrcCookieBanner %}
-{% from "footer/macro.njk" import wrcFooter %}
-{% from "google-analytics/macro.njk" import wrcGoogleAnalytics %}
+{% from "wrc/components/heading/macro.njk" import wrcHeading %}
+{% from "wrc/components/header/macro.njk" import wrcHeader %}
+{% from "wrc/components/service-header/macro.njk" import wrcServiceHeader %}
+{% from "wrc/components/cookie-banner/macro.njk" import wrcCookieBanner %}
+{% from "wrc/components/footer/macro.njk" import wrcFooter %}
+{% from "wrc/components/google-analytics/macro.njk" import wrcGoogleAnalytics %}
 
 {% block headIcons %}
   <link rel="icon" sizes="48x48" href="{{ assetPath }}/images/favicon.ico?v=2">

@@ -21,14 +21,10 @@ The pagination component is implemented as a Nunjucks template partial rather th
 
 ### Template include
 
-```njk
-{% include "defra-internal-frontend/components/pagination/template.njk" %}
-```
-
-Or when `node_modules/defra-internal-frontend/dist/components` is included in Nunjucks search paths:
+When `node_modules/defra-internal-frontend/dist` is included in your Nunjucks search paths:
 
 ```njk
-{% include "pagination/template.njk" %}
+{% include "wrc/components/pagination/template.njk" %}
 ```
 
 ### Context variables

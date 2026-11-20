@@ -1,6 +1,6 @@
 @use "govuk-frontend" as *;
 @use "variables" as *;
-@use "dist/index" as *;
+@use "dist/wrc/index" as *;
 
 :root {
   --govuk-brand-colour: #00a33b;

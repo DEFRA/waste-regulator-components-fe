@@ -20,7 +20,7 @@ Use this component above filtered tables or record lists where users need to sea
 ### Nunjucks macro import
 
 ```njk
-{% from "search/macro.njk" import wrcSearch %}
+{% from "wrc/components/search/macro.njk" import wrcSearch %}
 
 {{ wrcSearch({
   action: "/certificates-of-compliance",

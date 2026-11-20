@@ -11,7 +11,7 @@ Configure your Nunjucks view engine, Sass compiler, and asset bundler to use `de
 
 ## 1. Configure Nunjucks
 
-Add `node_modules/defra-internal-frontend/dist/components` to your Nunjucks template search paths alongside `govuk-frontend/dist`. This allows templates to import Defra components using standard paths (for example `{% from "header/macro.njk" import wrcHeader %}`).
+Add `node_modules/defra-internal-frontend/dist` to your Nunjucks template search paths alongside `govuk-frontend/dist`. This allows templates to import Defra components using namespaced paths matching GOV.UK Frontend (for example `{% from "wrc/components/header/macro.njk" import wrcHeader %}`).
 
 ```js
 // src/config/nunjucks/nunjucks.js
@@ -21,7 +21,7 @@ import nunjucks from 'nunjucks'
 const nunjucksEnvironment = nunjucks.configure(
   [
     'node_modules/govuk-frontend/dist',
-    'node_modules/defra-internal-frontend/dist/components',
+    'node_modules/defra-internal-frontend/dist',
     path.resolve(dirname, '../../server/common/templates'),
     path.resolve(dirname, '../../server/routes')
   ],
@@ -74,7 +74,7 @@ In your main `application.scss`, import the `defra-internal-frontend` component 
 ```scss
 // src/client/stylesheets/application.scss
 @use 'govuk-frontend';
-@use 'defra-internal-frontend/dist/components' as *;
+@use 'defra-internal-frontend/dist/wrc/components' as *;
 
 @use 'variables';
 @use 'helpers';
@@ -91,10 +91,10 @@ In your main `application.scss`, import the `defra-internal-frontend` component 
 > If you only need specific components, you can import individual stylesheets instead:
 >
 > ```scss
-> @use 'defra-internal-frontend/dist/components/header';
-> @use 'defra-internal-frontend/dist/components/footer';
-> @use 'defra-internal-frontend/dist/components/cookie-banner';
-> @use 'defra-internal-frontend/dist/components/service-navigation';
+> @use 'defra-internal-frontend/dist/wrc/components/header';
+> @use 'defra-internal-frontend/dist/wrc/components/footer';
+> @use 'defra-internal-frontend/dist/wrc/components/cookie-banner';
+> @use 'defra-internal-frontend/dist/wrc/components/service-navigation';
 > ```
 
 ### Configure Sass compiler load paths
@@ -148,7 +148,7 @@ export default defineConfig({
 
 ## 3. Copy static image assets
 
-`defra-internal-frontend` provides Defra favicons, `apple-touch-icon.png`, and `govuk-crest.svg` in `dist/assets/images/`. Copy these into your public assets folder alongside `govuk-frontend` assets.
+`defra-internal-frontend` provides Defra favicons, `apple-touch-icon.png`, and `govuk-crest.svg` in `dist/wrc/assets/images/`. Copy these into your public assets folder alongside `govuk-frontend` assets.
 
 #### Vite (`vite.config.js`)
 
@@ -162,7 +162,7 @@ const govukAssets = path.join(
 )
 const defraAssets = path.join(
   dirname,
-  'node_modules/defra-internal-frontend/dist/assets'
+  'node_modules/defra-internal-frontend/dist/wrc/assets'
 )
 const dest = path.join(dirname, 'src/client/static/assets')
 
@@ -189,7 +189,7 @@ new CopyPlugin({
       to: 'assets'
     },
     {
-      from: path.join(defraInternalFrontendPath, 'dist/assets'),
+      from: path.join(defraInternalFrontendPath, 'dist/wrc/assets'),
       to: 'assets',
       force: true
     }

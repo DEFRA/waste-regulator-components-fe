@@ -4,7 +4,7 @@ import { fileURLToPath } from 'node:url'
 const dirname = path.dirname(fileURLToPath(import.meta.url))
 const publicDir = path.resolve(dirname, '../public')
 const rootDir = path.resolve(dirname, '../../..')
-const defraAssetsDir = path.join(rootDir, 'dist/assets')
+const defraAssetsDir = path.join(rootDir, 'dist/wrc/assets')
 const govukAssetsDir = path.join(
   rootDir,
   'node_modules/govuk-frontend/dist/govuk/assets'

@@ -51,27 +51,27 @@ examples/
 
 ## Components demonstrated
 
-| Component                 | Macro / Template          | Usage in Example App                                                                           |
-| ------------------------- | ------------------------- | ---------------------------------------------------------------------------------------------- |
-| **Header**                | `wrcHeader`               | Rendered at the top of every page in `page.njk` with user account details.                     |
-| **Service header**        | `wrcServiceHeader`        | Navigation bar with "Environment Agency" regulator slot and English/Welsh toggle.              |
-| **Cookie banner**         | `wrcCookieBanner`         | Fixed cookie banner on `/` with POST actions to `/cookies/banner` and `/cookies/hide-banner`.  |
-| **Footer**                | `wrcFooter`               | Displays "Get help" contacts, support links, OGL v3.0 licence, and Crown copyright.            |
-| **Google Analytics**      | `wrcGoogleAnalytics`      | Injects Consent Mode v2 scripts in `<head>` and `<noscript>` iframe in `<body>`.               |
-| **Heading**               | `wrcHeading`              | Primary `<h1>` title and section caption on dashboard and cookie pages.                        |
-| **CSRF field**            | `wrcCsrfField`            | Hidden input for CSRF prevention in forms.                                                     |
-| **Search**                | `wrcSearch`               | Search form filtering records while preserving `type` and `sort` hidden fields.                |
-| **Subnavigation**         | `wrcSubnavigation`        | Subnavigation filter bar for switching between All, Direct producers, and Compliance schemes.  |
-| **Tabs list**             | `wrcTabsList`             | GOV.UK tabs list (`<ul class="govuk-tabs__list">`) above the organisations table.              |
-| **Sorting column header** | `wrcSortingColumnHeader`  | Table headers (`Organisation`, `Year`) supporting toggleable `[asc]` / `[desc]` queries.       |
-| **Pagination**            | `pagination/template.njk` | Numbered page navigation controls beneath the data table.                                      |
-| **Status tag**            | `wrcStatusTag`            | Verified (green), Unverified (red), and Pending review (fallback) tags.                        |
-| **Submission status tag** | `wrcSubmissionStatusTag`  | Lifecycle pills (`Accepted`, `Pending`, `Cancelled`, `Not submitted`) with Welsh localization. |
-| **Organisation link**     | `wrcOrganisationLink`     | Dynamic links targeting organisation overviews or specific compliance documents.               |
-| **Button group**          | CSS (`_index.scss`)       | Inline `<form>` button alignment inside `.govuk-button-group`.                                 |
-| **Scrollable pane**       | CSS (`_index.scss`)       | Table wrapping inside `.moj-scrollable-pane` around the organisations table.                   |
-| **Notification banner**   | CSS (`_index.scss`)       | Cancelled status modifier `.wrc-notification-banner--cancelled`.                               |
-| **Tab panel**             | CSS (`_index.scss`)       | Compact `.v3-compact-table` table sizing and normal row header weight.                         |
+| Component                 | Macro / Template                         | Usage in Example App                                                                           |
+| ------------------------- | ---------------------------------------- | ---------------------------------------------------------------------------------------------- |
+| **Header**                | `wrcHeader`                              | Rendered at the top of every page in `page.njk` with user account details.                     |
+| **Service header**        | `wrcServiceHeader`                       | Navigation bar with "Environment Agency" regulator slot and English/Welsh toggle.              |
+| **Cookie banner**         | `wrcCookieBanner`                        | Fixed cookie banner on `/` with POST actions to `/cookies/banner` and `/cookies/hide-banner`.  |
+| **Footer**                | `wrcFooter`                              | Displays "Get help" contacts, support links, OGL v3.0 licence, and Crown copyright.            |
+| **Google Analytics**      | `wrcGoogleAnalytics`                     | Injects Consent Mode v2 scripts in `<head>` and `<noscript>` iframe in `<body>`.               |
+| **Heading**               | `wrcHeading`                             | Primary `<h1>` title and section caption on dashboard and cookie pages.                        |
+| **CSRF field**            | `wrcCsrfField`                           | Hidden input for CSRF prevention in forms.                                                     |
+| **Search**                | `wrcSearch`                              | Search form filtering records while preserving `type` and `sort` hidden fields.                |
+| **Subnavigation**         | `wrcSubnavigation`                       | Subnavigation filter bar for switching between All, Direct producers, and Compliance schemes.  |
+| **Tabs list**             | `wrcTabsList`                            | GOV.UK tabs list (`<ul class="govuk-tabs__list">`) above the organisations table.              |
+| **Sorting column header** | `wrcSortingColumnHeader`                 | Table headers (`Organisation`, `Year`) supporting toggleable `[asc]` / `[desc]` queries.       |
+| **Pagination**            | `wrc/components/pagination/template.njk` | Numbered page navigation controls beneath the data table.                                      |
+| **Status tag**            | `wrcStatusTag`                           | Verified (green), Unverified (red), and Pending review (fallback) tags.                        |
+| **Submission status tag** | `wrcSubmissionStatusTag`                 | Lifecycle pills (`Accepted`, `Pending`, `Cancelled`, `Not submitted`) with Welsh localization. |
+| **Organisation link**     | `wrcOrganisationLink`                    | Dynamic links targeting organisation overviews or specific compliance documents.               |
+| **Button group**          | CSS (`_index.scss`)                      | Inline `<form>` button alignment inside `.govuk-button-group`.                                 |
+| **Scrollable pane**       | CSS (`_index.scss`)                      | Table wrapping inside `.moj-scrollable-pane` around the organisations table.                   |
+| **Notification banner**   | CSS (`_index.scss`)                      | Cancelled status modifier `.wrc-notification-banner--cancelled`.                               |
+| **Tab panel**             | CSS (`_index.scss`)                      | Compact `.v3-compact-table` table sizing and normal row header weight.                         |
 
 ---
 

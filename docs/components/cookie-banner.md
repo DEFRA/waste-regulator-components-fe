@@ -20,7 +20,7 @@ Use the Defra internal cookie banner at the very top of your page template, dire
 ### Nunjucks macro import
 
 ```njk
-{% from "cookie-banner/macro.njk" import wrcCookieBanner %}
+{% from "wrc/components/cookie-banner/macro.njk" import wrcCookieBanner %}
 
 {{ wrcCookieBanner({
   serviceName: "Waste Tracking Service",

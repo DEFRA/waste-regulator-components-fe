@@ -22,7 +22,7 @@ export function buildDocsStyles({
 
 export function copyDocsImages({
   rootDir = DEFAULT_ROOT_DIR,
-  srcImagesDir = path.join(rootDir, 'dist/assets/images'),
+  srcImagesDir = path.join(rootDir, 'dist/wrc/assets/images'),
   destImagesDir = path.join(rootDir, 'docs/assets/images')
 } = {}) {
   fs.mkdirSync(destImagesDir, { recursive: true })

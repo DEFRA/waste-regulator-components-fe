@@ -20,7 +20,7 @@ Use the Defra internal header at the top of all pages in internal Defra services
 ### Nunjucks macro import
 
 ```njk
-{% from "header/macro.njk" import wrcHeader %}
+{% from "wrc/components/header/macro.njk" import wrcHeader %}
 
 {{ wrcHeader({
   organisationName: "Department for Environment,<br>Food &amp; Rural Affairs",
@@ -80,5 +80,5 @@ Use the Defra internal header at the top of all pages in internal Defra services
 To import styles for this component individually:
 
 ```scss
-@use 'defra-internal-frontend/dist/components/header';
+@use 'defra-internal-frontend/dist/wrc/components/header';
 ```

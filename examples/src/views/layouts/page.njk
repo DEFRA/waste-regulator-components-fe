@@ -1,10 +1,10 @@
 {% extends "govuk/template.njk" %}
 
-{% from "header/macro.njk" import wrcHeader %}
-{% from "service-header/macro.njk" import wrcServiceHeader %}
-{% from "cookie-banner/macro.njk" import wrcCookieBanner %}
-{% from "footer/macro.njk" import wrcFooter %}
-{% from "google-analytics/macro.njk" import wrcGoogleAnalytics %}
+{% from "wrc/components/header/macro.njk" import wrcHeader %}
+{% from "wrc/components/service-header/macro.njk" import wrcServiceHeader %}
+{% from "wrc/components/cookie-banner/macro.njk" import wrcCookieBanner %}
+{% from "wrc/components/footer/macro.njk" import wrcFooter %}
+{% from "wrc/components/google-analytics/macro.njk" import wrcGoogleAnalytics %}
 
 {% block pageTitle %}{{ pageTitle | default("Waste Tracking Service") }} - GOV.UK{% endblock %}
 

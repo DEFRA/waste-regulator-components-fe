@@ -20,7 +20,7 @@ Use this component at the top of the main page content area (inside `content` or
 ### Nunjucks macro import
 
 ```njk
-{% from "heading/macro.njk" import wrcHeading %}
+{% from "wrc/components/heading/macro.njk" import wrcHeading %}
 
 {{ wrcHeading({
   text: "Manage waste tracking compliance",

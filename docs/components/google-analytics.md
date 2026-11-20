@@ -23,7 +23,7 @@ Use this component to track analytics in accordance with Defra and GOV.UK cookie
 ### Nunjucks macro import
 
 ```njk
-{% from "google-analytics/macro.njk" import wrcGoogleAnalytics %}
+{% from "wrc/components/google-analytics/macro.njk" import wrcGoogleAnalytics %}
 
 {# Head scripts (default consent is denied until allowGoogleAnalytics is true) #}
 {{ wrcGoogleAnalytics({
