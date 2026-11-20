@@ -34,7 +34,7 @@ jobs:
 
       - name: Install dependencies and run checks
         run: |
-          npm ci
+          npm ci --ignore-scripts
           npm run format:check
           npm run lint
           npm test

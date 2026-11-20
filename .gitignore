@@ -3,4 +3,6 @@ coverage/
 .DS_Store
 .vite/
 .cache/
+docs/assets/css/
+docs/assets/images/
 
