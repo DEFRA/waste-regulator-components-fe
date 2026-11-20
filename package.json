@@ -41,6 +41,9 @@
     "nunjucks": "^3.2.4"
   },
   "devDependencies": {
+    "@hapi/hapi": "21.4.9",
+    "@hapi/inert": "7.1.1",
+    "@hapi/vision": "7.0.3",
     "@vitest/coverage-v8": "4.1.11",
     "cheerio": "1.2.0",
     "eslint": "9.39.4",
