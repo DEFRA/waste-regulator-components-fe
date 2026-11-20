@@ -276,4 +276,4 @@ Release notes and semantic version bumps are automated from [Conventional Commit
 
 ## Licence
 
-Unless stated otherwise, the codebase is released under the [MIT Licence](LICENCE). This covers both the software and any sample code in the documentation.
+Unless stated otherwise, the codebase is released under the [Open Government Licence (OGL) Version 3](LICENCE). This covers both the software and any sample code in the documentation.
