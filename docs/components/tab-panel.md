@@ -5,7 +5,7 @@ title: Tab panel
 
 # Tab panel
 
-The tab panel stylesheet provides `.v3-compact-table` compact table sizing (`16px`) and normal font weight styling for table row headers (`tbody th`).
+The tab panel stylesheet provides `.v3-compact-table` compact table sizing (`16px`) and normal font weight styling for compact table row headers (`.v3-compact-table tbody th`).
 
 ---
 
@@ -20,7 +20,7 @@ Apply `.v3-compact-table` to dense regulatory data tables (such as Certificates 
 Including `dist/wrc/components/tab-panel/_index.scss` applies:
 
 - `font-size: 16px` on `.v3-compact-table thead` and `.v3-compact-table tbody`.
-- `font-weight: normal` on `.v3-compact-table tbody th` and `.govuk-table tbody th`.
+- `font-weight: normal` on `.v3-compact-table tbody th`.
 
 ### Example usage
 

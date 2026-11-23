@@ -69,6 +69,8 @@ describe('Component stylesheets', () => {
     expect(result.css).toContain('.moj-sub-navigation__item')
     expect(result.css).toContain('.moj-sub-navigation__link[aria-current=page]')
     expect(result.css).toContain('.v3-compact-table thead')
+    expect(result.css).toContain('.v3-compact-table tbody th')
+    expect(result.css).not.toContain('.govuk-table tbody th')
   })
 
   test.each([
