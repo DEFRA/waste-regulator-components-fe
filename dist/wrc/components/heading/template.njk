@@ -1,11 +1,13 @@
 <div class="govuk-grid-row wrc-heading" data-testid="wrc-heading">
   <div class="govuk-grid-column-two-thirds">
-    <h1 class="govuk-heading-xl govuk-!-margin-bottom-2"
-        data-testid="wrc-heading-title">{{ params.text }}</h1>
-
+    {# Caption above the H1, as GOV.UK Frontend's headings with captions:
+       https://design-system.service.gov.uk/styles/headings/#headings-with-captions #}
     {% if params.caption %}
-      <span class="govuk-caption-m"
+      <span class="govuk-caption-xl"
             data-testid="wrc-heading-caption">{{ params.caption }}</span>
     {% endif %}
+
+    <h1 class="govuk-heading-xl govuk-!-margin-bottom-2"
+        data-testid="wrc-heading-title">{{ params.text }}</h1>
   </div>
 </div>

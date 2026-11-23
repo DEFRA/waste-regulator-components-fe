@@ -5,7 +5,7 @@ title: Page heading
 
 # Page heading
 
-The heading component displays a main page title (`<h1>`) within a two-thirds width column, paired with an optional secondary caption.
+The heading component displays a main page title (`<h1>`) within a two-thirds width column, paired with an optional caption above it, as in the GOV.UK Design System's [headings with captions](https://design-system.service.gov.uk/styles/headings/#headings-with-captions).
 
 ---
 
@@ -33,15 +33,15 @@ Use this component at the top of the main page content area (inside `content` or
 ```html
 <div class="govuk-grid-row wrc-heading" data-testid="wrc-heading">
   <div class="govuk-grid-column-two-thirds">
+    <span class="govuk-caption-xl" data-testid="wrc-heading-caption"
+      >Scheme registration 2026</span
+    >
     <h1
       class="govuk-heading-xl govuk-!-margin-bottom-2"
       data-testid="wrc-heading-title"
     >
       Manage waste tracking compliance
     </h1>
-    <span class="govuk-caption-m" data-testid="wrc-heading-caption"
-      >Scheme registration 2026</span
-    >
   </div>
 </div>
 ```
@@ -50,7 +50,7 @@ Use this component at the top of the main page content area (inside `content` or
 
 ## Macro options
 
-| Name      | Type     | Default     | Description                                              |
-| --------- | -------- | ----------- | -------------------------------------------------------- |
-| `text`    | `string` | `undefined` | The primary page heading text (`govuk-heading-xl`).      |
-| `caption` | `string` | `undefined` | Optional sub-caption text rendered as `govuk-caption-m`. |
+| Name      | Type     | Default     | Description                                                                                   |
+| --------- | -------- | ----------- | --------------------------------------------------------------------------------------------- |
+| `text`    | `string` | `undefined` | The primary page heading text (`govuk-heading-xl`).                                           |
+| `caption` | `string` | `undefined` | Optional caption above the heading, rendered as `govuk-caption-xl` to match the heading size. |
