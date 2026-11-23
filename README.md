@@ -158,7 +158,7 @@ The documentation site in [`docs/`](docs/index.md) uses the same Defra/GOV.UK st
   npm run docs:start
   ```
 
-  This builds the documentation CSS and image assets and serves the site at `http://localhost:1999` (set `PORT` to override, e.g. `PORT=8080 npm run docs:start`).
+  This builds the documentation CSS and image assets and serves the site on `localhost` only at `http://localhost:1999` (set `PORT` to override, e.g. `PORT=8080 npm run docs:start` in Bash/Zsh or `$env:PORT=8080; npm run docs:start` in PowerShell).
 
 - **Build documentation assets only**:
 

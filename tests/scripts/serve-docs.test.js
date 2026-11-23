@@ -8,6 +8,7 @@ import {
   DEFAULT_DOCS_PORT,
   createDocsServer,
   createLiquidEngine,
+  parseDocsPort,
   parseFrontmatter,
   resolveDocsRoute,
   rewriteMarkdownLinks
@@ -28,6 +29,31 @@ describe('Documentation local server', () => {
     }
     while (tempDirs.length > 0) {
       fs.rmSync(tempDirs.pop(), { recursive: true, force: true })
+    }
+  })
+
+  test('parseDocsPort validates PORT values and falls back to default when unset', () => {
+    for (const unsetValue of [undefined, null, '', '   ']) {
+      expect(parseDocsPort(unsetValue)).toBe(DEFAULT_DOCS_PORT)
+    }
+
+    expect(parseDocsPort('1')).toBe(1)
+    expect(parseDocsPort('1999')).toBe(1999)
+    expect(parseDocsPort(' 8080 ')).toBe(8080)
+    expect(parseDocsPort('65535')).toBe(65535)
+    expect(parseDocsPort(3000)).toBe(3000)
+
+    for (const invalidValue of [
+      '0',
+      '65536',
+      '-1',
+      'abc',
+      '8080px',
+      '12.34',
+      '9'.repeat(400)
+    ]) {
+      expect(() => parseDocsPort(invalidValue)).toThrow(RangeError)
+      expect(() => parseDocsPort(invalidValue)).toThrow(/Invalid PORT/)
     }
   })
 

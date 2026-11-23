@@ -93,28 +93,16 @@ export function calculateNextVersion(currentVersion, bump) {
   return calculator()
 }
 
-/**
- * Resolve the git binary path from PATH to avoid POSIX spawn PATH permission errors in sandboxed environments.
- */
-export function resolveGitBinary(envPath = process.env.PATH) {
-  if (!envPath) {
-    return 'git'
+function isExecutable(candidate) {
+  try {
+    fs.accessSync(candidate, fs.constants.X_OK)
+    return true
+  } catch {
+    return false
   }
-  const match = envPath
-    .split(path.delimiter)
-    .map((dir) => path.join(dir, 'git'))
-    .find((candidate) => {
-      try {
-        fs.accessSync(candidate, fs.constants.X_OK)
-        return true
-      } catch {
-        return false
-      }
-    })
-  return match ?? 'git'
 }
 
-function findExecutableOnPath(binaryName, envPath = process.env.PATH) {
+function findExecutableOnPath(binaryName, envPath) {
   if (!envPath) {
     return null
   }
@@ -122,15 +110,15 @@ function findExecutableOnPath(binaryName, envPath = process.env.PATH) {
     envPath
       .split(path.delimiter)
       .map((dir) => path.join(dir, binaryName))
-      .find((candidate) => {
-        try {
-          fs.accessSync(candidate, fs.constants.X_OK)
-          return true
-        } catch {
-          return false
-        }
-      }) ?? null
+      .find(isExecutable) ?? null
   )
+}
+
+/**
+ * Resolve the git binary path from PATH to avoid POSIX spawn PATH permission errors in sandboxed environments.
+ */
+export function resolveGitBinary(envPath = process.env.PATH) {
+  return findExecutableOnPath('git', envPath) ?? 'git'
 }
 
 /**
@@ -138,16 +126,20 @@ function findExecutableOnPath(binaryName, envPath = process.env.PATH) {
  */
 export function resolveShellForScripts(envPath = process.env.PATH) {
   if (process.platform === 'win32') {
-    const programFiles = process.env.ProgramFiles
-    const programFilesX86 = process.env['ProgramFiles(x86)']
-    const candidates = [
-      programFiles && path.join(programFiles, 'Git', 'bin', 'bash.exe'),
-      programFilesX86 && path.join(programFilesX86, 'Git', 'bin', 'bash.exe'),
-      findExecutableOnPath('bash.exe', envPath)
-    ].filter(Boolean)
-    return candidates[0] ?? 'bash.exe'
+    const windowsCandidates = [
+      process.env.ProgramFiles,
+      process.env['ProgramFiles(x86)']
+    ]
+      .filter(Boolean)
+      .map((baseDir) => path.join(baseDir, 'Git', 'bin', 'bash.exe'))
+
+    return (
+      windowsCandidates.find(isExecutable) ??
+      findExecutableOnPath('bash.exe', envPath) ??
+      'bash.exe'
+    )
   }
-  return 'sh'
+  return findExecutableOnPath('sh', envPath) ?? 'sh'
 }
 
 /**

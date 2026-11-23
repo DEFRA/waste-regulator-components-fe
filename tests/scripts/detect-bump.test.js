@@ -197,9 +197,8 @@ describe('detect-bump script', () => {
       const shell = resolveShellForScripts()
       if (process.platform === 'win32') {
         expect(shell.toLowerCase()).toMatch(/bash\.exe$/)
-        expect(resolveShellForScripts('')).toMatch(/bash/i)
       } else {
-        expect(shell).toBe('sh')
+        expect(path.basename(shell)).toBe('sh')
       }
 
       const output = execShellScript(
@@ -210,37 +209,103 @@ describe('detect-bump script', () => {
       expect(output).toContain(
         'Release notes for Waste Regulator Components Frontend'
       )
+
+      const tempDir = trackTempDir(
+        fs.mkdtempSync(path.join(os.tmpdir(), 'shell-exec-'))
+      )
+      const scriptFile = path.join(tempDir, 'echo.sh')
+      fs.writeFileSync(scriptFile, '#!/bin/sh\necho "$1"\n')
+
+      expect(() => execShellScript(scriptFile)).not.toThrow()
+      expect(
+        execShellScript(scriptFile, ['ok'], {
+          encoding: 'utf8',
+          env: process.env
+        }).trim()
+      ).toBe('ok')
     })
 
-    test('resolveShellForScripts uses POSIX sh off Windows', () => {
+    test('resolveShellForScripts resolves sh from PATH and falls back off Windows', () => {
       const platformSpy = vi
         .spyOn(process, 'platform', 'get')
         .mockReturnValue('linux')
+      const tempBinDir = trackTempDir(
+        fs.mkdtempSync(path.join(os.tmpdir(), 'sh-bin-'))
+      )
+      const shPath = path.join(tempBinDir, 'sh')
+      fs.writeFileSync(shPath, '#!/bin/sh\n')
+      fs.chmodSync(shPath, 0o755)
+
       try {
-        expect(resolveShellForScripts()).toBe('sh')
+        expect(resolveShellForScripts(tempBinDir)).toBe(shPath)
+        expect(resolveShellForScripts('')).toBe('sh')
+        expect(resolveShellForScripts('/nonexistent-bin-dir')).toBe('sh')
       } finally {
         platformSpy.mockRestore()
       }
     })
 
-    test('resolveShellForScripts falls back when Git Bash is not on PATH', () => {
+    test('resolveShellForScripts resolves Git Bash on Windows and falls back when missing', () => {
       const platformSpy = vi
         .spyOn(process, 'platform', 'get')
         .mockReturnValue('win32')
       const previousProgramFiles = process.env.ProgramFiles
       const previousProgramFilesX86 = process.env['ProgramFiles(x86)']
-      delete process.env.ProgramFiles
-      delete process.env['ProgramFiles(x86)']
+
+      const createFakeBash = (baseDir, ...segments) => {
+        const target = path.join(baseDir, ...segments)
+        fs.mkdirSync(path.dirname(target), { recursive: true })
+        fs.writeFileSync(target, '')
+        fs.chmodSync(target, 0o755)
+        return target
+      }
+
+      const programFilesDir = trackTempDir(
+        fs.mkdtempSync(path.join(os.tmpdir(), 'pf-'))
+      )
+      const programFilesX86Dir = trackTempDir(
+        fs.mkdtempSync(path.join(os.tmpdir(), 'pf86-'))
+      )
+      const pathBinDir = trackTempDir(
+        fs.mkdtempSync(path.join(os.tmpdir(), 'bash-path-'))
+      )
+      const emptyDir = trackTempDir(
+        fs.mkdtempSync(path.join(os.tmpdir(), 'empty-'))
+      )
+
+      const pfBash = createFakeBash(programFilesDir, 'Git', 'bin', 'bash.exe')
+      const pf86Bash = createFakeBash(
+        programFilesX86Dir,
+        'Git',
+        'bin',
+        'bash.exe'
+      )
+      const pathBash = createFakeBash(pathBinDir, 'bash.exe')
+
       try {
-        expect(resolveShellForScripts(path.dirname(process.execPath))).toBe(
-          'bash.exe'
-        )
+        process.env.ProgramFiles = programFilesDir
+        delete process.env['ProgramFiles(x86)']
+        expect(resolveShellForScripts(emptyDir)).toBe(pfBash)
+
+        process.env.ProgramFiles = emptyDir
+        process.env['ProgramFiles(x86)'] = programFilesX86Dir
+        expect(resolveShellForScripts(emptyDir)).toBe(pf86Bash)
+
+        delete process.env.ProgramFiles
+        delete process.env['ProgramFiles(x86)']
+        expect(resolveShellForScripts(pathBinDir)).toBe(pathBash)
+        expect(resolveShellForScripts(emptyDir)).toBe('bash.exe')
+        expect(resolveShellForScripts('')).toBe('bash.exe')
       } finally {
         platformSpy.mockRestore()
-        if (previousProgramFiles) {
+        if (previousProgramFiles === undefined) {
+          delete process.env.ProgramFiles
+        } else {
           process.env.ProgramFiles = previousProgramFiles
         }
-        if (previousProgramFilesX86) {
+        if (previousProgramFilesX86 === undefined) {
+          delete process.env['ProgramFiles(x86)']
+        } else {
           process.env['ProgramFiles(x86)'] = previousProgramFilesX86
         }
       }

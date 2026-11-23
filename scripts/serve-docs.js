@@ -12,8 +12,34 @@ import { DEFAULT_ROOT_DIR } from './sass-config.js'
 
 export const DEFAULT_DOCS_PORT = 1999
 
+const MIN_PORT = 1
+const MAX_PORT = 65535
+const PORT_PATTERN = /^\d+$/
 const HTTP_NOT_FOUND = 404
 const EXTERNAL_LINK_PREFIXES = ['http://', 'https://', 'mailto:', '#']
+
+/**
+ * Parses and validates a PORT environment variable value.
+ * @param {string | number | undefined} rawPort
+ * @returns {number}
+ */
+export function parseDocsPort(rawPort) {
+  const trimmed =
+    rawPort === undefined || rawPort === null ? '' : String(rawPort).trim()
+
+  if (!trimmed) {
+    return DEFAULT_DOCS_PORT
+  }
+
+  const port = PORT_PATTERN.test(trimmed) ? Number(trimmed) : Number.NaN
+  if (!Number.isInteger(port) || port < MIN_PORT || port > MAX_PORT) {
+    throw new RangeError(
+      `Invalid PORT "${rawPort}": expected an integer between ${MIN_PORT} and ${MAX_PORT}`
+    )
+  }
+
+  return port
+}
 
 export function parseFrontmatter(markdown) {
   const normalized = markdown.replaceAll('\r\n', '\n')
@@ -231,9 +257,7 @@ if (
   process.argv[1] &&
   path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)
 ) {
-  const port = process.env.PORT
-    ? Number.parseInt(process.env.PORT, 10)
-    : DEFAULT_DOCS_PORT
+  const port = parseDocsPort(process.env.PORT)
   const server = await createDocsServer({ port })
   await server.start()
   console.log(`Documentation server running at: ${server.info.uri}`)
