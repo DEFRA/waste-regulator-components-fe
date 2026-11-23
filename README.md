@@ -8,9 +8,9 @@ See [live examples of components](docs/components/index.md), explore the [exampl
 
 - [Contact the team](#contact-the-team)
 - [Quick start](#quick-start)
-  - [Installing using npm](#installing-using-npm)
+  - [Prototype installation (GOV.UK Prototype Kit)](#prototype-installation-govuk-prototype-kit)
+  - [Production installation (Node.js service)](#production-installation-nodejs-service)
   - [Package layout](#package-layout)
-  - [Setting up your project](#setting-up-your-project)
 - [Example application](#example-application)
 - [Documentation](#documentation)
 - [Components](#components)
@@ -26,42 +26,99 @@ Defra Internal Frontend is maintained by the Defra EPR Regulators team.
 
 If you have questions, want to propose a new component, or need assistance:
 
-- [open an issue or pull request](https://github.com/DEFRA/defra-internal-frontend) in this repository
+- [open an issue or pull request](https://github.com/DEFRA/waste-regulator-components-fe) in this repository
 - get in touch with the team on Slack
 - read our [Design System Documentation](docs/index.md) hosted on GitHub Pages
 
 ## Quick start
 
-There are two main ways to use Defra Internal Frontend:
+Choose the installation path that matches your project — prototyping with the **GOV.UK Prototype Kit** or building a **production Node.js service** (see the [Getting started overview](docs/get-started/index.md)):
 
-1. **Installing using npm (recommended)** — allows you to import Sass sources, configure Nunjucks template paths, and include only the assets your application needs.
-2. **Reading the documentation** — refer to the [Getting started guide](docs/get-started/index.md) for full walkthroughs on Nunjucks, Sass load paths, and Vite / Webpack asset bundling.
+### Prototype installation (GOV.UK Prototype Kit)
 
-### Installing using npm
+Ensure your prototype meets the prerequisites:
 
-We recommend installing Defra Internal Frontend alongside `govuk-frontend` using the Node.js package manager:
+- **Node.js** (`>=20`, LTS `>=22` recommended)
+- **GOV.UK Prototype Kit** (`>=13.0.0`)
+- **`govuk-frontend`** (`^6.0.0`)
+
+Install `waste-regulator-components-fe` alongside `govuk-frontend`:
 
 ```bash
-npm install defra-internal-frontend govuk-frontend
+npm install govuk-frontend@^6.0.0 waste-regulator-components-fe
 ```
 
-Ensure your project meets the prerequisites:
+Restart `npm run dev` to load the plugin. Because `waste-regulator-components-fe` ships `govuk-prototype-kit.config.json`, the Prototype Kit automatically registers the Sass stylesheet (`/dist/index.scss`), static assets, `/dist` Nunjucks path, and all `wrc*` macros. See [Prototype installation](docs/get-started/prototype-kit.md) for layout setup and optional typography or i18n helper customisation.
 
-- **Node.js** (LTS version recommended)
+### Production installation (Node.js service)
+
+Ensure your service meets the prerequisites:
+
+- **Node.js** (`>=20`, LTS `>=22` recommended)
 - **`govuk-frontend`** (`^6.0.0`)
 - **`nunjucks`** for server-side view templates
 - **`sass-embedded`** (or Dart Sass `>= 1.77.0`) for Sass compilation
 
+Install `waste-regulator-components-fe` alongside `govuk-frontend`:
+
+```bash
+npm install govuk-frontend@^6.0.0 waste-regulator-components-fe
+```
+
+#### 1. Configure Nunjucks
+
+Add the `dist` directory and `govuk-frontend/dist` to your Nunjucks view search paths:
+
+```js
+import { createRequire } from 'node:module'
+import path from 'node:path'
+import nunjucks from 'nunjucks'
+
+const require = createRequire(import.meta.url)
+const defraInternalPath = path.dirname(
+  require.resolve('waste-regulator-components-fe/package.json')
+)
+const govukPath = path.dirname(require.resolve('govuk-frontend/package.json'))
+
+const env = nunjucks.configure(
+  [path.join(defraInternalPath, 'dist'), path.join(govukPath, 'dist')],
+  {
+    autoescape: true
+  }
+)
+```
+
+#### 2. Import styles in Sass
+
+In your application's main Sass file, import GOV.UK Frontend followed by Defra Internal Frontend:
+
+```scss
+@use 'govuk-frontend';
+@use 'waste-regulator-components-fe/dist/wrc/index' as *;
+```
+
+Ensure your Sass compiler's `loadPaths` includes the directory containing `node_modules` (usually the project root `.`, or the workspace root in a monorepo) alongside `node_modules` so `govuk-frontend` forwards resolve cleanly.
+
+#### 3. Copy static assets
+
+Copy static images from `node_modules/waste-regulator-components-fe/dist/wrc/assets/images/` to your public directory (e.g. `/assets/images/`).
+
+For complete walkthroughs, see [Production installation](docs/get-started/installation.md), [Project setup](docs/get-started/project-setup.md), and the [Page template](docs/get-started/page-template.md).
+
 ### Package layout
 
-Like `govuk-frontend`, `defra-internal-frontend` serves all component macros, stylesheets, and static assets out of the `dist/` directory:
+The package includes `govuk-prototype-kit.config.json` and serves all component macros, stylesheets, and static assets out of `dist/`:
 
 ```text
-node_modules/defra-internal-frontend/
+node_modules/waste-regulator-components-fe/
+├── govuk-prototype-kit.config.json
 └── dist/
     ├── index.scss
     └── wrc/
         ├── index.scss
+        ├── _variables.scss
+        ├── vendor/
+        │   └── _govuk-frontend.scss
         ├── assets/
         │   └── images/
         │       ├── apple-touch-icon.png
@@ -91,44 +148,6 @@ node_modules/defra-internal-frontend/
             └── tabs-list/
 ```
 
-### Setting up your project
-
-#### 1. Configure Nunjucks
-
-Add the `dist` directory and `govuk-frontend/dist` to your Nunjucks view search paths:
-
-```js
-import nunjucks from 'nunjucks'
-import path from 'node:path'
-
-const defraInternalPath = path.dirname(
-  require.resolve('defra-internal-frontend/package.json')
-)
-const govukPath = path.dirname(require.resolve('govuk-frontend/package.json'))
-
-const env = nunjucks.configure(
-  [path.join(defraInternalPath, 'dist'), path.join(govukPath, 'dist')],
-  {
-    autoescape: true
-  }
-)
-```
-
-#### 2. Import styles in Sass
-
-In your application's main Sass file, import GOV.UK Frontend followed by Defra Internal Frontend:
-
-```scss
-@use 'govuk/index' as govuk;
-@use 'defra-internal-frontend/dist/wrc/index' as defra;
-```
-
-#### 3. Copy static assets
-
-Copy static images from `node_modules/defra-internal-frontend/dist/wrc/assets/images/` to your public directory (e.g. `/assets/images/`).
-
-For a complete step-by-step walkthrough, see [Project setup](docs/get-started/project-setup.md) and the [Production page template](docs/get-started/page-template.md).
-
 ## Example application
 
 We provide a complete reference application in [`examples/`](examples/README.md) built with **Hapi.js**, **Nunjucks**, and **Dart Sass**, demonstrating all components in action:
@@ -139,7 +158,7 @@ We provide a complete reference application in [`examples/`](examples/README.md)
   npm run example:start
   ```
 
-  Then open `http://localhost:3000` in your browser.
+  Then open `http://localhost:2000` in your browser.
 
 - **Run example app integration tests**:
   ```bash
@@ -158,7 +177,7 @@ The documentation site in [`docs/`](docs/index.md) uses the same Defra/GOV.UK st
   npm run docs:start
   ```
 
-  This builds the documentation CSS and image assets and serves the site on `localhost` only at `http://localhost:1999` (set `PORT` to override, e.g. `PORT=8080 npm run docs:start` in Bash/Zsh or `$env:PORT=8080; npm run docs:start` in PowerShell).
+  This builds the documentation CSS, image assets, and release version data (`docs/_data/release.yml`) and serves the site on `localhost` only at `http://localhost:1999` (set `PORT` to override, e.g. `PORT=8080 npm run docs:start` in Bash/Zsh or `$env:PORT=8080; npm run docs:start` in PowerShell).
 
 - **Build documentation assets only**:
 
@@ -166,7 +185,7 @@ The documentation site in [`docs/`](docs/index.md) uses the same Defra/GOV.UK st
   npm run docs:build
   ```
 
-  Compiles `docs/assets/scss/docs.scss` using the shared Defra/GOV.UK styles and copies `dist/wrc/assets/images/` into `docs/assets/images/`.
+  Compiles `docs/assets/scss/docs.scss` using the shared Defra/GOV.UK styles, copies `dist/wrc/assets/images/` into `docs/assets/images/`, and writes the current release version tag to `docs/_data/release.yml`.
 
 See the [Running documentation locally guide](docs/running-locally.md) for full details on local previewing, port configuration, and asset builds.
 
@@ -211,7 +230,7 @@ Defra Internal Frontend adheres to the browser and assistive technology support 
 
 All components are built to meet or exceed **WCAG 2.2 Level AA** standards and comply with the [GOV.UK Service Standard](https://www.gov.uk/service-manual/service-standard).
 
-If you identify an accessibility barrier in any component, please [open an issue](https://github.com/DEFRA/defra-internal-frontend/issues).
+If you identify an accessibility barrier in any component, please [open an issue](https://github.com/DEFRA/waste-regulator-components-fe/issues).
 
 ## Development and testing
 

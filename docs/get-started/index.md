@@ -5,14 +5,25 @@ title: Get started
 
 # Get started
 
-Follow these guides to install `defra-internal-frontend` and integrate it into your Node.js web application.
+Choose the installation path that matches your project — whether you are building a prototype with the **GOV.UK Prototype Kit** or a **production Node.js service**.
 
 ---
 
-## Getting started guides
+## Prototyping (GOV.UK Prototype Kit)
 
-1. [**Installation**](./installation.md)  
-   Install `defra-internal-frontend` and `govuk-frontend` via npm and explore the package directory layout.
+Use this path when designing and testing a service with the GOV.UK Prototype Kit (v13+). The package registers its Sass stylesheet, static assets, and `wrc*` macros automatically as a plugin.
+
+- [**Prototype installation**](./prototype-kit.md)  
+  Install `waste-regulator-components-fe` as a GOV.UK Prototype Kit plugin, apply Defra chrome in your layout, and optionally customise typography or translation helpers.
+
+---
+
+## Production (Node.js service)
+
+Use this path when building a live or staging web application with Node.js, Nunjucks, and a Sass bundler (Vite or Webpack).
+
+1. [**Production installation**](./installation.md)  
+   Install `waste-regulator-components-fe` and `govuk-frontend` via npm and explore the package directory layout.
 
 2. [**Project setup**](./project-setup.md)  
    Configure your Nunjucks view engine search paths, import the Sass stylesheets, and set up your asset build pipeline using Vite or Webpack.
@@ -24,4 +35,4 @@ Follow these guides to install `defra-internal-frontend` and integrate it into y
 
 ## Upgrading
 
-If your project is already using local copies of Defra components, see the [Project setup guide](./project-setup.md) for how to replace relative component imports with package imports.
+If your production project is already using local copies of Defra components, see the [Project setup guide](./project-setup.md) for how to replace relative component imports with package imports.

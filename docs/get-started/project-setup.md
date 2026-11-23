@@ -5,13 +5,13 @@ title: Project setup
 
 # Project setup
 
-Configure your Nunjucks view engine, Sass compiler, and asset bundler to use `defra-internal-frontend`.
+Configure your production Node.js project's Nunjucks view engine, Sass compiler, and asset bundler to use `waste-regulator-components-fe`. If you are using the GOV.UK Prototype Kit, these steps are handled automatically — see [Prototype installation](./prototype-kit.md).
 
 ---
 
 ## 1. Configure Nunjucks
 
-Add `node_modules/defra-internal-frontend/dist` to your Nunjucks template search paths alongside `govuk-frontend/dist`. This allows templates to import Defra components using namespaced paths matching GOV.UK Frontend (for example `{% from "wrc/components/header/macro.njk" import wrcHeader %}`).
+Add `node_modules/waste-regulator-components-fe/dist` to your Nunjucks template search paths alongside `govuk-frontend/dist`. This allows templates to import Defra components using namespaced paths matching GOV.UK Frontend (for example `{% from "wrc/components/header/macro.njk" import wrcHeader %}`).
 
 ```js
 // src/config/nunjucks/nunjucks.js
@@ -21,7 +21,7 @@ import nunjucks from 'nunjucks'
 const nunjucksEnvironment = nunjucks.configure(
   [
     'node_modules/govuk-frontend/dist',
-    'node_modules/defra-internal-frontend/dist',
+    'node_modules/waste-regulator-components-fe/dist',
     path.resolve(dirname, '../../server/common/templates'),
     path.resolve(dirname, '../../server/routes')
   ],
@@ -48,38 +48,43 @@ Several Defra components rely on standard internationalisation and routing helpe
 
 ## 2. Configure Sass
 
-### Define Defra brand colour variables
+### Customise Defra brand colour variables (optional)
 
-The Defra header, footer, and service navigation components use `@use "variables" as *;` and require these Sass variables in your stylesheet variables file:
+`waste-regulator-components-fe` ships default Defra colour variables (`!default`) in `dist/wrc/_variables.scss`, so no separate `variables` module is required:
 
 ```scss
-// src/client/stylesheets/variables/_colours.scss
-@use 'sass:color';
+// Default values in dist/wrc/_variables.scss
+$defra-internal-brand: #00a33b !default;
+$defra-internal-footer-link: #3b3b3b !default;
+$defra-internal-nav-background: color.mix(
+  #ffffff,
+  $defra-internal-brand,
+  92%
+) !default;
+$defra-internal-link: #00703c !default;
+$defra-internal-link-hover: color.mix(
+  #000000,
+  $defra-internal-link,
+  40%
+) !default;
+```
 
-$defra-internal-brand: #00a33b;
-$defra-internal-footer-link: #3b3b3b;
+You can optionally override any variable with a Sass `@use ... with (...)` clause when importing the package:
 
-// Navigation band: lightest tint that reads as a band rather than off-white
-$defra-internal-nav-background: color.mix(#ffffff, $defra-internal-brand, 92%);
-
-// Link colour on the green band (minimum 4.5:1 contrast ratio)
-$defra-internal-link: #00703c;
-$defra-internal-link-hover: color.mix(#000000, $defra-internal-link, 40%);
+```scss
+@use 'waste-regulator-components-fe/dist/wrc/index' as * with (
+  $defra-internal-brand: #00a33b
+);
 ```
 
 ### Import component styles in `application.scss`
 
-In your main `application.scss`, import the `defra-internal-frontend` component styles after `govuk-frontend`:
+In your main `application.scss`, import the `waste-regulator-components-fe` component styles after `govuk-frontend`:
 
 ```scss
 // src/client/stylesheets/application.scss
 @use 'govuk-frontend';
-@use 'defra-internal-frontend/dist/wrc/components' as *;
-
-@use 'variables';
-@use 'helpers';
-@use 'core';
-@use 'components';
+@use 'waste-regulator-components-fe/dist/wrc/index' as *;
 
 :root {
   --govuk-brand-colour: #00a33b;
@@ -91,15 +96,15 @@ In your main `application.scss`, import the `defra-internal-frontend` component 
 > If you only need specific components, you can import individual stylesheets instead:
 >
 > ```scss
-> @use 'defra-internal-frontend/dist/wrc/components/header';
-> @use 'defra-internal-frontend/dist/wrc/components/footer';
-> @use 'defra-internal-frontend/dist/wrc/components/cookie-banner';
-> @use 'defra-internal-frontend/dist/wrc/components/service-header';
+> @use 'waste-regulator-components-fe/dist/wrc/components/header';
+> @use 'waste-regulator-components-fe/dist/wrc/components/footer';
+> @use 'waste-regulator-components-fe/dist/wrc/components/cookie-banner';
+> @use 'waste-regulator-components-fe/dist/wrc/components/service-header';
 > ```
 
 ### Configure Sass compiler load paths
 
-Ensure your bundler's Sass compiler resolves `node_modules` and your local stylesheets directory.
+Ensure your bundler's Sass compiler resolves the directory containing `node_modules` (usually the project root `.`, or the workspace root in a monorepo) alongside `node_modules` so `node_modules/govuk-frontend/dist/govuk/base` resolves cleanly.
 
 #### Vite (`vite.config.js`)
 
@@ -133,6 +138,7 @@ export default defineConfig({
       options: {
         sassOptions: {
           loadPaths: [
+            dirname,
             path.join(dirname, 'node_modules'),
             path.join(dirname, 'src/client/stylesheets')
           ],
@@ -148,7 +154,7 @@ export default defineConfig({
 
 ## 3. Copy static image assets
 
-`defra-internal-frontend` provides Defra favicons, `apple-touch-icon.png`, and `govuk-crest.svg` in `dist/wrc/assets/images/`. Copy these into your public assets folder alongside `govuk-frontend` assets.
+`waste-regulator-components-fe` provides Defra favicons, `apple-touch-icon.png`, and `govuk-crest.svg` in `dist/wrc/assets/images/`. Copy these into your public assets folder alongside `govuk-frontend` assets.
 
 #### Vite (`vite.config.js`)
 
@@ -162,7 +168,7 @@ const govukAssets = path.join(
 )
 const defraAssets = path.join(
   dirname,
-  'node_modules/defra-internal-frontend/dist/wrc/assets'
+  'node_modules/waste-regulator-components-fe/dist/wrc/assets'
 )
 const dest = path.join(dirname, 'src/client/static/assets')
 

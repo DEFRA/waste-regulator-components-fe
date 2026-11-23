@@ -208,9 +208,58 @@ describe('Documentation local server', () => {
         '.govuk-service-navigation__link[aria-current="page"] strong'
       ).text()
     ).toBe('Home')
+    const sidebarHeadings = $home('.wrc-docs-sidebar__heading')
+      .map((_index, element) => $home(element).text().trim())
+      .get()
+    expect(sidebarHeadings).toContain('Prototyping')
+    expect(sidebarHeadings).toContain('Production')
     expect(homeRes.payload).toContain('href="./get-started/installation.html"')
+    expect(homeRes.payload).toContain('href="./get-started/prototype-kit.html"')
     expect(homeRes.payload).toContain('href="./components/"')
     expect(homeRes.payload).toContain('href="./running-locally.html"')
+
+    const getStartedRes = await server.inject({
+      method: 'GET',
+      url: '/get-started/'
+    })
+    expect(getStartedRes.statusCode).toBe(200)
+    expect(getStartedRes.payload).toContain('href="./prototype-kit.html"')
+    expect(getStartedRes.payload).toContain('href="./installation.html"')
+
+    const prototypeKitRes = await server.inject({
+      method: 'GET',
+      url: '/get-started/prototype-kit.html'
+    })
+    expect(prototypeKitRes.statusCode).toBe(200)
+    const $prototypeKit = cheerio.load(prototypeKitRes.payload)
+    expect(
+      $prototypeKit(
+        '.govuk-service-navigation__link[aria-current="true"] strong'
+      ).text()
+    ).toBe('Get started')
+    expect(
+      $prototypeKit('.wrc-docs-sidebar__link--current[aria-current="page"]')
+        .text()
+        .trim()
+    ).toBe('Prototype installation')
+    expect(prototypeKitRes.payload).toContain('govuk-prototype-kit.config.json')
+
+    const installationRes = await server.inject({
+      method: 'GET',
+      url: '/get-started/installation.html'
+    })
+    expect(installationRes.statusCode).toBe(200)
+    const $installation = cheerio.load(installationRes.payload)
+    expect(
+      $installation(
+        '.govuk-service-navigation__link[aria-current="true"] strong'
+      ).text()
+    ).toBe('Get started')
+    expect(
+      $installation('.wrc-docs-sidebar__link--current[aria-current="page"]')
+        .text()
+        .trim()
+    ).toBe('Production installation')
 
     const headerRes = await server.inject({
       method: 'GET',

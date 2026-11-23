@@ -7,15 +7,21 @@ title: Home
 
 Design and build consistent, accessible digital services for the Department for Environment, Food and Rural Affairs (Defra).
 
-`defra-internal-frontend` provides reusable Nunjucks components, Sass stylesheets, and static assets built on top of [GOV.UK Frontend](https://design-system.service.gov.uk/) v6.
+`waste-regulator-components-fe` provides reusable Nunjucks components, Sass stylesheets, and static assets built on top of [GOV.UK Frontend](https://design-system.service.gov.uk/) v6.
 
 ---
 
 ## Get started
 
-Learn how to install and configure `defra-internal-frontend` in your production application:
+Install and configure `waste-regulator-components-fe` for either a prototype or a production service:
 
-- [**Installation**](./get-started/installation.md) — Prerequisites, installing via npm, and package directory layout.
+### Prototyping
+
+- [**Prototype installation (GOV.UK Prototype Kit)**](./get-started/prototype-kit.md) — Install as a GOV.UK Prototype Kit v13+ plugin with automatic Sass, static assets, and `wrc*` macro registration.
+
+### Production
+
+- [**Production installation**](./get-started/installation.md) — Prerequisites, installing via npm, and package directory layout.
 - [**Project setup**](./get-started/project-setup.md) — Configuring Nunjucks search paths, Sass variables, and Vite / Webpack asset bundling.
 - [**Page template**](./get-started/page-template.md) — Creating a base `page.njk` layout extending `govuk/template.njk`.
 
