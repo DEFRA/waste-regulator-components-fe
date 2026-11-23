@@ -75,13 +75,13 @@ import path from 'node:path'
 import nunjucks from 'nunjucks'
 
 const require = createRequire(import.meta.url)
-const defraInternalPath = path.dirname(
+const wrcPath = path.dirname(
   require.resolve('waste-regulator-components-fe/package.json')
 )
 const govukPath = path.dirname(require.resolve('govuk-frontend/package.json'))
 
 const env = nunjucks.configure(
-  [path.join(defraInternalPath, 'dist'), path.join(govukPath, 'dist')],
+  [path.join(wrcPath, 'dist'), path.join(govukPath, 'dist')],
   {
     autoescape: true
   }

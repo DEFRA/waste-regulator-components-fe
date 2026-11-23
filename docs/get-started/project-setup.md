@@ -195,7 +195,7 @@ new CopyPlugin({
       to: 'assets'
     },
     {
-      from: path.join(defraInternalFrontendPath, 'dist/wrc/assets'),
+      from: path.join(wrcPath, 'dist/wrc/assets'),
       to: 'assets',
       force: true
     }
