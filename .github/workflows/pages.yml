@@ -11,9 +11,14 @@ on:
       - 'scripts/detect-bump.js'
       - 'scripts/sass-config.js'
       - '.github/workflows/pages.yml'
-  release:
+  # Runs on the default branch (main) after Publish to npm succeeds so
+  # github-pages' main-only deployment policy passes without tag rules.
+  # Must match the `name:` field in .github/workflows/publish.yml.
+  workflow_run:
+    workflows:
+      - Publish to npm
     types:
-      - published
+      - completed
   workflow_dispatch:
 
 permissions:
@@ -28,12 +33,12 @@ concurrency:
 jobs:
   build:
     name: Build Jekyll Documentation
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v6
         with:
-          ref: ${{ github.event_name == 'release' && 'main' || github.ref }}
           fetch-depth: 0
 
       - name: Setup Node.js
