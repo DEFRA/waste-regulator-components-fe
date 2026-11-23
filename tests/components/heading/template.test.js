@@ -27,6 +27,14 @@ describe('Heading Component', () => {
       ).toBe('A page showing available services')
     })
 
+    test('Should size the caption to match the heading', () => {
+      expect(
+        $heading('[data-testid="wrc-heading-caption"]').hasClass(
+          'govuk-caption-xl'
+        )
+      ).toBe(true)
+    })
+
     test('Should render the caption before the heading', () => {
       expect(
         $heading('[data-testid="wrc-heading-caption"] + h1').attr('data-testid')
