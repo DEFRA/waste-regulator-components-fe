@@ -5,7 +5,7 @@ title: Contributing
 
 # Contributing
 
-We welcome contributions to `defra-internal-frontend` (`waste-regulator-components-fe`).
+We welcome contributions to `waste-regulator-components-fe`.
 
 ---
 

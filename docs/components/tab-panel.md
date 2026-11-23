@@ -45,4 +45,4 @@ Including `dist/wrc/components/tab-panel/_index.scss` applies:
 
 ## Stylesheet import
 
-Included automatically via `dist/wrc/components/_index.scss` (or imported individually via `@use "dist/wrc/components/tab-panel";`).
+Included automatically via `dist/wrc/components/_index.scss` (or imported individually via `@use 'waste-regulator-components-fe/dist/wrc/components/tab-panel';`).

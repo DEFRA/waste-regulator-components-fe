@@ -80,5 +80,5 @@ Use the Defra internal header at the top of all pages in internal Defra services
 To import styles for this component individually:
 
 ```scss
-@use 'defra-internal-frontend/dist/wrc/components/header';
+@use 'waste-regulator-components-fe/dist/wrc/components/header';
 ```

@@ -1,5 +1,5 @@
 {
-  "name": "defra-internal-frontend",
+  "name": "waste-regulator-components-fe",
   "version": "0.1.0",
   "description": "Reusable Nunjucks components, Sass stylesheets, and static assets for Defra internal services",
   "sass": "dist/wrc/index.scss",

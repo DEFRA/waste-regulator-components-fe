@@ -56,4 +56,4 @@ Including `dist/wrc/components/moj-scrollable-pane/_index.scss` applies normal t
 
 ## Stylesheet import
 
-Included automatically via `dist/wrc/components/_index.scss` (or imported individually via `@use "dist/wrc/components/moj-scrollable-pane";`).
+Included automatically via `dist/wrc/components/_index.scss` (or imported individually via `@use 'waste-regulator-components-fe/dist/wrc/components/moj-scrollable-pane';`).

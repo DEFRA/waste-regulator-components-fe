@@ -1,7 +1,7 @@
 {
-  "name": "defra-internal-frontend-example-app",
+  "name": "waste-regulator-components-fe-example-app",
   "version": "1.0.0",
-  "description": "Example Hapi.js and Nunjucks application using defra-internal-frontend components",
+  "description": "Example Hapi.js and Nunjucks application using waste-regulator-components-fe components",
   "private": true,
   "type": "module",
   "scripts": {

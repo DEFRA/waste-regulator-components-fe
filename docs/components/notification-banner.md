@@ -60,4 +60,4 @@ GOV.UK Frontend provides default (blue Important) and `govuk-notification-banner
 
 ## Stylesheet import
 
-Included automatically via `dist/wrc/components/_index.scss` (or imported individually via `@use "dist/wrc/components/notification-banner";`).
+Included automatically via `dist/wrc/components/_index.scss` (or imported individually via `@use 'waste-regulator-components-fe/dist/wrc/components/notification-banner';`).
