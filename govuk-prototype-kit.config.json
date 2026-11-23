@@ -1,0 +1,77 @@
+{
+  "meta": {
+    "description": "Reusable Nunjucks components, Sass stylesheets, and static assets for Defra internal services",
+    "urls": {
+      "documentation": "https://defra.github.io/waste-regulator-components-fe/",
+      "releaseNotes": "https://github.com/DEFRA/waste-regulator-components-fe/releases/latest",
+      "versionHistory": "https://github.com/DEFRA/waste-regulator-components-fe/releases"
+    }
+  },
+  "pluginDependencies": [
+    {
+      "packageName": "govuk-frontend",
+      "minVersion": "6.0.0"
+    }
+  ],
+  "assets": ["/dist/wrc/assets"],
+  "sass": ["/dist/index.scss"],
+  "nunjucksPaths": ["/dist"],
+  "nunjucksMacros": [
+    {
+      "importFrom": "wrc/components/cookie-banner/macro.njk",
+      "macroName": "wrcCookieBanner"
+    },
+    {
+      "importFrom": "wrc/components/csrf-field/macro.njk",
+      "macroName": "wrcCsrfField"
+    },
+    {
+      "importFrom": "wrc/components/footer/macro.njk",
+      "macroName": "wrcFooter"
+    },
+    {
+      "importFrom": "wrc/components/google-analytics/macro.njk",
+      "macroName": "wrcGoogleAnalytics"
+    },
+    {
+      "importFrom": "wrc/components/header/macro.njk",
+      "macroName": "wrcHeader"
+    },
+    {
+      "importFrom": "wrc/components/heading/macro.njk",
+      "macroName": "wrcHeading"
+    },
+    {
+      "importFrom": "wrc/components/organisation-link/macro.njk",
+      "macroName": "wrcOrganisationLink"
+    },
+    {
+      "importFrom": "wrc/components/search/macro.njk",
+      "macroName": "wrcSearch"
+    },
+    {
+      "importFrom": "wrc/components/service-header/macro.njk",
+      "macroName": "wrcServiceHeader"
+    },
+    {
+      "importFrom": "wrc/components/sorting-column-header/macro.njk",
+      "macroName": "wrcSortingColumnHeader"
+    },
+    {
+      "importFrom": "wrc/components/status-tag/macro.njk",
+      "macroName": "wrcStatusTag"
+    },
+    {
+      "importFrom": "wrc/components/submission-status-tag/macro.njk",
+      "macroName": "wrcSubmissionStatusTag"
+    },
+    {
+      "importFrom": "wrc/components/subnavigation/macro.njk",
+      "macroName": "wrcSubnavigation"
+    },
+    {
+      "importFrom": "wrc/components/tabs-list/macro.njk",
+      "macroName": "wrcTabsList"
+    }
+  ]
+}

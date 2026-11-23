@@ -1,4 +1,4 @@
-@use "govuk-frontend" as *;
+@use "../../vendor/govuk-frontend" as *;
 
 // Mirrors govuk-notification-banner--success: only the banner chrome colour changes.
 // GOV.UK Design System has no cancelled variant — default is blue Important,
