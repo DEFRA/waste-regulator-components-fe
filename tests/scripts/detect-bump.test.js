@@ -2,6 +2,7 @@ import { execFileSync } from 'node:child_process'
 import fs from 'node:fs'
 import os from 'node:os'
 import path from 'node:path'
+import { fileURLToPath } from 'node:url'
 import { vi } from 'vitest'
 
 import {
@@ -11,10 +12,14 @@ import {
   getCommitsSinceTag,
   getLatestTag,
   readPackageVersion,
+  execShellScript,
   resolveGitBinary,
+  resolveShellForScripts,
   runCli
 } from '../../scripts/detect-bump.js'
 
+const dirname = path.dirname(fileURLToPath(import.meta.url))
+const repoRoot = path.resolve(dirname, '../..')
 const gitBin = resolveGitBinary()
 
 function initTempGitRepo() {
@@ -186,6 +191,59 @@ describe('detect-bump script', () => {
       expect(path.basename(resolveGitBinary())).toBe('git')
       expect(resolveGitBinary('')).toBe('git')
       expect(resolveGitBinary('/nonexistent-bin-dir')).toBe('git')
+    })
+
+    test('resolves shell for scripts and can run generate-release-notes.sh', () => {
+      const shell = resolveShellForScripts()
+      if (process.platform === 'win32') {
+        expect(shell.toLowerCase()).toMatch(/bash\.exe$/)
+        expect(resolveShellForScripts('')).toMatch(/bash/i)
+      } else {
+        expect(shell).toBe('sh')
+      }
+
+      const output = execShellScript(
+        path.join(repoRoot, 'scripts/generate-release-notes.sh'),
+        ['--preview'],
+        { cwd: repoRoot, encoding: 'utf8' }
+      )
+      expect(output).toContain(
+        'Release notes for Waste Regulator Components Frontend'
+      )
+    })
+
+    test('resolveShellForScripts uses POSIX sh off Windows', () => {
+      const platformSpy = vi
+        .spyOn(process, 'platform', 'get')
+        .mockReturnValue('linux')
+      try {
+        expect(resolveShellForScripts()).toBe('sh')
+      } finally {
+        platformSpy.mockRestore()
+      }
+    })
+
+    test('resolveShellForScripts falls back when Git Bash is not on PATH', () => {
+      const platformSpy = vi
+        .spyOn(process, 'platform', 'get')
+        .mockReturnValue('win32')
+      const previousProgramFiles = process.env.ProgramFiles
+      const previousProgramFilesX86 = process.env['ProgramFiles(x86)']
+      delete process.env.ProgramFiles
+      delete process.env['ProgramFiles(x86)']
+      try {
+        expect(resolveShellForScripts(path.dirname(process.execPath))).toBe(
+          'bash.exe'
+        )
+      } finally {
+        platformSpy.mockRestore()
+        if (previousProgramFiles) {
+          process.env.ProgramFiles = previousProgramFiles
+        }
+        if (previousProgramFilesX86) {
+          process.env['ProgramFiles(x86)'] = previousProgramFilesX86
+        }
+      }
     })
 
     test('supports default cwd parameters', () => {

@@ -114,6 +114,50 @@ export function resolveGitBinary(envPath = process.env.PATH) {
   return match ?? 'git'
 }
 
+function findExecutableOnPath(binaryName, envPath = process.env.PATH) {
+  if (!envPath) {
+    return null
+  }
+  return (
+    envPath
+      .split(path.delimiter)
+      .map((dir) => path.join(dir, binaryName))
+      .find((candidate) => {
+        try {
+          fs.accessSync(candidate, fs.constants.X_OK)
+          return true
+        } catch {
+          return false
+        }
+      }) ?? null
+  )
+}
+
+/**
+ * Shell used to run repository .sh scripts (Git Bash on Windows, POSIX sh elsewhere).
+ */
+export function resolveShellForScripts(envPath = process.env.PATH) {
+  if (process.platform === 'win32') {
+    const programFiles = process.env.ProgramFiles
+    const programFilesX86 = process.env['ProgramFiles(x86)']
+    const candidates = [
+      programFiles && path.join(programFiles, 'Git', 'bin', 'bash.exe'),
+      programFilesX86 && path.join(programFilesX86, 'Git', 'bin', 'bash.exe'),
+      findExecutableOnPath('bash.exe', envPath)
+    ].filter(Boolean)
+    return candidates[0] ?? 'bash.exe'
+  }
+  return 'sh'
+}
+
+/**
+ * Run a shell script via sh/bash so tests work on Windows without a shebang executable.
+ */
+export function execShellScript(scriptPath, args = [], options = {}) {
+  const shell = resolveShellForScripts(options.env?.PATH)
+  return execFileSync(shell, [scriptPath, ...args], options)
+}
+
 /**
  * Retrieve the latest semantic version git tag (vX.Y.Z) or null when none exists.
  */

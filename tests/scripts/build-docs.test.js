@@ -121,7 +121,7 @@ describe('Documentation build and structure', () => {
     expect(mdFiles.length).toBeGreaterThanOrEqual(25)
 
     for (const filePath of mdFiles) {
-      const content = fs.readFileSync(filePath, 'utf8')
+      const content = fs.readFileSync(filePath, 'utf8').replaceAll('\r\n', '\n')
       const match = content.match(/^---\n([\s\S]*?)\n---\n/)
       expect(match, `${filePath} should have YAML frontmatter`).not.toBeNull()
       expect(match[1]).toContain('layout: default')
