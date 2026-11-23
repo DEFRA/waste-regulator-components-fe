@@ -48,6 +48,7 @@
     ]
   }) }}
 
+  {% set serviceNavigationContext %}<div class="defra-internal-service-navigation__context">{{ releaseVersion }}</div>{% endset %}
   {{ wrcServiceHeader({
     serviceName: serviceName | default("Waste Tracking Service"),
     serviceUrl: "/",
@@ -56,7 +57,7 @@
       { text: "Dashboard", href: "/", current: currentUrl == "/" },
       { text: "Cookie policy", href: "/cookies", current: currentUrl == "/cookies" }
     ],
-    regulatorContext: '<div class="defra-internal-service-navigation__context">Environment Agency</div>',
+    regulatorContext: serviceNavigationContext,
     languageSwitcher: {
       en: "/?lang=en",
       cy: "/?lang=cy"

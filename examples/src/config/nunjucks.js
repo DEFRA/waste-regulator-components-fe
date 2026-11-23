@@ -1,13 +1,14 @@
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import nunjucks from 'nunjucks'
+import { resolveReleaseTag } from '../../../scripts/detect-bump.js'
 import { translate } from '../../../tests/helpers/translate.js'
 
 const dirname = path.dirname(fileURLToPath(import.meta.url))
 const rootDir = path.resolve(dirname, '../../..')
 const viewsDir = path.resolve(dirname, '../views')
 
-export function createNunjucksEnvironment(customPaths = []) {
+export function createNunjucksEnvironment(customPaths = [], options = {}) {
   const templatePaths = [
     viewsDir,
     path.join(rootDir, 'dist'),
@@ -22,6 +23,10 @@ export function createNunjucksEnvironment(customPaths = []) {
   })
 
   env.addGlobal('govukRebrand', true)
+  env.addGlobal(
+    'releaseVersion',
+    options.releaseVersion ?? resolveReleaseTag(rootDir)
+  )
   env.addGlobal('t', (locale, key, params = {}) =>
     translate(locale, key, params)
   )

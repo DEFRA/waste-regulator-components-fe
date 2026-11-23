@@ -66,4 +66,4 @@ npm run release-notes:next-version  # Print next semantic version tag
 
 1. **Pull request preview**: Opening or updating a PR targeting `main` runs `.github/workflows/pr-release-notes.yml`, posting and updating a preview comment with the calculated version bump and release notes.
 2. **Draft release on `main`**: Merging into `main` runs `.github/workflows/release.yml`, which creates or updates a Draft GitHub Release when a version bump is detected.
-3. **Publish to npm**: Publishing the GitHub Release triggers `.github/workflows/publish.yml`, which syncs `package.json` with the release tag, runs `npm test`, and publishes the package to npm.
+3. **Publish to npm**: Publishing the GitHub Release triggers `.github/workflows/publish.yml` (which syncs `package.json` with the release tag, runs `npm test`, and publishes the package to npm) and `.github/workflows/pages.yml` (which rebuilds and deploys the documentation site with the new release version in the service navigation).

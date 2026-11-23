@@ -2,6 +2,7 @@ import crypto from 'node:crypto'
 import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { resolveReleaseTag as resolveGitReleaseTag } from './detect-bump.js'
 import { DEFAULT_ROOT_DIR, compileDesignSystemScss } from './sass-config.js'
 
 /**
@@ -57,10 +58,26 @@ export function copyDocsImages({
   return copied
 }
 
+export function resolveReleaseTag(rootDir = DEFAULT_ROOT_DIR) {
+  return resolveGitReleaseTag(rootDir)
+}
+
+export function writeDocsReleaseData({
+  rootDir = DEFAULT_ROOT_DIR,
+  releaseDataPath = path.join(rootDir, 'docs/_data/release.yml')
+} = {}) {
+  const releaseTag = resolveReleaseTag(rootDir)
+  writeFileAtomically(releaseDataPath, (tempPath) => {
+    fs.writeFileSync(tempPath, `tag: ${releaseTag}\n`)
+  })
+  return releaseTag
+}
+
 export function buildDocs(options = {}) {
   const css = buildDocsStyles(options)
   const images = copyDocsImages(options)
-  return { css, images }
+  const releaseTag = writeDocsReleaseData(options)
+  return { css, images, releaseTag }
 }
 
 /* v8 ignore start */
@@ -68,9 +85,9 @@ if (
   process.argv[1] &&
   path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)
 ) {
-  const { images } = buildDocs()
+  const { images, releaseTag } = buildDocs()
   console.log(
-    `Docs CSS and ${images.length} images built successfully in docs/assets/`
+    `Docs CSS, ${images.length} images, and release data (${releaseTag}) built successfully in docs/`
   )
 }
 /* v8 ignore stop */

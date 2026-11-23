@@ -4,10 +4,12 @@ import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import * as cheerio from 'cheerio'
 
+import { resolveReleaseTag } from '../../scripts/build-docs.js'
 import {
   DEFAULT_DOCS_PORT,
   createDocsServer,
   createLiquidEngine,
+  loadSiteContext,
   parseDocsPort,
   parseFrontmatter,
   resolveDocsRoute,
@@ -197,6 +199,9 @@ describe('Documentation local server', () => {
     const $home = cheerio.load(homeRes.payload)
     expect($home('.defra-internal-header').length).toBe(1)
     expect($home('.defra-internal-service-header').length).toBe(1)
+    expect(
+      $home('.defra-internal-service-navigation__context').text().trim()
+    ).toBe(resolveReleaseTag())
     expect($home('body > footer.defra-internal-footer').length).toBe(1)
     expect(
       $home(
@@ -281,6 +286,9 @@ describe('Documentation local server', () => {
     fs.cpSync(path.join(docsDir, '_data'), path.join(tempDocsDir, '_data'), {
       recursive: true
     })
+    fs.writeFileSync(path.join(tempDocsDir, '_data/release.yml'), '')
+    expect(loadSiteContext(tempDocsDir).data.release).toEqual({})
+    fs.rmSync(path.join(tempDocsDir, '_data/release.yml'), { force: true })
     fs.cpSync(
       path.join(docsDir, '_layouts'),
       path.join(tempDocsDir, '_layouts'),
@@ -304,5 +312,9 @@ describe('Documentation local server', () => {
     expect(res.statusCode).toBe(200)
     expect(res.payload).toContain('<h1')
     expect(res.payload).toContain('Minimal Page')
+    const $fallback = cheerio.load(res.payload)
+    expect(
+      $fallback('.defra-internal-service-navigation__context').text().trim()
+    ).toBe('Design System')
   })
 })

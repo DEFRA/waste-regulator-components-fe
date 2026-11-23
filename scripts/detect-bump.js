@@ -202,6 +202,13 @@ export function readPackageVersion(cwd = process.cwd()) {
 }
 
 /**
+ * Resolve the latest semantic version release tag (vX.Y.Z), falling back to package.json.
+ */
+export function resolveReleaseTag(cwd = process.cwd()) {
+  return getLatestTag(cwd) ?? `v${readPackageVersion(cwd)}`
+}
+
+/**
  * CLI entrypoint reporting bump level, next tag, or full JSON metadata.
  */
 export function runCli(argv = process.argv.slice(2), options = {}) {

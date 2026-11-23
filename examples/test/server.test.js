@@ -1,7 +1,15 @@
+import path from 'node:path'
+import { fileURLToPath } from 'node:url'
 import { describe, it, expect, beforeAll, afterAll } from 'vitest'
 import * as cheerio from 'cheerio'
+import { resolveReleaseTag } from '../../scripts/detect-bump.js'
+import { createNunjucksEnvironment } from '../src/config/nunjucks.js'
 import { createServer } from '../src/server.js'
 import { parseSort } from '../src/routes/home.js'
+
+const dirname = path.dirname(fileURLToPath(import.meta.url))
+const repoRoot = path.resolve(dirname, '../..')
+const expectedReleaseVersion = resolveReleaseTag(repoRoot)
 
 describe('Example Application Hapi Server', () => {
   let server
@@ -70,7 +78,10 @@ describe('Example Application Hapi Server', () => {
       expect($('.govuk-service-navigation__service-name').text()).toContain(
         'Waste Tracking Service'
       )
-      expect($('.defra-internal-service-header').text()).toContain(
+      expect(
+        $('.defra-internal-service-navigation__context').text().trim()
+      ).toBe(expectedReleaseVersion)
+      expect($('.defra-internal-service-header').text()).not.toContain(
         'Environment Agency'
       )
 
@@ -316,9 +327,55 @@ describe('Example Application Hapi Server', () => {
 
       expect(response.statusCode).toBe(200)
       const $ = cheerio.load(response.payload)
+      expect(
+        $('.defra-internal-service-navigation__context').text().trim()
+      ).toBe(expectedReleaseVersion)
       expect($('.govuk-cookie-banner').length).toBe(0)
       expect($('h1').text()).toContain('Cookies on Waste Tracking Service')
       expect($('input[name="analytics"]').length).toBe(2)
+    })
+  })
+
+  describe('Service navigation release version', () => {
+    it('renders custom releaseVersion and escapes HTML in service navigation context', async () => {
+      const customServer = await createServer({
+        port: 0,
+        nunjucksEnvironment: createNunjucksEnvironment([], {
+          releaseVersion: 'v9.9.9'
+        })
+      })
+      await customServer.initialize()
+
+      try {
+        const res = await customServer.inject({ method: 'GET', url: '/' })
+        expect(res.statusCode).toBe(200)
+        const $ = cheerio.load(res.payload)
+        expect(
+          $('.defra-internal-service-navigation__context').text().trim()
+        ).toBe('v9.9.9')
+      } finally {
+        await customServer.stop()
+      }
+
+      const escapedServer = await createServer({
+        port: 0,
+        nunjucksEnvironment: createNunjucksEnvironment([], {
+          releaseVersion: '<script>v1</script>'
+        })
+      })
+      await escapedServer.initialize()
+
+      try {
+        const res = await escapedServer.inject({ method: 'GET', url: '/' })
+        expect(res.statusCode).toBe(200)
+        expect(res.payload).not.toContain('<script>v1</script>')
+        const $ = cheerio.load(res.payload)
+        expect(
+          $('.defra-internal-service-navigation__context').text().trim()
+        ).toBe('<script>v1</script>')
+      } finally {
+        await escapedServer.stop()
+      }
     })
   })
 
