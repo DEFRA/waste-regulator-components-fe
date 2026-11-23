@@ -1,6 +1,7 @@
+import { execFileSync } from 'node:child_process'
 import fs from 'node:fs'
 import path from 'node:path'
-import { fileURLToPath } from 'node:url'
+import { fileURLToPath, pathToFileURL } from 'node:url'
 import * as sass from 'sass-embedded'
 
 const dirname = path.dirname(fileURLToPath(import.meta.url))
@@ -8,6 +9,25 @@ const rootDir = path.resolve(dirname, '../..')
 
 function readJson(relativePath) {
   return JSON.parse(fs.readFileSync(path.join(rootDir, relativePath), 'utf8'))
+}
+
+function resolveKitCliPath() {
+  const kitDir = path.join(rootDir, 'node_modules/govuk-prototype-kit')
+  const kitPkg = JSON.parse(
+    fs.readFileSync(path.join(kitDir, 'package.json'), 'utf8')
+  )
+  const binEntry =
+    typeof kitPkg.bin === 'string'
+      ? kitPkg.bin
+      : kitPkg.bin['govuk-prototype-kit']
+
+  return path.join(kitDir, binEntry)
+}
+
+function assertValidPrototypeCss(css) {
+  expect(css).toContain('.defra-internal-header')
+  expect(css).toContain('.v3-compact-table tbody th')
+  expect(css).not.toContain('.govuk-table tbody th')
 }
 
 function listComponentMacroPaths(componentsDir) {
@@ -72,10 +92,25 @@ describe('GOV.UK Prototype Kit plugin configuration', () => {
     }
   })
 
+  test('passes govuk-prototype-kit validate-plugin', () => {
+    const output = execFileSync(
+      process.execPath,
+      [resolveKitCliPath(), 'validate-plugin'],
+      { cwd: rootDir, encoding: 'utf8' }
+    )
+
+    expect(output).toContain('The plugin config is valid.')
+  })
+
   test('every configured sass entry compiles in a Prototype Kit build', () => {
+    const kitFrontendInit = path.join(
+      rootDir,
+      'node_modules/govuk-frontend/dist/govuk-prototype-kit/init.scss'
+    )
+
     for (const sassEntry of config.sass) {
       const importPath = sassEntry.slice(1).replace(/\.scss$/, '')
-      const result = sass.compileString(
+      const v13Result = sass.compileString(
         `
         $govuk-prototype-kit-major-version: 13;
         $govuk-extensions-url-context: "/plugin-assets";
@@ -88,9 +123,29 @@ describe('GOV.UK Prototype Kit plugin configuration', () => {
         }
       )
 
-      expect(result.css).toContain('.defra-internal-header')
-      expect(result.css).toContain('.v3-compact-table tbody th')
-      expect(result.css).not.toContain('.govuk-table tbody th')
+      assertValidPrototypeCss(v13Result.css)
+
+      // Match how Prototype Kit v14 generates .tmp/sass/_plugins.scss via
+      // sassPlugins() and compiles with loadPaths and NodePackageImporter.
+      const absoluteEntry = path.join(rootDir, sassEntry.slice(1))
+      const v14Result = sass.compileString(
+        `
+        $govuk-extensions-url-context: "/plugin-assets";
+        $govuk-plugins-url-context: "/plugin-assets";
+        $govuk-prototype-kit-major-version: 13;
+        @import "${kitFrontendInit.split(path.sep).join('/')}";
+        @import "${absoluteEntry.split(path.sep).join('/')}";
+      `,
+        {
+          url: pathToFileURL(path.join(rootDir, '.tmp/sass/_plugins.scss')),
+          loadPaths: [rootDir],
+          quietDeps: true,
+          silenceDeprecations: ['import'],
+          importers: [new sass.NodePackageImporter(rootDir)]
+        }
+      )
+
+      assertValidPrototypeCss(v14Result.css)
     }
   })
 })
