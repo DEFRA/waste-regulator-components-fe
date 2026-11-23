@@ -4,7 +4,7 @@ import os from 'node:os'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 
-import { resolveGitBinary } from '../../scripts/detect-bump.js'
+import { execShellScript, resolveGitBinary } from '../../scripts/detect-bump.js'
 
 const dirname = path.dirname(fileURLToPath(import.meta.url))
 const repoRoot = path.resolve(dirname, '../..')
@@ -66,7 +66,7 @@ describe('git-cliff release notes configuration', () => {
     const dir = createRepoWithSampleCommits()
     tempDirs.push(dir)
 
-    const output = execFileSync(scriptPath, ['--preview'], {
+    const output = execShellScript(scriptPath, ['--preview'], {
       cwd: dir,
       encoding: 'utf8'
     })
@@ -106,7 +106,7 @@ describe('git-cliff release notes configuration', () => {
     const dir = createRepoWithSampleCommits()
     tempDirs.push(dir)
 
-    const taggedOutput = execFileSync(scriptPath, ['--tag', 'v1.0.0'], {
+    const taggedOutput = execShellScript(scriptPath, ['--tag', 'v1.0.0'], {
       cwd: dir,
       encoding: 'utf8'
     })
@@ -118,7 +118,7 @@ describe('git-cliff release notes configuration', () => {
     expect(taggedOutput).toContain('## 🚀 Features')
 
     execFileSync(gitBin, ['tag', 'v1.0.0'], { cwd: dir, stdio: 'ignore' })
-    const latestOutput = execFileSync(scriptPath, [], {
+    const latestOutput = execShellScript(scriptPath, [], {
       cwd: dir,
       encoding: 'utf8'
     })

@@ -93,25 +93,61 @@ export function calculateNextVersion(currentVersion, bump) {
   return calculator()
 }
 
+function isExecutable(candidate) {
+  try {
+    fs.accessSync(candidate, fs.constants.X_OK)
+    return true
+  } catch {
+    return false
+  }
+}
+
+function findExecutableOnPath(binaryName, envPath) {
+  if (!envPath) {
+    return null
+  }
+  return (
+    envPath
+      .split(path.delimiter)
+      .map((dir) => path.join(dir, binaryName))
+      .find(isExecutable) ?? null
+  )
+}
+
 /**
  * Resolve the git binary path from PATH to avoid POSIX spawn PATH permission errors in sandboxed environments.
  */
 export function resolveGitBinary(envPath = process.env.PATH) {
-  if (!envPath) {
-    return 'git'
+  return findExecutableOnPath('git', envPath) ?? 'git'
+}
+
+/**
+ * Shell used to run repository .sh scripts (Git Bash on Windows, POSIX sh elsewhere).
+ */
+export function resolveShellForScripts(envPath = process.env.PATH) {
+  if (process.platform === 'win32') {
+    const windowsCandidates = [
+      process.env.ProgramFiles,
+      process.env['ProgramFiles(x86)']
+    ]
+      .filter(Boolean)
+      .map((baseDir) => path.join(baseDir, 'Git', 'bin', 'bash.exe'))
+
+    return (
+      windowsCandidates.find(isExecutable) ??
+      findExecutableOnPath('bash.exe', envPath) ??
+      'bash.exe'
+    )
   }
-  const match = envPath
-    .split(path.delimiter)
-    .map((dir) => path.join(dir, 'git'))
-    .find((candidate) => {
-      try {
-        fs.accessSync(candidate, fs.constants.X_OK)
-        return true
-      } catch {
-        return false
-      }
-    })
-  return match ?? 'git'
+  return findExecutableOnPath('sh', envPath) ?? 'sh'
+}
+
+/**
+ * Run a shell script via sh/bash so tests work on Windows without a shebang executable.
+ */
+export function execShellScript(scriptPath, args = [], options = {}) {
+  const shell = resolveShellForScripts(options.env?.PATH)
+  return execFileSync(shell, [scriptPath, ...args], options)
 }
 
 /**

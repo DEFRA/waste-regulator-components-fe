@@ -39,22 +39,33 @@ describe('Documentation build and structure', () => {
     tempDirs.push(tempDir)
 
     const outputCssPath = path.join(tempDir, 'assets/css/docs.css')
+    const destImagesDir = path.join(tempDir, 'assets/images')
     const customCss = buildDocsStyles({ outputCssPath })
     expect(fs.existsSync(outputCssPath)).toBe(true)
     expect(customCss).toContain('.wrc-docs-layout')
 
-    const result = buildDocs()
-    expect(result.images).toEqual([
+    const isolatedResult = buildDocs({ outputCssPath, destImagesDir })
+    expect(isolatedResult.images).toEqual([
+      'apple-touch-icon.png',
+      'favicon.ico',
+      'favicon.svg',
+      'govuk-crest.svg'
+    ])
+    expect(fs.existsSync(path.join(destImagesDir, 'govuk-crest.svg'))).toBe(
+      true
+    )
+
+    const defaultResult = buildDocs()
+    expect(defaultResult.css).toContain('.wrc-docs-layout')
+    expect(defaultResult.css).toContain('#00a33b')
+    expect(defaultResult.images).toEqual([
       'apple-touch-icon.png',
       'favicon.ico',
       'favicon.svg',
       'govuk-crest.svg'
     ])
 
-    const css = fs.readFileSync(
-      path.join(docsDir, 'assets/css/docs.css'),
-      'utf8'
-    )
+    const css = fs.readFileSync(outputCssPath, 'utf8')
     expect(css).toContain('arial, sans-serif')
     expect(css).not.toContain('GDS Transport')
     expect(css).toContain('#00a33b')
@@ -110,7 +121,7 @@ describe('Documentation build and structure', () => {
     expect(mdFiles.length).toBeGreaterThanOrEqual(25)
 
     for (const filePath of mdFiles) {
-      const content = fs.readFileSync(filePath, 'utf8')
+      const content = fs.readFileSync(filePath, 'utf8').replaceAll('\r\n', '\n')
       const match = content.match(/^---\n([\s\S]*?)\n---\n/)
       expect(match, `${filePath} should have YAML frontmatter`).not.toBeNull()
       expect(match[1]).toContain('layout: default')
