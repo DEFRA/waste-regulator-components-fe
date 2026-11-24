@@ -54,7 +54,7 @@ Because the package ships a `govuk-prototype-kit.config.json` configuration file
 
 ---
 
-## Use Defra chrome in your layout
+## Use WCE regulator chrome in your layout
 
 Update `app/views/layouts/main.html` to apply the `defra-internal` body class and render `wrcHeader` and `wrcFooter` inside the GOV.UK Prototype Kit layout:
 

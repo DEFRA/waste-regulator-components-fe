@@ -14,7 +14,7 @@ Choose the installation path that matches your project — whether you are build
 Use this path when designing and testing a service with the GOV.UK Prototype Kit (v13+). The package registers its Sass stylesheet, static assets, and `wrc*` macros automatically as a plugin.
 
 - [**Prototype installation**](./prototype-kit.md)  
-  Install `waste-regulator-components-fe` as a GOV.UK Prototype Kit plugin, apply Defra chrome in your layout, and optionally customise typography or translation helpers.
+  Install `waste-regulator-components-fe` as a GOV.UK Prototype Kit plugin, apply WCE regulator chrome in your layout, and optionally customise typography or translation helpers.
 
 ---
 
@@ -35,4 +35,4 @@ Use this path when building a live or staging web application with Node.js, Nunj
 
 ## Upgrading
 
-If your production project is already using local copies of Defra components, see the [Project setup guide](./project-setup.md) for how to replace relative component imports with package imports.
+If your production project is already using local copies of WCE regulator components, see the [Project setup guide](./project-setup.md) for how to replace relative component imports with package imports.

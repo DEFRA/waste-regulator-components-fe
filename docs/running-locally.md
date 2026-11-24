@@ -28,7 +28,7 @@ npm run docs:start
 
 This runs `scripts/serve-docs.js`, which:
 
-1. Compiles `docs/assets/scss/docs.scss` into `docs/assets/css/docs.css` using the shared Defra/GOV.UK Sass configuration.
+1. Compiles `docs/assets/scss/docs.scss` into `docs/assets/css/docs.css` using the shared WCE regulator/GOV.UK Sass configuration.
 2. Copies static images from `dist/wrc/assets/images/` into `docs/assets/images/`.
 3. Writes the current release version tag to `docs/_data/release.yml` (from the latest `vX.Y.Z` Git tag, falling back to `package.json`).
 4. Starts a local Hapi server intentionally bound to `localhost` only (`http://localhost:1999`) so the development preview is not exposed on other network interfaces.

@@ -11,7 +11,7 @@ Configure your production Node.js project's Nunjucks view engine, Sass compiler,
 
 ## 1. Configure Nunjucks
 
-Add `node_modules/waste-regulator-components-fe/dist` to your Nunjucks template search paths alongside `govuk-frontend/dist`. This allows templates to import Defra components using namespaced paths matching GOV.UK Frontend (for example `{% from "wrc/components/header/macro.njk" import wrcHeader %}`).
+Add `node_modules/waste-regulator-components-fe/dist` to your Nunjucks template search paths alongside `govuk-frontend/dist`. This allows templates to import WCE regulator components using namespaced paths matching GOV.UK Frontend (for example `{% from "wrc/components/header/macro.njk" import wrcHeader %}`).
 
 ```js
 // src/config/nunjucks/nunjucks.js
@@ -36,7 +36,7 @@ const nunjucksEnvironment = nunjucks.configure(
 
 ### Required Nunjucks globals and context helpers
 
-Several Defra components rely on standard internationalisation and routing helpers registered in your Nunjucks environment or view context:
+Several WCE regulator components rely on standard internationalisation and routing helpers registered in your Nunjucks environment or view context:
 
 | Helper / Context key     | Type     | Description                                                                   |
 | ------------------------ | -------- | ----------------------------------------------------------------------------- |
