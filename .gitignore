@@ -5,4 +5,4 @@ coverage/
 .cache/
 docs/assets/css/
 docs/assets/images/
-
+docs/_data/release.yml

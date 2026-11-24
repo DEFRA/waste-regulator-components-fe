@@ -4,10 +4,12 @@ import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import * as cheerio from 'cheerio'
 
+import { resolveReleaseTag } from '../../scripts/build-docs.js'
 import {
   DEFAULT_DOCS_PORT,
   createDocsServer,
   createLiquidEngine,
+  loadSiteContext,
   parseDocsPort,
   parseFrontmatter,
   resolveDocsRoute,
@@ -197,15 +199,67 @@ describe('Documentation local server', () => {
     const $home = cheerio.load(homeRes.payload)
     expect($home('.defra-internal-header').length).toBe(1)
     expect($home('.defra-internal-service-header').length).toBe(1)
+    expect(
+      $home('.defra-internal-service-navigation__context').text().trim()
+    ).toBe(resolveReleaseTag())
     expect($home('body > footer.defra-internal-footer').length).toBe(1)
     expect(
       $home(
         '.govuk-service-navigation__link[aria-current="page"] strong'
       ).text()
     ).toBe('Home')
+    const sidebarHeadings = $home('.wrc-docs-sidebar__heading')
+      .map((_index, element) => $home(element).text().trim())
+      .get()
+    expect(sidebarHeadings).toContain('Prototyping')
+    expect(sidebarHeadings).toContain('Production')
     expect(homeRes.payload).toContain('href="./get-started/installation.html"')
+    expect(homeRes.payload).toContain('href="./get-started/prototype-kit.html"')
     expect(homeRes.payload).toContain('href="./components/"')
     expect(homeRes.payload).toContain('href="./running-locally.html"')
+
+    const getStartedRes = await server.inject({
+      method: 'GET',
+      url: '/get-started/'
+    })
+    expect(getStartedRes.statusCode).toBe(200)
+    expect(getStartedRes.payload).toContain('href="./prototype-kit.html"')
+    expect(getStartedRes.payload).toContain('href="./installation.html"')
+
+    const prototypeKitRes = await server.inject({
+      method: 'GET',
+      url: '/get-started/prototype-kit.html'
+    })
+    expect(prototypeKitRes.statusCode).toBe(200)
+    const $prototypeKit = cheerio.load(prototypeKitRes.payload)
+    expect(
+      $prototypeKit(
+        '.govuk-service-navigation__link[aria-current="true"] strong'
+      ).text()
+    ).toBe('Get started')
+    expect(
+      $prototypeKit('.wrc-docs-sidebar__link--current[aria-current="page"]')
+        .text()
+        .trim()
+    ).toBe('Prototype installation')
+    expect(prototypeKitRes.payload).toContain('govuk-prototype-kit.config.json')
+
+    const installationRes = await server.inject({
+      method: 'GET',
+      url: '/get-started/installation.html'
+    })
+    expect(installationRes.statusCode).toBe(200)
+    const $installation = cheerio.load(installationRes.payload)
+    expect(
+      $installation(
+        '.govuk-service-navigation__link[aria-current="true"] strong'
+      ).text()
+    ).toBe('Get started')
+    expect(
+      $installation('.wrc-docs-sidebar__link--current[aria-current="page"]')
+        .text()
+        .trim()
+    ).toBe('Production installation')
 
     const headerRes = await server.inject({
       method: 'GET',
@@ -281,6 +335,9 @@ describe('Documentation local server', () => {
     fs.cpSync(path.join(docsDir, '_data'), path.join(tempDocsDir, '_data'), {
       recursive: true
     })
+    fs.writeFileSync(path.join(tempDocsDir, '_data/release.yml'), '')
+    expect(loadSiteContext(tempDocsDir).data.release).toEqual({})
+    fs.rmSync(path.join(tempDocsDir, '_data/release.yml'), { force: true })
     fs.cpSync(
       path.join(docsDir, '_layouts'),
       path.join(tempDocsDir, '_layouts'),
@@ -304,5 +361,9 @@ describe('Documentation local server', () => {
     expect(res.statusCode).toBe(200)
     expect(res.payload).toContain('<h1')
     expect(res.payload).toContain('Minimal Page')
+    const $fallback = cheerio.load(res.payload)
+    expect(
+      $fallback('.defra-internal-service-navigation__context').text().trim()
+    ).toBe('Design System')
   })
 })

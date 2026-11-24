@@ -2,7 +2,6 @@ import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import {
   DEFAULT_ROOT_DIR,
-  DEFRA_VARIABLES_SCSS,
   compileDesignSystemScss,
   createGovukForwardScss,
   createSassOptions
@@ -12,16 +11,6 @@ const dirname = path.dirname(fileURLToPath(import.meta.url))
 const repoRoot = path.resolve(dirname, '../..')
 
 describe('Shared Sass configuration helper', () => {
-  test('DEFRA_VARIABLES_SCSS defines expected Defra internal brand variables', () => {
-    expect(DEFRA_VARIABLES_SCSS).toContain('$defra-internal-brand: #00a33b;')
-    expect(DEFRA_VARIABLES_SCSS).toContain(
-      '$defra-internal-footer-link: #3b3b3b;'
-    )
-    expect(DEFRA_VARIABLES_SCSS).toContain('$defra-internal-nav-background:')
-    expect(DEFRA_VARIABLES_SCSS).toContain('$defra-internal-link: #00703c;')
-    expect(DEFRA_VARIABLES_SCSS).toContain('$defra-internal-link-hover:')
-  })
-
   test('createGovukForwardScss sets arial font family with optional assetsPath', () => {
     expect(createGovukForwardScss()).toBe(
       '@forward "pkg:govuk-frontend" with ($govuk-font-family: (arial, sans-serif));'
@@ -51,18 +40,11 @@ describe('Shared Sass configuration helper', () => {
     expect(customOptions.loadPaths[0]).toBe('/tmp/custom-scss')
 
     const customImporter = customOptions.importers[1]
-    expect(customImporter.canonicalize('variables')?.href).toBe(
-      'custom:variables'
-    )
     expect(customImporter.canonicalize('govuk-frontend')?.href).toBe(
       'custom:govuk-frontend'
     )
     expect(customImporter.canonicalize('some-other-module')).toBeNull()
 
-    expect(customImporter.load(new URL('custom:variables'))).toEqual({
-      contents: DEFRA_VARIABLES_SCSS,
-      syntax: 'scss'
-    })
     expect(customImporter.load(new URL('custom:govuk-frontend'))).toEqual({
       contents:
         '@forward "pkg:govuk-frontend" with ($govuk-font-family: (arial, sans-serif), $govuk-assets-path: "../");',

@@ -154,14 +154,19 @@ export function resolveDocsRoute(requestPath, docsDir) {
 export function loadSiteContext(docsDir) {
   const configPath = path.join(docsDir, '_config.yml')
   const navPath = path.join(docsDir, '_data/navigation.yml')
+  const releasePath = path.join(docsDir, '_data/release.yml')
   const siteConfig = yaml.load(fs.readFileSync(configPath, 'utf8'))
   const navigation = yaml.load(fs.readFileSync(navPath, 'utf8'))
+  const release = fs.existsSync(releasePath)
+    ? (yaml.load(fs.readFileSync(releasePath, 'utf8')) ?? {})
+    : {}
 
   return {
     ...siteConfig,
     baseurl: '',
     data: {
-      navigation
+      navigation,
+      release
     }
   }
 }
@@ -185,7 +190,8 @@ export async function createDocsServer(options = {}) {
     buildDocs({
       rootDir,
       outputCssPath: path.join(docsDir, 'assets/css/docs.css'),
-      destImagesDir: path.join(docsDir, 'assets/images')
+      destImagesDir: path.join(docsDir, 'assets/images'),
+      releaseDataPath: path.join(docsDir, '_data/release.yml')
     })
   }
 

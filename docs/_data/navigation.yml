@@ -15,7 +15,15 @@ sections:
     items:
       - title: Overview
         url: /get-started/
-      - title: Installation
+
+  - heading: Prototyping
+    items:
+      - title: Prototype installation
+        url: /get-started/prototype-kit.html
+
+  - heading: Production
+    items:
+      - title: Production installation
         url: /get-started/installation.html
       - title: Project setup
         url: /get-started/project-setup.html

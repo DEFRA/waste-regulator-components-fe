@@ -14,6 +14,7 @@ import {
   readPackageVersion,
   execShellScript,
   resolveGitBinary,
+  resolveReleaseTag,
   resolveShellForScripts,
   runCli
 } from '../../scripts/detect-bump.js'
@@ -163,23 +164,30 @@ describe('detect-bump script', () => {
       const dir = trackTempDir(fs.mkdtempSync(path.join(os.tmpdir(), 'pkg-')))
       fs.writeFileSync(path.join(dir, 'package.json'), JSON.stringify({}))
       expect(readPackageVersion(dir)).toBe('0.0.0')
+      expect(resolveReleaseTag(dir)).toBe('v0.0.0')
 
       fs.writeFileSync(
         path.join(dir, 'package.json'),
         JSON.stringify({ version: '2.3.4' })
       )
       expect(readPackageVersion(dir)).toBe('2.3.4')
+      expect(resolveReleaseTag(dir)).toBe('v2.3.4')
       expect(typeof readPackageVersion()).toBe('string')
     })
 
     test('finds latest semver tag and commits since tag', () => {
       const dir = trackTempDir(initTempGitRepo())
+      fs.writeFileSync(
+        path.join(dir, 'package.json'),
+        JSON.stringify({ version: '0.0.1' })
+      )
       makeCommit(dir, 'chore: initial commit')
       execFileSync(gitBin, ['tag', 'v0.1.0'], { cwd: dir, stdio: 'ignore' })
       makeCommit(dir, 'feat: add component')
       makeCommit(dir, 'fix: tidy padding')
 
       expect(getLatestTag(dir)).toBe('v0.1.0')
+      expect(resolveReleaseTag(dir)).toBe('v0.1.0')
       expect(getCommitsSinceTag('v0.1.0', dir)).toEqual([
         'fix: tidy padding',
         'feat: add component'
@@ -314,6 +322,7 @@ describe('detect-bump script', () => {
     test('supports default cwd parameters', () => {
       expect(() => getLatestTag()).not.toThrow()
       expect(Array.isArray(getCommitsSinceTag(null))).toBe(true)
+      expect(resolveReleaseTag()).toMatch(/^v\d+\.\d+\.\d+$/)
     })
   })
 

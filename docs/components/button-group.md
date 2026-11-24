@@ -43,4 +43,4 @@ GOV.UK Frontend's `.govuk-button-group` expects buttons and links to be direct f
 
 ## Stylesheet import
 
-Included automatically via `dist/wrc/components/_index.scss` (or imported individually via `@use "dist/wrc/components/button-group";`).
+Included automatically via `dist/wrc/components/_index.scss` (or imported individually via `@use 'waste-regulator-components-fe/dist/wrc/components/button-group';`).

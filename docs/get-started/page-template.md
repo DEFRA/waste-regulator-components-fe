@@ -5,7 +5,7 @@ title: Page template
 
 # Page template
 
-Create a consistent base page layout using `govuk/template.njk` and `defra-internal-frontend` components.
+Create a consistent base page layout for a production Node.js service using `govuk/template.njk` and `waste-regulator-components-fe` components. For GOV.UK Prototype Kit layouts, see [Prototype installation](./prototype-kit.md).
 
 ---
 

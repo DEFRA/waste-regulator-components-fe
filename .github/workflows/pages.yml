@@ -8,8 +8,17 @@ on:
       - 'docs/**'
       - 'dist/**'
       - 'scripts/build-docs.js'
+      - 'scripts/detect-bump.js'
       - 'scripts/sass-config.js'
       - '.github/workflows/pages.yml'
+  # Runs on the default branch (main) after Publish to npm succeeds so
+  # github-pages' main-only deployment policy passes without tag rules.
+  # Must match the `name:` field in .github/workflows/publish.yml.
+  workflow_run:
+    workflows:
+      - Publish to npm
+    types:
+      - completed
   workflow_dispatch:
 
 permissions:
@@ -24,10 +33,13 @@ concurrency:
 jobs:
   build:
     name: Build Jekyll Documentation
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
 
       - name: Setup Node.js
         uses: actions/setup-node@v6
@@ -84,4 +96,3 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-

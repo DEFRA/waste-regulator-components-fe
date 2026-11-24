@@ -1,14 +1,14 @@
 # Defra Internal Frontend — Example Application
 
-A reference implementation demonstrating how to build a Defra digital service using [Hapi.js](https://hapi.dev/) (v21), [Nunjucks](https://mozilla.github.io/nunjucks/), and the [`defra-internal-frontend`](../README.md) component library.
+A reference implementation demonstrating how to build a Defra digital service using [Hapi.js](https://hapi.dev/) (v21), [Nunjucks](https://mozilla.github.io/nunjucks/), and the [`waste-regulator-components-fe`](../README.md) component library.
 
 ---
 
 ## Overview
 
-This example application showcases all Nunjucks and stylesheet components provided by `defra-internal-frontend` integrated into a production-pattern Hapi application:
+This example application showcases all Nunjucks and stylesheet components provided by `waste-regulator-components-fe` integrated into a production-pattern Hapi application:
 
-- **Top-level layout & branding**: Defra internal header, Defra internal service header with regulator context slot and Welsh language switcher, and Defra internal footer.
+- **Top-level layout & branding**: Defra internal header, Defra internal service header with release version context slot and Welsh language switcher, and Defra internal footer.
 - **Cookie consent & privacy**: Cookie banner handling analytics acceptance/rejection via POST endpoints, confirmation banners, and cookie policy pages.
 - **Navigation, search & data presentation**: Search panel (`wrcSearch`), subnavigation (`wrcSubnavigation`), tabs list (`wrcTabsList`), sortable table headers (`wrcSortingColumnHeader`), pagination (`pagination`), compact tables (`tab-panel`), scrollable table regions (`moj-scrollable-pane`), binary status tags (`wrcStatusTag`), submission lifecycle tags (`wrcSubmissionStatusTag`), and contextual organisation links (`wrcOrganisationLink`).
 - **Typography, banners & forms**: Page headings (`wrcHeading`), captions, cancelled notification banner modifier (`notification-banner`), inline button-group forms (`button-group`), and CSRF token fields (`wrcCsrfField`).
@@ -54,7 +54,7 @@ examples/
 | Component                 | Macro / Template                         | Usage in Example App                                                                           |
 | ------------------------- | ---------------------------------------- | ---------------------------------------------------------------------------------------------- |
 | **Header**                | `wrcHeader`                              | Rendered at the top of every page in `page.njk` with user account details.                     |
-| **Service header**        | `wrcServiceHeader`                       | Navigation bar with "Environment Agency" regulator slot and English/Welsh toggle.              |
+| **Service header**        | `wrcServiceHeader`                       | Navigation bar with current release version context slot and English/Welsh toggle.             |
 | **Cookie banner**         | `wrcCookieBanner`                        | Fixed cookie banner on `/` with POST actions to `/cookies/banner` and `/cookies/hide-banner`.  |
 | **Footer**                | `wrcFooter`                              | Displays "Get help" contacts, support links, OGL v3.0 licence, and Crown copyright.            |
 | **Google Analytics**      | `wrcGoogleAnalytics`                     | Injects Consent Mode v2 scripts in `<head>` and `<noscript>` iframe in `<body>`.               |
@@ -91,7 +91,7 @@ node scripts/build-css.js
 node src/index.js
 ```
 
-The application will start on **`http://localhost:3000`**.
+The application will start on **`http://localhost:2000`**.
 
 ### 3. Run the test suite
 

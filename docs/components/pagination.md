@@ -21,7 +21,7 @@ The pagination component is implemented as a Nunjucks template partial rather th
 
 ### Template include
 
-When `node_modules/defra-internal-frontend/dist` is included in your Nunjucks search paths:
+When `node_modules/waste-regulator-components-fe/dist` is included in your Nunjucks search paths:
 
 ```njk
 {% include "wrc/components/pagination/template.njk" %}

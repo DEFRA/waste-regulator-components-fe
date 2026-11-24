@@ -1,14 +1,15 @@
 {
-  "name": "defra-internal-frontend",
+  "name": "waste-regulator-components-fe",
   "version": "0.1.0",
   "description": "Reusable Nunjucks components, Sass stylesheets, and static assets for Defra internal services",
-  "sass": "dist/wrc/index.scss",
+  "sass": "dist/index.scss",
   "type": "module",
   "files": [
-    "dist"
+    "dist",
+    "govuk-prototype-kit.config.json"
   ],
   "engines": {
-    "node": ">=22"
+    "node": ">=20"
   },
   "scripts": {
     "test": "vitest run --coverage",
@@ -51,6 +52,7 @@
     "eslint": "9.39.4",
     "git-cliff": "^2.14.2",
     "govuk-frontend": "6.3.0",
+    "govuk-prototype-kit": "14.0.3",
     "husky": "9.1.7",
     "js-yaml": "4.3.2",
     "liquidjs": "10.30.1",

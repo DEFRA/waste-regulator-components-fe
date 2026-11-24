@@ -5,56 +5,18 @@ import * as sass from 'sass-embedded'
 const dirname = path.dirname(fileURLToPath(import.meta.url))
 const rootDir = path.resolve(dirname, '../..')
 
-const mockVariablesScss = `
-@use "sass:color";
-$defra-internal-brand: #00a33b;
-$defra-internal-footer-link: #3b3b3b;
-$defra-internal-nav-background: color.mix(#ffffff, $defra-internal-brand, 92%);
-$defra-internal-link: #00703c;
-$defra-internal-link-hover: color.mix(#000000, $defra-internal-link, 40%);
-`
+function compileWithRootLoadPath(source) {
+  return sass.compileString(source, {
+    loadPaths: [rootDir],
+    quietDeps: true
+  })
+}
 
 describe('Component stylesheets', () => {
-  test('Should compile dist/index.scss with govuk-frontend without errors', () => {
-    const result = sass.compileString(
-      `
+  test('Should compile dist/index.scss without custom importers', () => {
+    const result = compileWithRootLoadPath(`
       @use "dist/index" as *;
-    `,
-      {
-        loadPaths: [
-          rootDir,
-          path.join(rootDir, 'node_modules'),
-          path.join(rootDir, 'node_modules/govuk-frontend/dist')
-        ],
-        importers: [
-          new sass.NodePackageImporter(rootDir),
-          {
-            canonicalize(url) {
-              if (url === 'variables' || url === 'govuk-frontend') {
-                return new URL(`custom:${url}`)
-              }
-              return null
-            },
-            load(canonicalUrl) {
-              if (canonicalUrl.href === 'custom:variables') {
-                return {
-                  contents: mockVariablesScss,
-                  syntax: 'scss'
-                }
-              }
-              if (canonicalUrl.href === 'custom:govuk-frontend') {
-                return {
-                  contents: '@forward "pkg:govuk-frontend";',
-                  syntax: 'scss'
-                }
-              }
-              return null
-            }
-          }
-        ],
-        quietDeps: true
-      }
-    )
+    `)
 
     expect(result.css).toContain('.defra-internal-header')
     expect(result.css).toContain('.defra-internal-footer')
@@ -69,11 +31,61 @@ describe('Component stylesheets', () => {
     expect(result.css).toContain('.moj-sub-navigation__item')
     expect(result.css).toContain('.moj-sub-navigation__link[aria-current=page]')
     expect(result.css).toContain('.v3-compact-table thead')
+    expect(result.css).toContain('.v3-compact-table tbody th')
+    expect(result.css).not.toContain('.govuk-table tbody th')
+  })
+
+  test('Should allow overriding Defra variables via @use ... with (...)', () => {
+    const result = compileWithRootLoadPath(`
+      @use "dist/index" as * with (
+        $defra-internal-brand: #123456
+      );
+    `)
+
+    expect(result.css).toContain('border-bottom: 8px solid #123456')
+    expect(result.css).not.toContain('border-bottom: 8px solid #00a33b')
+  })
+
+  test('Should compile in a GOV.UK Prototype Kit v13 build alongside govuk-frontend', () => {
+    const result = compileWithRootLoadPath(`
+      $govuk-prototype-kit-major-version: 13;
+      $govuk-extensions-url-context: "/plugin-assets";
+      @import "node_modules/govuk-frontend/dist/govuk-prototype-kit/init";
+      @import "dist/index";
+    `)
+
+    expect(result.css).toContain('.defra-internal-header')
+    expect(result.css).toContain('.defra-internal-footer')
+    expect(result.css).toContain('.defra-internal-service-header')
+    expect(result.css).toContain('.govuk-button-group > form')
+    expect(result.css).toContain('#00a33b')
+    expect(result.css).toContain(
+      'url("/plugin-assets/govuk-frontend/dist/govuk/assets/images/govuk-crest.svg")'
+    )
+    expect(result.css).toContain('.v3-compact-table tbody th')
+    expect(result.css).not.toContain('.govuk-table tbody th')
+
+    const customisedResult = compileWithRootLoadPath(`
+      $govuk-prototype-kit-major-version: 13;
+      $govuk-extensions-url-context: "/plugin-assets";
+      $govuk-font-family: (arial, sans-serif);
+      $defra-internal-brand: #123456;
+      @import "node_modules/govuk-frontend/dist/govuk-prototype-kit/init";
+      @import "dist/index";
+    `)
+
+    expect(customisedResult.css).toContain('arial, sans-serif')
+    expect(customisedResult.css).not.toContain('GDS Transport')
+    expect(customisedResult.css).toContain('border-bottom: 8px solid #123456')
+    expect(customisedResult.css).not.toContain(
+      'border-bottom: 8px solid #00a33b'
+    )
   })
 
   test.each([
     ['root entry (dist/index)', 'dist/index'],
     ['namespace entry (dist/wrc/index)', 'dist/wrc/index'],
+    ['variables module (dist/wrc/variables)', 'dist/wrc/variables'],
     ['components aggregate', 'dist/wrc/components'],
     ['button-group', 'dist/wrc/components/button-group'],
     ['cookie-banner', 'dist/wrc/components/cookie-banner'],
@@ -87,45 +99,12 @@ describe('Component stylesheets', () => {
     ['sorting-column-header', 'dist/wrc/components/sorting-column-header'],
     ['tab-panel', 'dist/wrc/components/tab-panel']
   ])('Should compile %s stylesheet individually', (_name, importPath) => {
-    const result = sass.compileString(
-      `
+    const result = compileWithRootLoadPath(`
       @use "${importPath}" as *;
-    `,
-      {
-        loadPaths: [
-          rootDir,
-          path.join(rootDir, 'node_modules'),
-          path.join(rootDir, 'node_modules/govuk-frontend/dist')
-        ],
-        importers: [
-          new sass.NodePackageImporter(rootDir),
-          {
-            canonicalize(url) {
-              if (url === 'variables' || url === 'govuk-frontend') {
-                return new URL(`custom:${url}`)
-              }
-              return null
-            },
-            load(canonicalUrl) {
-              if (canonicalUrl.href === 'custom:variables') {
-                return {
-                  contents: mockVariablesScss,
-                  syntax: 'scss'
-                }
-              }
-              if (canonicalUrl.href === 'custom:govuk-frontend') {
-                return {
-                  contents: '@forward "pkg:govuk-frontend";',
-                  syntax: 'scss'
-                }
-              }
-              return null
-            }
-          }
-        ],
-        quietDeps: true
+      .probe {
+        content: "compiled";
       }
-    )
+    `)
 
     expect(result.css.length).toBeGreaterThan(0)
   })

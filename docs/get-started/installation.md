@@ -1,11 +1,11 @@
 ---
 layout: default
-title: Installation
+title: Production installation
 ---
 
-# Installation
+# Production installation
 
-How to install `defra-internal-frontend` in your production project.
+Install `waste-regulator-components-fe` in a production Node.js service. If you are building a prototype, follow [Prototype installation](./prototype-kit.md) instead.
 
 ---
 
@@ -13,7 +13,7 @@ How to install `defra-internal-frontend` in your production project.
 
 Before installing, make sure you have:
 
-- **Node.js** (LTS version `>=22` recommended)
+- **Node.js** (`>=20`, LTS `>=22` recommended)
 - **npm** package manager
 - **[GOV.UK Frontend](https://www.npmjs.com/package/govuk-frontend)** (`^6.0.0`)
 
@@ -21,24 +21,36 @@ Before installing, make sure you have:
 
 ## Install with npm
 
-Install `defra-internal-frontend` alongside `govuk-frontend`:
+Install `waste-regulator-components-fe` alongside `govuk-frontend`:
 
 ```bash
-npm install --save govuk-frontend defra-internal-frontend
+npm install govuk-frontend@^6.0.0 waste-regulator-components-fe
 ```
+
+If you are installing directly from GitHub rather than the npm registry:
+
+```bash
+npm install govuk-frontend@^6.0.0 github:DEFRA/waste-regulator-components-fe
+```
+
+_(Append a release tag such as `#vX.Y.Z` or a branch name to pin a specific version.)_
 
 ---
 
 ## Package structure
 
-The package exports all compiled assets, Nunjucks macros, and Sass stylesheets out of the `dist/` directory:
+The package exports all Nunjucks macros, Sass stylesheets, and static assets under `dist/`, alongside `govuk-prototype-kit.config.json`:
 
 ```text
-node_modules/defra-internal-frontend/
+node_modules/waste-regulator-components-fe/
+├── govuk-prototype-kit.config.json
 └── dist/
     ├── index.scss
     └── wrc/
         ├── index.scss
+        ├── _variables.scss
+        ├── vendor/
+        │   └── _govuk-frontend.scss
         ├── assets/
         │   └── images/
         │       ├── apple-touch-icon.png
@@ -72,4 +84,5 @@ node_modules/defra-internal-frontend/
 
 ## Next steps
 
-Once the package is installed, follow the [Project setup guide](./project-setup.md) to configure Nunjucks template paths, Sass stylesheets, and asset bundling.
+- Follow the [Project setup guide](./project-setup.md) to configure Nunjucks template paths, Sass stylesheets, and asset bundling.
+- Build your base layout with the [Page template guide](./page-template.md).

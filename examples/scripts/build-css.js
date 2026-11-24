@@ -17,7 +17,7 @@ export function buildCss() {
   )
 
   fs.mkdirSync(path.dirname(outputPath), { recursive: true })
-  fs.writeFileSync(outputPath, css)
+  fs.writeFileSync(outputPath, css.endsWith('\n') ? css : `${css}\n`)
   return css
 }
 
