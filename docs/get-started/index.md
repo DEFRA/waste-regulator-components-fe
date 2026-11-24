@@ -14,7 +14,7 @@ Choose the installation path that matches your project — whether you are build
 Use this path when designing and testing a service with the GOV.UK Prototype Kit (v13+). The package registers its Sass stylesheet, static assets, and `wrc*` macros automatically as a plugin.
 
 - [**Prototype installation**](./prototype-kit.md)  
-  Install `waste-regulator-components-fe` as a GOV.UK Prototype Kit plugin, apply WCE regulator chrome in your layout, and optionally customise typography or translation helpers.
+  Install `waste-regulator-components-fe` as a GOV.UK Prototype Kit plugin, apply WCE internal chrome in your layout, and optionally customise typography or translation helpers.
 
 ---
 
@@ -29,10 +29,10 @@ Use this path when building a live or staging web application with Node.js, Nunj
    Configure your Nunjucks view engine search paths, import the Sass stylesheets, and set up your asset build pipeline using Vite or Webpack.
 
 3. [**Page template**](./page-template.md)  
-   Build a production-ready base page layout (`page.njk`) combining GOV.UK Frontend and WCE regulator chrome components.
+   Build a production-ready base page layout (`page.njk`) combining GOV.UK Frontend and WCE internal chrome components.
 
 ---
 
 ## Upgrading
 
-If your production project is already using local copies of WCE regulator components, see the [Project setup guide](./project-setup.md) for how to replace relative component imports with package imports.
+If your production project is already using local copies of WCE internal components, see the [Project setup guide](./project-setup.md) for how to replace relative component imports with package imports.

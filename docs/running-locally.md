@@ -5,7 +5,7 @@ title: Running documentation locally
 
 # Running documentation locally
 
-How to build and preview the WCE regulator components frontend documentation site locally without installing Ruby or Jekyll.
+How to build and preview the WCE internal components frontend documentation site locally without installing Ruby or Jekyll.
 
 ---
 
@@ -28,7 +28,7 @@ npm run docs:start
 
 This runs `scripts/serve-docs.js`, which:
 
-1. Compiles `docs/assets/scss/docs.scss` into `docs/assets/css/docs.css` using the shared WCE regulator/GOV.UK Sass configuration.
+1. Compiles `docs/assets/scss/docs.scss` into `docs/assets/css/docs.css` using the shared WCE internal/GOV.UK Sass configuration.
 2. Copies static images from `dist/wrc/assets/images/` into `docs/assets/images/`.
 3. Writes the current release version tag to `docs/_data/release.yml` (from the latest `vX.Y.Z` Git tag, falling back to `package.json`).
 4. Starts a local Hapi server intentionally bound to `localhost` only (`http://localhost:1999`) so the development preview is not exposed on other network interfaces.
@@ -88,4 +88,4 @@ Or run the full test suite and coverage check with `npm test`.
 ## Related guides
 
 - [Contributing and semantic commits](./contributing.md)
-- [WCE regulator components frontend home](./index.md)
+- [WCE internal components frontend home](./index.md)

@@ -5,13 +5,13 @@ title: Header
 
 # Header
 
-The WCE regulator header displays the departmental identity lock-up, the official Royal Crest, and an optional signed-in user account menu.
+The WCE internal header displays the departmental identity lock-up, the official Royal Crest, and an optional signed-in user account menu.
 
 ---
 
 ## When to use this component
 
-Use the WCE regulator header at the top of all pages in WCE regulator services. It pairs with the [Service header](./service-header.md) directly below it.
+Use the WCE internal header at the top of all pages in WCE internal services. It pairs with the [Service header](./service-header.md) directly below it.
 
 ---
 

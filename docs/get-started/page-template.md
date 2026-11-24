@@ -24,7 +24,7 @@ Save this layout as `src/server/common/templates/layouts/page.njk` in your proje
 {% from "govuk/components/skip-link/macro.njk" import govukSkipLink %}
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 
-{# Import WCE regulator components #}
+{# Import WCE internal components #}
 {% from "wrc/components/heading/macro.njk" import wrcHeading %}
 {% from "wrc/components/header/macro.njk" import wrcHeader %}
 {% from "wrc/components/service-header/macro.njk" import wrcServiceHeader %}
