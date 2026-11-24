@@ -179,35 +179,41 @@ export async function buildDocsExamples({
     .filter((fileName) => fileName.endsWith('.njk'))
     .sort()
 
-  const examples = {}
-  for (const fileName of fileNames) {
-    const slug = path.basename(fileName, '.njk')
-    const { data, body } = parseFrontmatter(
-      fs.readFileSync(path.join(examplesDir, fileName), 'utf8')
-    )
-    const source = body.trim()
-    const rendered = nunjucksTestEnv.renderString(source, data.context ?? {})
-    // The preview gets the exact output; the code panel gets it formatted to read
-    const html = (
-      await prettier.format(rendered, {
-        parser: 'html',
-        htmlWhitespaceSensitivity: 'ignore'
-      })
-    ).trim()
+  // Examples are independent, so format them in parallel; Promise.all keeps file order
+  const entries = await Promise.all(
+    fileNames.map(async (fileName) => {
+      const slug = path.basename(fileName, '.njk')
+      const { data, body } = parseFrontmatter(
+        fs.readFileSync(path.join(examplesDir, fileName), 'utf8')
+      )
+      const source = body.trim()
+      const rendered = nunjucksTestEnv.renderString(source, data.context ?? {})
+      // The preview gets the exact output; the code panel gets it formatted to read
+      const html = (
+        await prettier.format(rendered, {
+          parser: 'html',
+          htmlWhitespaceSensitivity: 'ignore'
+        })
+      ).trim()
 
-    examples[slug] = {
-      html,
-      nunjucks: /{[{%]/.test(source) ? source : undefined,
-      htmlNote: data.htmlNote && marked.parse(data.htmlNote),
-      nunjucksNote: data.nunjucksNote && marked.parse(data.nunjucksNote)
-    }
-    writeFileAtomically(
-      path.join(outputPagesDir, `${slug}.html`),
-      (tempPath) => {
-        fs.writeFileSync(tempPath, renderExamplePage(slug, rendered))
-      }
-    )
-  }
+      writeFileAtomically(
+        path.join(outputPagesDir, `${slug}.html`),
+        (tempPath) => {
+          fs.writeFileSync(tempPath, renderExamplePage(slug, rendered))
+        }
+      )
+      return [
+        slug,
+        {
+          html,
+          nunjucks: /{[{%]/.test(source) ? source : undefined,
+          htmlNote: data.htmlNote && marked.parse(data.htmlNote),
+          nunjucksNote: data.nunjucksNote && marked.parse(data.nunjucksNote)
+        }
+      ]
+    })
+  )
+  const examples = Object.fromEntries(entries)
 
   writeFileAtomically(outputDataPath, (tempPath) => {
     fs.writeFileSync(tempPath, `${JSON.stringify(examples, null, 2)}\n`)
