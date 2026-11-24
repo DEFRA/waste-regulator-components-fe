@@ -7,7 +7,7 @@ title: Home
 
 Components and styles for internal waste and circular economy services.
 
-This is not a Defra-wide design system. If your service is not an internal waste or circular economy service, use the [GOV.UK Design System](https://design-system.service.gov.uk/).
+This is not a Defra-wide design system. If your service is not an internal waste and circular economy service, use the [GOV.UK Design System](https://design-system.service.gov.uk/).
 
 It is built on [GOV.UK Frontend](https://frontend.design-system.service.gov.uk/) v6 and gives you Nunjucks components, Sass styles and static assets.
 
