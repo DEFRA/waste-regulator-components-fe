@@ -1,0 +1,23 @@
+{% from "wrc/components/tabs-list/macro.njk" import wrcTabsList %}
+
+<div class="govuk-tabs">
+  {{ wrcTabsList({
+    items: [
+      {
+        text: "Pending (4)",
+        href: "?type=direct-producers&tab=pending&clearSort=true",
+        current: true
+      },
+      {
+        text: "Accepted (2)",
+        href: "?type=direct-producers&tab=accepted&clearSort=true",
+        current: false
+      },
+      {
+        text: "Not submitted (1)",
+        href: "?type=direct-producers&tab=not-submitted&clearSort=true",
+        current: false
+      }
+    ]
+  }) }}
+</div>

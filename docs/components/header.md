@@ -15,48 +15,6 @@ Use the Defra internal header at the top of all pages in internal Defra services
 
 ---
 
-## How it works
-
-### Nunjucks macro import
-
-```njk
-{% from "wrc/components/header/macro.njk" import wrcHeader %}
-
-{{ wrcHeader({
-  organisationName: "Department for Environment,<br>Food &amp; Rural Affairs",
-  navigation: [
-    { text: "Jane Doe", visuallyHiddenText: "Signed in as " },
-    { text: "Sign out", href: "/logout" }
-  ]
-}) }}
-```
-
-### HTML output
-
-```html
-<header class="defra-internal-header">
-  <div class="govuk-width-container">
-    <div class="defra-internal-header__main">
-      <div class="defra-internal-header__logo">
-        <span class="defra-internal-header__logo-link">
-          Department for Environment,<br />Food &amp; Rural Affairs
-        </span>
-      </div>
-      <div class="defra-internal-header__account-menu">
-        <ul>
-          <li>
-            <span class="govuk-visually-hidden">Signed in as </span>Jane Doe
-          </li>
-          <li><a href="/logout">Sign out</a></li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</header>
-```
-
----
-
 ## Macro parameters
 
 | Name               | Type   | Required | Description                                                                                                                            |

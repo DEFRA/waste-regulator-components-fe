@@ -25,20 +25,6 @@ GOV.UK Frontend's `.govuk-button-group` expects buttons and links to be direct f
 }
 ```
 
-### Example usage
-
-```njk
-<div class="govuk-button-group">
-  <form action="/accept" method="post">
-    {{ wrcCsrfField(csrfToken) }}
-    {{ govukButton({
-      text: "Accept certificate"
-    }) }}
-  </form>
-  <a class="govuk-link" href="/certificates-of-compliance">Cancel and return</a>
-</div>
-```
-
 ---
 
 ## Stylesheet import

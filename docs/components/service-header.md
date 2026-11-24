@@ -15,32 +15,6 @@ Use this component directly below the [Header](./header.md) on every page. It es
 
 ---
 
-## How it works
-
-### Nunjucks macro import
-
-```njk
-{% from "wrc/components/service-header/macro.njk" import wrcServiceHeader %}
-
-{{ wrcServiceHeader({
-  serviceName: "pEPR: Regulators' Service",
-  serviceUrl: "/home",
-  navigationId: "service-navigation",
-  navigation: [
-    { text: "Home", href: "/home", current: true },
-    { text: "About", href: "/about" }
-  ],
-  regulatorContext: '<div class="defra-internal-service-navigation__context">Environment Agency</div>',
-  locale: "en",
-  languageSwitcher: {
-    en: "/home?lang=en",
-    cy: "/home?lang=cy"
-  }
-}) }}
-```
-
----
-
 ## Macro parameters
 
 | Name               | Type   | Required | Description                                                                        |

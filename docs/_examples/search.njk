@@ -1,0 +1,24 @@
+---
+context:
+  locale: en
+  organisationType: direct-producers
+  activeTab: pending
+  sort:
+    column: DateSubmitted
+    direction: desc
+  searchTerm: ''
+---
+{% from "wrc/components/search/macro.njk" import wrcSearch %}
+
+{{ wrcSearch({
+  action: "/certificates-of-compliance",
+  locale: locale,
+  hiddenFields: {
+    type: organisationType,
+    tab: activeTab,
+    sort: sort.column ~ "[" ~ sort.direction ~ "]"
+  },
+  label: "Search by organisation name or ID",
+  searchTerm: searchTerm,
+  errorMessage: errors.search if errors
+}) }}

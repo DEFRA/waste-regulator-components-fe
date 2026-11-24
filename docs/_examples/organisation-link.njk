@@ -1,0 +1,25 @@
+{% from "wrc/components/organisation-link/macro.njk" import wrcOrganisationLink %}
+
+<!-- Organisation overview (no item.id) -->
+{{ wrcOrganisationLink({
+  routePrefix: "/organisations",
+  organisationType: "compliance-schemes",
+  activeTab: "overview",
+  complianceYear: "2026",
+  item: {
+    organisationId: "ORG-001",
+    organisationName: "Acme Recycling Ltd"
+  }
+}) }}
+
+<!-- Specific document (item.id present) -->
+{{ wrcOrganisationLink({
+  routePrefix: "/organisations",
+  organisationType: "producers",
+  activeTab: "certificates",
+  item: {
+    id: "CERT-456",
+    organisationId: "ORG-002",
+    organisationName: "Northern Packaging Ltd"
+  }
+}) }}

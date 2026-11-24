@@ -22,25 +22,6 @@ Including `dist/wrc/components/tab-panel/_index.scss` applies:
 - `font-size: 16px` on `.v3-compact-table thead` and `.v3-compact-table tbody`.
 - `font-weight: normal` on `.v3-compact-table tbody th`.
 
-### Example usage
-
-```html
-<table class="govuk-table v3-compact-table">
-  <thead class="govuk-table__head">
-    <tr class="govuk-table__row">
-      <th scope="col" class="govuk-table__header">Organisation</th>
-      <th scope="col" class="govuk-table__header">Submission status</th>
-    </tr>
-  </thead>
-  <tbody class="govuk-table__body">
-    <tr class="govuk-table__row">
-      <th scope="row" class="govuk-table__header">Acme Recycling Ltd</th>
-      <td class="govuk-table__cell">Accepted</td>
-    </tr>
-  </tbody>
-</table>
-```
-
 ---
 
 ## Stylesheet import

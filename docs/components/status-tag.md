@@ -15,50 +15,6 @@ Use this component to show quick visual indicators for binary flags such as subm
 
 ---
 
-## How it works
-
-### Nunjucks macro import
-
-```njk
-{% from "wrc/components/status-tag/macro.njk" import wrcStatusTag %}
-
-{# Positive boolean state #}
-{{ wrcStatusTag({
-  value: true,
-  trueText: "Complete"
-}) }}
-
-{# Negative boolean state #}
-{{ wrcStatusTag({
-  value: false,
-  falseText: "Action required"
-}) }}
-
-{# Null / missing data state #}
-{{ wrcStatusTag({
-  value: null
-}) }}
-```
-
-### HTML output
-
-```html
-<!-- value: true -->
-<strong class="govuk-tag govuk-tag--green govuk-!-font-size-16"
-  >Complete</strong
->
-
-<!-- value: false -->
-<strong class="govuk-tag govuk-tag--red govuk-!-font-size-16"
-  >Action required</strong
->
-
-<!-- value: null -->
-No data
-```
-
----
-
 ## Macro options
 
 | Name         | Type                           | Default                  | Description                                                                            |

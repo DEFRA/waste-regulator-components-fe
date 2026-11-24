@@ -4,14 +4,16 @@ import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import * as cheerio from 'cheerio'
 
-import { resolveReleaseTag } from '../../scripts/build-docs.js'
+import {
+  parseFrontmatter,
+  resolveReleaseTag
+} from '../../scripts/build-docs.js'
 import {
   DEFAULT_DOCS_PORT,
   createDocsServer,
   createLiquidEngine,
   loadSiteContext,
   parseDocsPort,
-  parseFrontmatter,
   resolveDocsRoute,
   rewriteMarkdownLinks
 } from '../../scripts/serve-docs.js'
@@ -315,6 +317,76 @@ describe('Documentation local server', () => {
     expect(imgRes.statusCode).toBe(200)
     expect(imgRes.payload).toContain('<svg')
 
+    const headingRes = await server.inject({
+      method: 'GET',
+      url: '/components/heading.html'
+    })
+    const $heading = cheerio.load(headingRes.payload)
+    expect(
+      $heading('.wrc-docs-example iframe.wrc-docs-example__frame').attr('src')
+    ).toBe('/assets/examples/heading.html')
+    expect($heading('#example-html pre code').text()).toContain('<h1')
+    expect($heading('#example-html pre code').html()).toContain('&lt;h1')
+    expect($heading('#example-nunjucks pre code').text()).toContain(
+      'import wrcHeading'
+    )
+    expect(
+      $heading('.wrc-docs-example__toolbar a[target="_blank"]').attr('href')
+    ).toBe('/assets/examples/heading.html')
+    expect($heading('.wrc-docs-example-wrapper h2').length).toBe(0)
+    const $sections = $heading('article.wrc-docs-main > *')
+    expect($sections.eq(0).find('h1').text()).toBe('Page heading')
+    expect($sections.eq(1).hasClass('wrc-docs-example-wrapper')).toBe(true)
+    expect($sections.eq(2).find('h2').first().text()).toBe(
+      'When to use this component'
+    )
+    expect($home('.wrc-docs-example-wrapper').length).toBe(0)
+    expect($home('article.wrc-docs-main h1').length).toBe(1)
+
+    const paginationRes = await server.inject({
+      method: 'GET',
+      url: '/components/pagination.html'
+    })
+    const $pagination = cheerio.load(paginationRes.payload)
+    expect($pagination('#example-nunjucks .wrc-docs-content').text()).toContain(
+      'Nunjucks search paths'
+    )
+    expect($pagination('#example-html pre code').text()).toContain(
+      'aria-label="Page 10"'
+    )
+
+    const scrollablePaneRes = await server.inject({
+      method: 'GET',
+      url: '/components/moj-scrollable-pane.html'
+    })
+    const $scrollablePane = cheerio.load(scrollablePaneRes.payload)
+    expect($scrollablePane('.wrc-docs-tabs a').text()).toBe('HTML')
+    expect($scrollablePane('#example-nunjucks').length).toBe(0)
+
+    const exampleRes = await server.inject({
+      method: 'GET',
+      url: '/assets/examples/heading.html'
+    })
+    expect(exampleRes.statusCode).toBe(200)
+    expect(exampleRes.payload).toContain('govuk-heading-xl')
+
+    const jsRes = await server.inject({
+      method: 'GET',
+      url: '/assets/js/iframeResizer.min.js'
+    })
+    expect(jsRes.statusCode).toBe(200)
+    expect($heading('script[src="/assets/js/clipboard.min.js"]').length).toBe(1)
+    expect(
+      $heading('script[src="/assets/js/iframeResizer.min.js"]').length
+    ).toBe(1)
+
+    const badCookieRes = await server.inject({
+      method: 'GET',
+      url: '/',
+      headers: { cookie: 'broken="value' }
+    })
+    expect(badCookieRes.statusCode).toBe(200)
+
     const missingRes = await server.inject({
       method: 'GET',
       url: '/does-not-exist.html'
@@ -349,6 +421,8 @@ describe('Documentation local server', () => {
       path.join(tempDocsDir, 'index.md'),
       '# Minimal Page\n\nHello docs.\n'
     )
+
+    fs.rmSync(path.join(tempDocsDir, '_data/examples.json'), { force: true })
 
     server = await createDocsServer({
       docsDir: tempDocsDir,

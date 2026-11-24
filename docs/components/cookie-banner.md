@@ -15,87 +15,6 @@ Use the Defra internal cookie banner at the very top of your page template, dire
 
 ---
 
-## How it works
-
-### Nunjucks macro import
-
-```njk
-{% from "wrc/components/cookie-banner/macro.njk" import wrcCookieBanner %}
-
-{{ wrcCookieBanner({
-  serviceName: "Waste Tracking Service",
-  CSRFToken: csrfToken,
-  cookiePreferenceSet: false,
-  hasCookiePolicy: false,
-  allowGoogleAnalytics: false,
-  bannerActionUrl: "/cookies/banner",
-  hideBannerActionUrl: "/cookies/hide-banner",
-  cookiesUrl: "/cookies",
-  locale: "en"
-}) }}
-```
-
-### HTML output (when preference has not been set)
-
-```html
-<form action="/cookies/banner" method="post" novalidate>
-  <input
-    id="cookie-banner-csrf-crumb"
-    type="hidden"
-    name="CSRFToken"
-    value="csrf-token-string"
-  />
-  <div
-    class="govuk-cookie-banner"
-    data-nosnippet
-    role="region"
-    aria-label="Cookies on Waste Tracking Service"
-  >
-    <div class="govuk-cookie-banner__message govuk-width-container">
-      <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-          <h2 class="govuk-cookie-banner__heading govuk-heading-m">
-            Cookies on Waste Tracking Service
-          </h2>
-          <div class="govuk-cookie-banner__content">
-            <p class="govuk-body">
-              We use some essential cookies to make this service work.
-            </p>
-            <p class="govuk-body">
-              We’d also like to use analytics cookies so we can understand how
-              you use the service and make improvements.
-            </p>
-          </div>
-        </div>
-      </div>
-      <div class="govuk-button-group">
-        <button
-          type="submit"
-          name="analytics"
-          value="yes"
-          class="govuk-button"
-          data-module="govuk-button"
-        >
-          Accept analytics cookies
-        </button>
-        <button
-          type="submit"
-          name="analytics"
-          value="no"
-          class="govuk-button"
-          data-module="govuk-button"
-        >
-          Reject analytics cookies
-        </button>
-        <a class="govuk-link" href="/cookies">View cookies</a>
-      </div>
-    </div>
-  </div>
-</form>
-```
-
----
-
 ## Macro options
 
 | Name                   | Type      | Default                  | Description                                                                                                                |
@@ -113,7 +32,7 @@ Use the Defra internal cookie banner at the very top of your page template, dire
 
 ---
 
-## Examples
+## More examples
 
 ### Cookie preference confirmation
 

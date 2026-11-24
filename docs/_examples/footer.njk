@@ -1,0 +1,16 @@
+{% from "wrc/components/footer/macro.njk" import wrcFooter %}
+
+{{ wrcFooter({
+  meta: "Department for Environment, Food & Rural Affairs",
+  getHelp: {
+    heading: "Get help",
+    email: "waste-tracking-support@defra.gov.uk",
+    telephone: "0300 060 4400",
+    hours: "Monday to Friday, 8:30am to 5pm"
+  },
+  links: [
+    { text: "Privacy", href: "/privacy" },
+    { text: "Cookies", href: "/cookies" },
+    { text: "Accessibility statement", href: "/accessibility" }
+  ]
+}) }}

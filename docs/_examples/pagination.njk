@@ -1,0 +1,10 @@
+---
+nunjucksNote: 'When `node_modules/waste-regulator-components-fe/dist` is included in your Nunjucks search paths, include the template and pass a `pagination` object in the view context (see Context variables below):'
+context:
+  pagination:
+    currentPage: 2
+    totalPages: 10
+    baseUrl: /records?status=active
+  locale: en
+---
+{% include "wrc/components/pagination/template.njk" %}

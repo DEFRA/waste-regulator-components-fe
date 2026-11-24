@@ -10,6 +10,7 @@ on:
       - 'scripts/build-docs.js'
       - 'scripts/detect-bump.js'
       - 'scripts/sass-config.js'
+      - 'tests/helpers/**' # build-docs.js renders examples with nunjucksTestEnv
       - '.github/workflows/pages.yml'
   # Runs on the default branch (main) after Publish to npm succeeds so
   # github-pages' main-only deployment policy passes without tag rules.
