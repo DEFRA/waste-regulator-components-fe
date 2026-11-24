@@ -29,7 +29,7 @@ Use this path when building a live or staging web application with Node.js, Nunj
    Configure your Nunjucks view engine search paths, import the Sass stylesheets, and set up your asset build pipeline using Vite or Webpack.
 
 3. [**Page template**](./page-template.md)  
-   Build a production-ready base page layout (`page.njk`) combining GOV.UK Frontend and Defra internal chrome components.
+   Build a production-ready base page layout (`page.njk`) combining GOV.UK Frontend and WCE regulator chrome components.
 
 ---
 

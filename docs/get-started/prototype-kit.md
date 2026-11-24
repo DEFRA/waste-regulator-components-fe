@@ -105,7 +105,7 @@ Update `app/views/layouts/main.html` to apply the `defra-internal` body class an
 
 `waste-regulator-components-fe` uses `$defra-internal-*` Sass variables with `!default` so the stylesheet compiles with zero extra configuration.
 
-If you want Defra internal prototypes to use Arial typography and green GOV.UK Frontend accents instead of GDS Transport:
+If you want WCE regulator prototypes to use Arial typography and green GOV.UK Frontend accents instead of GDS Transport:
 
 1. In `app/assets/sass/settings.scss` (which the Prototype Kit compiles before plugins):
 

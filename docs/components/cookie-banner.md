@@ -5,13 +5,13 @@ title: Cookie banner
 
 # Cookie banner
 
-The Defra internal cookie banner prompts users to accept or reject Google Analytics cookies and shows a confirmation message after a preference has been selected. It integrates with GOV.UK Cookie Banner components and CSRF token protection.
+The WCE regulator cookie banner prompts users to accept or reject Google Analytics cookies and shows a confirmation message after a preference has been selected. It integrates with GOV.UK Cookie Banner components and CSRF token protection.
 
 ---
 
 ## When to use this component
 
-Use the Defra internal cookie banner at the very top of your page template, directly inside the `bodyStart` block (before the header).
+Use the WCE regulator cookie banner at the very top of your page template, directly inside the `bodyStart` block (before the header).
 
 ---
 

@@ -5,7 +5,7 @@ title: Components
 
 # Components
 
-Components are reusable user interface elements designed specifically for Defra internal digital services.
+Components are reusable user interface elements designed specifically for WCE regulator services.
 
 ---
 

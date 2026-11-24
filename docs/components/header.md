@@ -5,13 +5,13 @@ title: Header
 
 # Header
 
-The Defra internal header displays the departmental identity lock-up, the official Royal Crest, and an optional signed-in user account menu.
+The WCE regulator header displays the departmental identity lock-up, the official Royal Crest, and an optional signed-in user account menu.
 
 ---
 
 ## When to use this component
 
-Use the Defra internal header at the top of all pages in internal Defra services. It pairs with the [Service header](./service-header.md) directly below it.
+Use the WCE regulator header at the top of all pages in WCE regulator services. It pairs with the [Service header](./service-header.md) directly below it.
 
 ---
 
