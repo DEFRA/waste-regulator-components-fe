@@ -1,0 +1,7 @@
+{% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
+
+{{ govukNotificationBanner({
+  titleText: "Cancelled",
+  classes: "wrc-notification-banner--cancelled",
+  html: '<p class="govuk-notification-banner__heading">This certificate has been cancelled.</p>'
+}) }}

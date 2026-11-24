@@ -1,0 +1,18 @@
+{% from "wrc/components/status-tag/macro.njk" import wrcStatusTag %}
+
+<!-- value: true -->
+{{ wrcStatusTag({
+  value: true,
+  trueText: "Complete"
+}) }}
+
+<!-- value: false -->
+{{ wrcStatusTag({
+  value: false,
+  falseText: "Action required"
+}) }}
+
+<!-- value: null (missing data) -->
+{{ wrcStatusTag({
+  value: null
+}) }}

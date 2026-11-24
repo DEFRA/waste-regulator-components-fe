@@ -19,14 +19,6 @@ Use this component directly below data tables or search result lists when result
 
 The pagination component is implemented as a Nunjucks template partial rather than a macro, reading directly from the `pagination` object in the rendering context.
 
-### Template include
-
-When `node_modules/waste-regulator-components-fe/dist` is included in your Nunjucks search paths:
-
-```njk
-{% include "wrc/components/pagination/template.njk" %}
-```
-
 ### Context variables
 
 Pass a `pagination` object into your template view context:
@@ -40,69 +32,6 @@ const context = {
   },
   locale: 'en' // optional, defaults to 'en'
 }
-```
-
-### HTML output
-
-```html
-<nav class="govuk-pagination" aria-label="Pagination">
-  <div class="govuk-pagination__prev">
-    <a
-      class="govuk-link govuk-pagination__link"
-      href="/records?status=active&amp;page=1"
-      rel="prev"
-    >
-      <svg
-        class="govuk-pagination__icon govuk-pagination__icon--prev"
-        ...
-      ></svg>
-      <span class="govuk-pagination__link-title">Previous</span>
-    </a>
-  </div>
-  <ul class="govuk-pagination__list">
-    <li class="govuk-pagination__item">
-      <a
-        class="govuk-link govuk-pagination__link"
-        href="/records?status=active&amp;page=1"
-        aria-label="Page 1"
-        >1</a
-      >
-    </li>
-    <li class="govuk-pagination__item govuk-pagination__item--current">
-      <a
-        class="govuk-link govuk-pagination__link"
-        href="/records?status=active&amp;page=2"
-        aria-label="Page 2"
-        aria-current="page"
-        >2</a
-      >
-    </li>
-    <li class="govuk-pagination__item govuk-pagination__item--ellipsis">
-      &ctdot;
-    </li>
-    <li class="govuk-pagination__item">
-      <a
-        class="govuk-link govuk-pagination__link"
-        href="/records?status=active&amp;page=10"
-        aria-label="Page 10"
-        >10</a
-      >
-    </li>
-  </ul>
-  <div class="govuk-pagination__next">
-    <a
-      class="govuk-link govuk-pagination__link"
-      href="/records?status=active&amp;page=3"
-      rel="next"
-    >
-      <span class="govuk-pagination__link-title">Next</span>
-      <svg
-        class="govuk-pagination__icon govuk-pagination__icon--next"
-        ...
-      ></svg>
-    </a>
-  </div>
-</nav>
 ```
 
 ---

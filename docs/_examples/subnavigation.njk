@@ -1,0 +1,17 @@
+{% from "wrc/components/subnavigation/macro.njk" import wrcSubnavigation %}
+
+{{ wrcSubnavigation({
+  ariaLabel: "Filter by producer type",
+  items: [
+    {
+      text: "Direct producers",
+      href: "/?type=direct-producers&tab=pending",
+      current: true
+    },
+    {
+      text: "Compliance schemes",
+      href: "/?type=compliance-schemes&tab=pending",
+      current: false
+    }
+  ]
+}) }}

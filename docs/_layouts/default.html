@@ -14,7 +14,7 @@
     <a href="#main-content" class="govuk-skip-link">Skip to main content</a>
 
     <header class="defra-internal-header">
-      <div class="govuk-width-container">
+      <div class="govuk-width-container wrc-docs-width-container">
         <div class="defra-internal-header__main">
           <div class="defra-internal-header__logo">
             <a class="defra-internal-header__logo-link" href="{{ '/' | relative_url }}">
@@ -32,7 +32,7 @@
 
     <div class="defra-internal-service-header">
       <section aria-label="Service information" class="govuk-service-navigation">
-        <div class="govuk-width-container">
+        <div class="govuk-width-container wrc-docs-width-container">
           <div class="govuk-service-navigation__container">
             <span class="govuk-service-navigation__service-name">
               <a href="{{ '/' | relative_url }}" class="govuk-service-navigation__link">
@@ -71,7 +71,7 @@
       </section>
     </div>
 
-    <div class="govuk-width-container">
+    <div class="govuk-width-container wrc-docs-width-container">
       <main class="govuk-main-wrapper" id="main-content">
         <div class="wrc-docs-layout">
           <nav class="wrc-docs-sidebar" aria-label="Documentation navigation">
@@ -99,15 +99,56 @@
             {% endfor %}
           </nav>
 
-          <article class="wrc-docs-content">
-            {{ content }}
+          {% assign example_slug = page.url | split: '/' | last | remove: '.html' %}
+          {% if page.url contains '/components/' %}{% assign example = site.data.examples[example_slug] %}{% endif %}
+          {%- comment -%} Built in two parts so HTML parsers don't read the delimiter as an hr tag {%- endcomment -%}
+          {% assign hr_open = '<' | append: 'hr' %}
+          {% assign content_intro = content | split: hr_open | first %}
+          {% assign content_rest = content | remove_first: content_intro %}
+          <article class="wrc-docs-main">
+            <div class="wrc-docs-content">
+              {{ content_intro }}
+            </div>
+
+            {% if example %}
+              {%- comment -%} Mirrors the GOV.UK Design System example macro (views/macros/_example.njk) {%- endcomment -%}
+              {% assign example_src = '/assets/examples/' | append: example_slug | append: '.html' | relative_url %}
+              <div class="wrc-docs-example-wrapper" data-module="wrc-docs-example">
+                <div class="wrc-docs-example">
+                  <div class="wrc-docs-example__toolbar">
+                    <a href="{{ example_src }}" class="govuk-link" target="_blank">Open this example in a new tab<span class="govuk-visually-hidden">: {{ page.title | downcase }}</span></a>
+                  </div>
+                  <iframe title="{{ page.title }} example" class="wrc-docs-example__frame" src="{{ example_src }}" loading="lazy"></iframe>
+                </div>
+                <ul class="wrc-docs-tabs">
+                  <li class="wrc-docs-tabs__item"><a class="govuk-link govuk-link--no-visited-state" href="#example-html" aria-controls="example-html">HTML</a></li>
+                  {% if example.nunjucks %}
+                    <li class="wrc-docs-tabs__item"><a class="govuk-link govuk-link--no-visited-state" href="#example-nunjucks" aria-controls="example-nunjucks">Nunjucks</a></li>
+                  {% endif %}
+                </ul>
+                <div class="wrc-docs-tabs__container" id="example-html">
+                  {% if example.htmlNote %}<div class="wrc-docs-content">{{ example.htmlNote }}</div>{% endif %}
+                  <div class="wrc-docs-example__code"><pre tabindex="0"><code>{{ example.html | escape }}</code></pre></div>
+                </div>
+                {% if example.nunjucks %}
+                  <div class="wrc-docs-tabs__container" id="example-nunjucks">
+                    {% if example.nunjucksNote %}<div class="wrc-docs-content">{{ example.nunjucksNote }}</div>{% endif %}
+                    <div class="wrc-docs-example__code"><pre tabindex="0"><code>{{ example.nunjucks | escape }}</code></pre></div>
+                  </div>
+                {% endif %}
+              </div>
+            {% endif %}
+
+            <div class="wrc-docs-content">
+              {{ content_rest }}
+            </div>
           </article>
         </div>
       </main>
     </div>
 
     <footer class="defra-internal-footer">
-      <div class="govuk-width-container">
+      <div class="govuk-width-container wrc-docs-width-container">
         <div class="govuk-footer__meta">
           <div class="govuk-footer__meta-item govuk-footer__meta-item--grow">
             <p class="govuk-body-s govuk-!-margin-bottom-2">Department for Environment, Food &amp; Rural Affairs</p>
@@ -140,5 +181,62 @@
         </div>
       </div>
     </footer>
+    <script src="{{ '/assets/js/clipboard.min.js' | relative_url }}"></script>
+    <script src="{{ '/assets/js/iframeResizer.min.js' | relative_url }}"></script>
+    <script type="module">
+      // Like the GOV.UK Design System app-tabs, app-copy and app-example-frame modules
+      const $root = document.querySelector('[data-module="wrc-docs-example"]')
+      if ($root) {
+        // Links work without JS; as toggles they become buttons so Space works too
+        const $tabs = [...$root.querySelectorAll('.wrc-docs-tabs a')].map(($link) => {
+          const $button = document.createElement('button')
+          $button.type = 'button'
+          $button.className = 'govuk-link govuk-link--no-visited-state'
+          $button.textContent = $link.textContent
+          $button.setAttribute('aria-controls', $link.getAttribute('aria-controls'))
+          $link.replaceWith($button)
+          return $button
+        })
+        const show = ($open) => {
+          for (const $tab of $tabs) {
+            const isOpen = $tab === $open
+            $tab.setAttribute('aria-expanded', String(isOpen))
+            $tab.parentElement.classList.toggle('wrc-docs-tabs__item--current', isOpen)
+            document.getElementById($tab.getAttribute('aria-controls')).hidden = !isOpen
+          }
+        }
+        for (const $tab of $tabs) {
+          $tab.addEventListener('click', () => {
+            show($tab.getAttribute('aria-expanded') === 'true' ? null : $tab)
+          })
+        }
+        show(null)
+
+        window.iFrameResize({ scrolling: 'omit' }, $root.querySelector('.wrc-docs-example__frame'))
+
+        for (const $code of $root.querySelectorAll('.wrc-docs-example__code')) {
+          const $button = document.createElement('button')
+          const $status = document.createElement('span')
+          let resetTimeoutId
+          $button.className = 'wrc-docs-copy-button'
+          $button.textContent = 'Copy code'
+          $status.className = 'govuk-visually-hidden'
+          $status.setAttribute('aria-live', 'assertive')
+          $code.prepend($button, $status)
+
+          // On error ClipboardJS leaves the code selected so it can be copied by hand
+          new window.ClipboardJS($button, { target: () => $code.querySelector('pre') })
+            .on('success', (event) => {
+              event.clearSelection()
+              $button.textContent = $status.textContent = 'Code copied'
+              window.clearTimeout(resetTimeoutId)
+              resetTimeoutId = window.setTimeout(() => {
+                $button.textContent = 'Copy code'
+                $status.textContent = ''
+              }, 5000)
+            })
+        }
+      }
+    </script>
   </body>
 </html>

@@ -26,32 +26,6 @@ Including `dist/wrc/components/moj-scrollable-pane/_index.scss` applies normal t
 }
 ```
 
-### Example usage
-
-```html
-<div
-  class="moj-scrollable-pane"
-  role="region"
-  aria-label="Registered organisations"
-  tabindex="0"
->
-  <table class="govuk-table">
-    <thead class="govuk-table__head">
-      <tr class="govuk-table__row">
-        <th scope="col" class="govuk-table__header">Organisation</th>
-        <th scope="col" class="govuk-table__header">Status</th>
-      </tr>
-    </thead>
-    <tbody class="govuk-table__body">
-      <tr class="govuk-table__row">
-        <th scope="row" class="govuk-table__header">Acme Recycling Ltd</th>
-        <td class="govuk-table__cell">Accepted</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
-```
-
 ---
 
 ## Stylesheet import

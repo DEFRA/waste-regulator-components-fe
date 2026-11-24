@@ -7,7 +7,7 @@ import yaml from 'js-yaml'
 import { Liquid } from 'liquidjs'
 import { marked } from 'marked'
 
-import { buildDocs } from './build-docs.js'
+import { buildDocs, parseFrontmatter } from './build-docs.js'
 import { DEFAULT_ROOT_DIR } from './sass-config.js'
 
 export const DEFAULT_DOCS_PORT = 1999
@@ -39,30 +39,6 @@ export function parseDocsPort(rawPort) {
   }
 
   return port
-}
-
-export function parseFrontmatter(markdown) {
-  const normalized = markdown.replaceAll('\r\n', '\n')
-  if (!normalized.startsWith('---\n')) {
-    return { data: {}, body: normalized }
-  }
-
-  const closeIndex = normalized.indexOf('\n---', 4)
-  if (closeIndex === -1) {
-    return { data: {}, body: normalized }
-  }
-
-  const afterClose = normalized.slice(closeIndex + 4)
-  if (afterClose !== '' && !afterClose.startsWith('\n')) {
-    return { data: {}, body: normalized }
-  }
-
-  const parsed = yaml.load(normalized.slice(4, closeIndex))
-  const data =
-    parsed && typeof parsed === 'object' && !Array.isArray(parsed) ? parsed : {}
-  const body = afterClose.startsWith('\n') ? afterClose.slice(1) : afterClose
-
-  return { data, body }
 }
 
 function isExternalOrAnchor(href) {
@@ -160,13 +136,18 @@ export function loadSiteContext(docsDir) {
   const release = fs.existsSync(releasePath)
     ? (yaml.load(fs.readFileSync(releasePath, 'utf8')) ?? {})
     : {}
+  const examplesPath = path.join(docsDir, '_data/examples.json')
+  const examples = fs.existsSync(examplesPath)
+    ? JSON.parse(fs.readFileSync(examplesPath, 'utf8'))
+    : {}
 
   return {
     ...siteConfig,
     baseurl: '',
     data: {
       navigation,
-      release
+      release,
+      examples
     }
   }
 }
@@ -187,15 +168,24 @@ export async function createDocsServer(options = {}) {
   const host = options.host ?? 'localhost'
 
   if (options.buildAssets !== false) {
-    buildDocs({
+    await buildDocs({
       rootDir,
       outputCssPath: path.join(docsDir, 'assets/css/docs.css'),
       destImagesDir: path.join(docsDir, 'assets/images'),
-      releaseDataPath: path.join(docsDir, '_data/release.yml')
+      releaseDataPath: path.join(docsDir, '_data/release.yml'),
+      destJsDir: path.join(docsDir, 'assets/js'),
+      examplesDir: path.join(docsDir, '_examples'),
+      outputDataPath: path.join(docsDir, '_data/examples.json'),
+      outputPagesDir: path.join(docsDir, 'assets/examples')
     })
   }
 
-  const server = Hapi.server({ port, host })
+  // Docs never read cookies, so other localhost apps' cookies can't cause a 400
+  const server = Hapi.server({
+    port,
+    host,
+    routes: { state: { parse: false } }
+  })
   await server.register(Inert)
 
   const site = loadSiteContext(docsDir)
@@ -204,20 +194,10 @@ export async function createDocsServer(options = {}) {
   server.route([
     {
       method: 'GET',
-      path: '/assets/css/{param*}',
+      path: '/assets/{param*}',
       handler: {
         directory: {
-          path: path.join(docsDir, 'assets/css'),
-          index: false
-        }
-      }
-    },
-    {
-      method: 'GET',
-      path: '/assets/images/{param*}',
-      handler: {
-        directory: {
-          path: path.join(docsDir, 'assets/images'),
+          path: path.join(docsDir, 'assets'),
           index: false
         }
       }

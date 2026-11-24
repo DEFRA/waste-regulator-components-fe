@@ -1,0 +1,9 @@
+{% from "wrc/components/header/macro.njk" import wrcHeader %}
+
+{{ wrcHeader({
+  organisationName: "Department for Environment,<br>Food &amp; Rural Affairs",
+  navigation: [
+    { text: "Jane Doe", visuallyHiddenText: "Signed in as " },
+    { text: "Sign out", href: "/logout" }
+  ]
+}) }}

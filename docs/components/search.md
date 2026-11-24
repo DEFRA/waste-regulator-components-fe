@@ -15,68 +15,6 @@ Use this component above filtered tables or record lists where users need to sea
 
 ---
 
-## How it works
-
-### Nunjucks macro import
-
-```njk
-{% from "wrc/components/search/macro.njk" import wrcSearch %}
-
-{{ wrcSearch({
-  action: "/certificates-of-compliance",
-  locale: locale,
-  hiddenFields: {
-    type: organisationType,
-    tab: activeTab,
-    sort: sort.column ~ '[' ~ sort.direction ~ ']'
-  },
-  label: "Search by organisation name or ID",
-  searchTerm: searchTerm,
-  errorMessage: errors.search if errors
-}) }}
-```
-
-### HTML output
-
-```html
-<div class="v3-search-panel govuk-!-margin-bottom-4">
-  <search class="moj-search">
-    <form action="/certificates-of-compliance" method="get" novalidate>
-      <input type="hidden" name="type" value="direct-producers" />
-      <input type="hidden" name="tab" value="pending" />
-      <input type="hidden" name="sort" value="DateSubmitted[desc]" />
-
-      <div class="govuk-form-group">
-        <label
-          class="govuk-label moj-search__label govuk-!-font-weight-bold"
-          for="search"
-        >
-          Search by organisation name or ID
-        </label>
-        <div class="moj-search__input-wrapper">
-          <input
-            class="govuk-input moj-search__input"
-            id="search"
-            name="search"
-            type="search"
-            value=""
-          />
-        </div>
-        <button
-          type="submit"
-          class="govuk-button moj-search__button govuk-!-margin-bottom-0 govuk-!-margin-left-2"
-          data-module="govuk-button"
-        >
-          Search
-        </button>
-      </div>
-    </form>
-  </search>
-</div>
-```
-
----
-
 ## Macro options
 
 | Name           | Type     | Default                      | Description                                                                                                                                                                        |
@@ -93,7 +31,7 @@ Use this component above filtered tables or record lists where users need to sea
 
 ---
 
-## Examples
+## More examples
 
 ### Search with validation error
 

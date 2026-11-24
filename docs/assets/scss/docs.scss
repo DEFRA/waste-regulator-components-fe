@@ -1,6 +1,8 @@
 @use "govuk-frontend" as *;
 @use "dist/wrc/index" as *;
 
+$wrc-docs-code-font: "SFMono-Regular", "Consolas", "Liberation Mono", "Menlo", monospace;
+
 :root {
   --govuk-brand-colour: #00a33b;
   --govuk-template-background-colour: #ffffff;
@@ -9,13 +11,19 @@
 // -----------------------------------------------------------------------------
 // Documentation layout
 // -----------------------------------------------------------------------------
+// Wider docs chrome like the GOV.UK Design System; examples keep the standard
+// width container so components render at their real size
+.wrc-docs-width-container {
+  @include govuk-width-container(1100px);
+}
+
 .wrc-docs-layout {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   gap: govuk-spacing(6);
 
   @include govuk-media-query($from: desktop) {
-    grid-template-columns: 240px minmax(0, 1fr);
+    grid-template-columns: 260px minmax(0, 1fr);
     gap: govuk-spacing(8);
     align-items: start;
   }
@@ -89,12 +97,203 @@
   }
 }
 
+.wrc-docs-main {
+  min-width: 0;
+}
+
+// -----------------------------------------------------------------------------
+// Rendered component example, ported from the GOV.UK Design System
+// (src/stylesheets/components/_example.scss, _tabs.scss and the copy button)
+// -----------------------------------------------------------------------------
+.wrc-docs-example-wrapper {
+  @include govuk-responsive-margin(6, "top");
+  @include govuk-responsive-margin(6, "bottom");
+  border: 1px solid $govuk-border-colour;
+  border-top: 0;
+}
+
+.wrc-docs-example {
+  @include govuk-font-size($size: 16);
+  position: relative;
+  border-top: 1px solid $govuk-border-colour;
+  // Checkerboard shows through when the frame is resized narrower
+  background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAJUlEQVQoU2P88ePHfwY0wMHBwYguxjgUFKI7GsTH5m4M3w1ChQAZTSeO0/AZpgAAAABJRU5ErkJggg==")
+    repeat;
+}
+
+.wrc-docs-example__toolbar {
+  padding: 10px;
+  border-bottom: 1px solid $govuk-border-colour;
+  background: $govuk-body-background-colour;
+}
+
+.wrc-docs-example__frame {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: 150px;
+  min-width: 230px;
+  min-height: govuk-spacing(6) * 2;
+  overflow: auto;
+  transform: translate3d(0, 0, 0);
+  border: 0;
+  border-right: 1px solid $govuk-border-colour;
+  background: govuk-colour("white");
+
+  @include govuk-media-query($from: desktop) {
+    resize: both;
+  }
+}
+
+.wrc-docs-example__code {
+  position: relative;
+}
+
+.wrc-docs-tabs {
+  margin: 0;
+  padding: 0;
+  font-size: 0; // Prevent white space taking up space between tabs
+  list-style-type: none;
+  border-top: 1px solid $govuk-border-colour;
+}
+
+.wrc-docs-tabs__item {
+  @include govuk-font($size: 19);
+  display: inline-block;
+  position: relative;
+  padding: govuk-spacing(4);
+
+  a,
+  button {
+    display: block;
+
+    // Extend the touch area of the link or button to fill the entire tab
+    &::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+    }
+  }
+
+  // .govuk-link only colours :link and :visited, so buttons need it set
+  button {
+    padding: 0;
+    border: 0;
+    color: $govuk-link-colour;
+    background: none;
+    font: inherit;
+    cursor: pointer;
+
+    &:hover {
+      color: $govuk-link-hover-colour;
+    }
+  }
+}
+
+.wrc-docs-tabs__item--current {
+  margin: 0 -1px;
+  border-right: 1px solid $govuk-border-colour;
+  border-left: 1px solid $govuk-border-colour;
+  background: govuk-colour("white");
+
+  // The wrapper border already sits to the left of the first tab
+  &:first-child {
+    margin-left: 0;
+    border-left: 0;
+  }
+
+  button:not(:focus) {
+    color: $govuk-text-colour;
+    @include govuk-link-style-no-underline;
+  }
+}
+
+.wrc-docs-tabs__container {
+  margin-top: -1px;
+  padding: 20px;
+  border-top: 1px solid $govuk-border-colour;
+  background-color: govuk-colour("white");
+
+  pre {
+    margin: 0;
+  }
+
+  pre code {
+    display: block;
+    max-width: 38em;
+    padding: govuk-spacing(4);
+    overflow-x: auto;
+    border: $govuk-focus-width solid transparent;
+    outline: 1px solid $govuk-border-colour;
+    color: $govuk-text-colour;
+    background-color: govuk-colour("black", $variant: "tint-95");
+    font-family: $wrc-docs-code-font;
+    @include govuk-font-size($size: 19);
+  }
+
+  // Room for the copy button, which only exists when JavaScript runs
+  .wrc-docs-copy-button ~ pre code {
+    padding-top: 45px;
+  }
+
+  pre:focus code {
+    border: $govuk-focus-width solid $govuk-input-border-colour;
+    outline: $govuk-focus-width solid $govuk-focus-colour;
+  }
+
+  pre:focus {
+    outline: none;
+  }
+}
+
+.wrc-docs-copy-button {
+  $copy-button-colour: #00823b;
+
+  @include govuk-font($size: 16);
+  position: absolute;
+  z-index: 1;
+  top: govuk-spacing(2);
+  right: govuk-spacing(2);
+  min-width: 110px;
+  padding: 3px 10px;
+  border: 1px solid $copy-button-colour;
+  color: $copy-button-colour;
+  background-color: govuk-colour("white");
+  box-shadow: 0 2px 0 0 govuk-colour("green");
+  text-align: center;
+  cursor: pointer;
+
+  &:focus:not(:hover) {
+    color: $govuk-focus-text-colour;
+    background-color: $govuk-focus-colour;
+    box-shadow: 0 2px 0 0 $govuk-focus-text-colour;
+  }
+
+  &:active,
+  &:focus {
+    padding: 2px 10px; // Counter increased border size
+    border: 2px solid $govuk-focus-colour;
+    outline: 2px solid transparent;
+    box-shadow: none;
+  }
+
+  &:active {
+    margin-top: 2px;
+  }
+}
+
+.wrc-docs-example-page {
+  @include govuk-font($size: 19); // For outputs that are bare text, like "No data"
+  padding: govuk-spacing(4);
+}
+
 // -----------------------------------------------------------------------------
 // Rendered Markdown content
 // -----------------------------------------------------------------------------
 .wrc-docs-content {
-  min-width: 0;
-
   h1 {
     @include govuk-font($size: 48, $weight: bold);
     margin: 0 0 govuk-spacing(6);
@@ -102,7 +301,7 @@
   }
 
   h2 {
-    @include govuk-font($size: 27, $weight: bold);
+    @include govuk-font($size: 36, $weight: bold);
     margin: govuk-spacing(7) 0 govuk-spacing(4);
     color: $govuk-text-colour;
   }
@@ -169,7 +368,7 @@
 
   code {
     padding: 2px 6px;
-    font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+    font-family: $wrc-docs-code-font;
     font-size: 0.9em;
     color: $govuk-text-colour;
     background-color: govuk-colour("black", $variant: "tint-95");

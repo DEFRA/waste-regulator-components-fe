@@ -1,0 +1,16 @@
+---
+context:
+  csrfToken: csrf-token-string
+---
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "wrc/components/csrf-field/macro.njk" import wrcCsrfField %}
+
+<div class="govuk-button-group">
+  <form action="/accept" method="post">
+    {{ wrcCsrfField(csrfToken) }}
+    {{ govukButton({
+      text: "Accept certificate"
+    }) }}
+  </form>
+  <a class="govuk-link" href="/certificates-of-compliance">Cancel and return</a>
+</div>

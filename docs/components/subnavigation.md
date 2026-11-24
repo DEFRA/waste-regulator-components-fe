@@ -15,59 +15,6 @@ Use this component above tabbed views or filtered datasets to switch between top
 
 ---
 
-## How it works
-
-### Nunjucks macro import
-
-```njk
-{% from "wrc/components/subnavigation/macro.njk" import wrcSubnavigation %}
-
-{{ wrcSubnavigation({
-  ariaLabel: "Filter by producer type",
-  items: [
-    {
-      text: "Direct producers",
-      href: "/?type=direct-producers&tab=pending",
-      current: true
-    },
-    {
-      text: "Compliance schemes",
-      href: "/?type=compliance-schemes&tab=pending",
-      current: false
-    }
-  ]
-}) }}
-```
-
-### HTML output
-
-```html
-<nav
-  class="moj-sub-navigation govuk-!-margin-bottom-5 govuk-!-margin-top-6"
-  aria-label="Filter by producer type"
->
-  <ul class="moj-sub-navigation__list">
-    <li class="moj-sub-navigation__item">
-      <a
-        class="moj-sub-navigation__link"
-        aria-current="page"
-        href="/?type=direct-producers&amp;tab=pending"
-        >Direct producers</a
-      >
-    </li>
-    <li class="moj-sub-navigation__item">
-      <a
-        class="moj-sub-navigation__link"
-        href="/?type=compliance-schemes&amp;tab=pending"
-        >Compliance schemes</a
-      >
-    </li>
-  </ul>
-</nav>
-```
-
----
-
 ## Macro options
 
 | Name              | Type      | Default            | Description                                                      |

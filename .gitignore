@@ -6,3 +6,6 @@ coverage/
 docs/assets/css/
 docs/assets/images/
 docs/_data/release.yml
+docs/assets/js/
+docs/assets/examples/
+docs/_data/examples.json

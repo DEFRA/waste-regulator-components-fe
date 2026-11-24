@@ -3,7 +3,7 @@ import { fileURLToPath } from 'node:url'
 import path from 'node:path'
 import nunjucks from 'nunjucks'
 import { load } from 'cheerio'
-import { camelCase } from 'lodash'
+import lodash from 'lodash'
 
 import { translate } from './translate.js'
 
@@ -38,7 +38,8 @@ export function renderComponent(
   const macroName =
     options.macroName ||
     `wrc${
-      componentName.charAt(0).toUpperCase() + camelCase(componentName.slice(1))
+      componentName.charAt(0).toUpperCase() +
+      lodash.camelCase(componentName.slice(1))
     }`
   const macroParams = JSON.stringify(params, null, 2)
   let macroString = `{%- from "${macroPath}" import ${macroName} -%}`

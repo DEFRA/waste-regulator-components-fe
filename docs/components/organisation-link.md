@@ -15,50 +15,6 @@ Use this component in table rows, list items, and search results where an organi
 
 ---
 
-## How it works
-
-### Nunjucks macro import
-
-```njk
-{% from "wrc/components/organisation-link/macro.njk" import wrcOrganisationLink %}
-
-{# Link to organisation overview (item.id is null) #}
-{{ wrcOrganisationLink({
-  routePrefix: "/organisations",
-  organisationType: "compliance-schemes",
-  activeTab: "overview",
-  complianceYear: "2026",
-  item: {
-    organisationId: "ORG-001",
-    organisationName: "Acme Recycling Ltd"
-  }
-}) }}
-
-{# Link to specific document (item.id present) #}
-{{ wrcOrganisationLink({
-  routePrefix: "/organisations",
-  organisationType: "producers",
-  activeTab: "certificates",
-  item: {
-    id: "CERT-456",
-    organisationId: "ORG-002",
-    organisationName: "Northern Packaging Ltd"
-  }
-}) }}
-```
-
-### HTML output
-
-```html
-<a
-  href="/organisations/ORG-001?obligationYear=2026&amp;type=compliance-schemes&amp;tab=overview"
-  class="govuk-link govuk-link--no-visited-state"
-  >Acme Recycling Ltd</a
->
-```
-
----
-
 ## Macro options
 
 | Name                    | Type                       | Default     | Description                                                                                                                     |

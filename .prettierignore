@@ -7,4 +7,6 @@ coverage
 .vs
 docs/assets/css
 docs/_site
-
+docs/assets/js
+docs/assets/examples
+docs/_data/examples.json

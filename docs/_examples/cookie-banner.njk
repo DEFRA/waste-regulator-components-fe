@@ -1,0 +1,18 @@
+---
+htmlNote: Shown when the cookie preference has not been set.
+context:
+  csrfToken: csrf-token-string
+---
+{% from "wrc/components/cookie-banner/macro.njk" import wrcCookieBanner %}
+
+{{ wrcCookieBanner({
+  serviceName: "Waste Tracking Service",
+  CSRFToken: csrfToken,
+  cookiePreferenceSet: false,
+  hasCookiePolicy: false,
+  allowGoogleAnalytics: false,
+  bannerActionUrl: "/cookies/banner",
+  hideBannerActionUrl: "/cookies/hide-banner",
+  cookiesUrl: "/cookies",
+  locale: "en"
+}) }}

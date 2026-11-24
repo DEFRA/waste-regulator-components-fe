@@ -15,39 +15,6 @@ Use this component at the top of the main page content area (inside `content` or
 
 ---
 
-## How it works
-
-### Nunjucks macro import
-
-```njk
-{% from "wrc/components/heading/macro.njk" import wrcHeading %}
-
-{{ wrcHeading({
-  text: "Manage waste tracking compliance",
-  caption: "Scheme registration 2026"
-}) }}
-```
-
-### HTML output
-
-```html
-<div class="govuk-grid-row wrc-heading" data-testid="wrc-heading">
-  <div class="govuk-grid-column-two-thirds">
-    <span class="govuk-caption-xl" data-testid="wrc-heading-caption"
-      >Scheme registration 2026</span
-    >
-    <h1
-      class="govuk-heading-xl govuk-!-margin-bottom-2"
-      data-testid="wrc-heading-title"
-    >
-      Manage waste tracking compliance
-    </h1>
-  </div>
-</div>
-```
-
----
-
 ## Macro options
 
 | Name      | Type     | Default     | Description                                                                                   |

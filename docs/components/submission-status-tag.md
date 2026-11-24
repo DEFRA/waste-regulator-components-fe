@@ -15,19 +15,7 @@ Use this component in summary cards, workflow histories, and data tables to indi
 
 ---
 
-## How it works
-
-### Nunjucks macro import
-
-```njk
-{% from "wrc/components/submission-status-tag/macro.njk" import wrcSubmissionStatusTag %}
-
-{{ wrcSubmissionStatusTag({
-  status: "Accepted"
-}) }}
-```
-
-### Supported statuses and colors
+## Supported statuses and colors
 
 | Status Value      | Tag Color Class     | Rendered Label (EN) | Rendered Label (CY) |
 | ----------------- | ------------------- | ------------------- | ------------------- |
@@ -36,12 +24,6 @@ Use this component in summary cards, workflow histories, and data tables to indi
 | `"Cancelled"`     | `govuk-tag--yellow` | Cancelled           | Wedi canslo         |
 | `"Not submitted"` | `govuk-tag--grey`   | Not submitted       | Heb ei gyflwyno     |
 | _Other / Custom_  | `govuk-tag--blue`   | Custom status text  | Custom status text  |
-
-### HTML output
-
-```html
-<strong class="govuk-tag govuk-tag--green">Accepted</strong>
-```
 
 ---
 

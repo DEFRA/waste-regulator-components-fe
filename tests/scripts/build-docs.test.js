@@ -7,8 +7,10 @@ import * as cheerio from 'cheerio'
 
 import {
   buildDocs,
+  buildDocsExamples,
   buildDocsStyles,
   copyDocsImages,
+  copyDocsScripts,
   resolveReleaseTag,
   writeDocsReleaseData
 } from '../../scripts/build-docs.js'
@@ -38,7 +40,7 @@ describe('Documentation build and structure', () => {
     }
   })
 
-  test('buildDocs builds CSS and copies images cleanly', () => {
+  test('buildDocs builds CSS and copies images cleanly', async () => {
     const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'wrc-docs-test-'))
     tempDirs.push(tempDir)
 
@@ -49,11 +51,15 @@ describe('Documentation build and structure', () => {
     expect(fs.existsSync(outputCssPath)).toBe(true)
     expect(customCss).toContain('.wrc-docs-layout')
 
-    const isolatedResult = buildDocs({
+    const isolatedResult = await buildDocs({
       outputCssPath,
       destImagesDir,
-      releaseDataPath
+      releaseDataPath,
+      destJsDir: path.join(tempDir, 'assets/js'),
+      outputDataPath: path.join(tempDir, '_data/examples.json'),
+      outputPagesDir: path.join(tempDir, 'assets/examples')
     })
+    expect(isolatedResult.examples).toContain('heading')
     expect(isolatedResult.images).toEqual([
       'apple-touch-icon.png',
       'favicon.ico',
@@ -68,7 +74,7 @@ describe('Documentation build and structure', () => {
       true
     )
 
-    const defaultResult = buildDocs()
+    const defaultResult = await buildDocs()
     expect(defaultResult.css).toContain('.wrc-docs-layout')
     expect(defaultResult.css).toContain('#00a33b')
     expect(defaultResult.releaseTag).toBe(resolveReleaseTag())
@@ -161,6 +167,103 @@ describe('Documentation build and structure', () => {
     expect(fs.readFileSync(releaseDataPath, 'utf8')).toBe('tag: v2.3.4\n')
   })
 
+  test('buildDocsExamples renders each example into an iframe page and data file', async () => {
+    const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'wrc-examples-test-'))
+    tempDirs.push(tempDir)
+
+    const examplesDir = path.join(tempDir, '_examples')
+    const outputDataPath = path.join(tempDir, '_data/examples.json')
+    const outputPagesDir = path.join(tempDir, 'assets/examples')
+    fs.mkdirSync(examplesDir)
+    fs.writeFileSync(
+      path.join(examplesDir, 'heading.njk'),
+      '{% from "wrc/components/heading/macro.njk" import wrcHeading %}\n{{ wrcHeading({ text: "Title <b>", caption: "Caption" }) }}\n'
+    )
+    fs.writeFileSync(path.join(examplesDir, 'README.md'), 'ignored')
+    fs.writeFileSync(
+      path.join(examplesDir, 'csrf.njk'),
+      [
+        '---',
+        'nunjucksNote: Takes positional arguments `(token, id)`.',
+        'htmlNote: Hidden from view.',
+        'context:',
+        '  csrfToken: abc-123',
+        '---',
+        '{% from "wrc/components/csrf-field/macro.njk" import wrcCsrfField %}',
+        '{{ wrcCsrfField(csrfToken) }}'
+      ].join('\n')
+    )
+    fs.writeFileSync(path.join(examplesDir, 'plain.njk'), '<p>Plain HTML</p>\n')
+
+    const slugs = await buildDocsExamples({
+      examplesDir,
+      outputDataPath,
+      outputPagesDir
+    })
+    expect(slugs).toEqual(['csrf', 'heading', 'plain'])
+
+    const data = JSON.parse(fs.readFileSync(outputDataPath, 'utf8'))
+    expect(data.heading.nunjucks).toMatch(/^\{% from .*wrcHeading\(/s)
+    expect(data.heading.html).toContain('govuk-heading-xl')
+    expect(data.heading.html).toContain('Title &lt;b&gt;')
+    expect(data.heading).not.toHaveProperty('nunjucksNote')
+
+    expect(data.csrf.html).toContain('value="abc-123"')
+    expect(data.csrf.nunjucks).not.toContain('nunjucksNote')
+    expect(data.csrf.nunjucksNote).toBe(
+      '<p>Takes positional arguments <code>(token, id)</code>.</p>\n'
+    )
+    expect(data.csrf.htmlNote).toBe('<p>Hidden from view.</p>\n')
+
+    expect(data.plain).toEqual({ html: '<p>Plain HTML</p>' })
+
+    const $ = cheerio.load(
+      fs.readFileSync(path.join(outputPagesDir, 'heading.html'), 'utf8')
+    )
+    expect($('link[rel="stylesheet"]').attr('href')).toBe('../css/docs.css')
+    expect(
+      $('body > .wrc-docs-example-page h1.govuk-heading-xl').text()
+    ).toContain('Title <b>')
+    expect($('script[type="module"]').html()).toContain(
+      '../js/govuk-frontend.min.js'
+    )
+    expect(
+      $('script[src="../js/iframeResizer.contentWindow.min.js"]').length
+    ).toBe(1)
+  })
+
+  test('copyDocsScripts copies the browser scripts for the docs and examples', () => {
+    const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'wrc-js-test-'))
+    tempDirs.push(tempDir)
+
+    expect(copyDocsScripts({ destJsDir: tempDir })).toEqual([
+      'govuk-frontend.min.js',
+      'clipboard.min.js',
+      'iframeResizer.min.js',
+      'iframeResizer.contentWindow.min.js'
+    ])
+    expect(
+      fs.readFileSync(path.join(tempDir, 'govuk-frontend.min.js'), 'utf8')
+    ).toContain('initAll')
+  })
+
+  test('every visual component page has a rendered example', () => {
+    // These render nothing visible, so their pages keep plain code blocks
+    const nonVisual = new Set(['index', 'csrf-field', 'google-analytics'])
+    const slugs = fs
+      .readdirSync(path.join(docsDir, 'components'))
+      .map((fileName) => path.basename(fileName, '.md'))
+      .filter((slug) => !nonVisual.has(slug))
+
+    expect(slugs.length).toBeGreaterThanOrEqual(17)
+    for (const slug of slugs) {
+      expect(
+        fs.existsSync(path.join(docsDir, '_examples', `${slug}.njk`)),
+        `docs/_examples/${slug}.njk should exist`
+      ).toBe(true)
+    }
+  })
+
   test('docs layout uses Defra chrome matching the example application', () => {
     const layoutHtml = fs.readFileSync(
       path.join(docsDir, '_layouts/default.html'),
@@ -176,7 +279,7 @@ describe('Documentation build and structure', () => {
     )
     expect($('.wrc-docs-layout').length).toBe(1)
     expect($('nav.wrc-docs-sidebar').length).toBe(1)
-    expect($('article.wrc-docs-content').length).toBe(1)
+    expect($('article.wrc-docs-main > .wrc-docs-content').length).toBe(2)
     expect(layoutHtml).toContain('/assets/css/docs.css')
     expect($('body > footer.defra-internal-footer').length).toBe(1)
   })
