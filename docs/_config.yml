@@ -1,5 +1,5 @@
-title: Defra Internal Design System
-description: Reusable Nunjucks components, Sass stylesheets, and assets for Defra internal services
+title: WCE regulator components frontend
+description: Components and styles for internal services used by regulators across waste and circular economy services
 markdown: kramdown
 kramdown:
   input: GFM
