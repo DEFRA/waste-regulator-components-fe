@@ -6,7 +6,7 @@ async function start() {
 
   await server.start()
   console.log(
-    `Defra Internal Frontend Example App running at: ${server.info.uri}`
+    `waste-regulator-components-fe Example App running at: ${server.info.uri}`
   )
 }
 

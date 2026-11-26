@@ -59,7 +59,7 @@ Components are reusable user interface elements created specifically for Defra i
 
 ## Contact the team
 
-Defra Internal Frontend is maintained by the Defra EPR Regulators team.
+`waste-regulator-components-fe` is maintained by the Defra EPR Regulators team.
 
 If you have questions, want to propose a new component, or need assistance:
 

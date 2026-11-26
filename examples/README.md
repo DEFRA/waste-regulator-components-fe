@@ -1,4 +1,4 @@
-# Defra Internal Frontend — Example Application
+# waste-regulator-components-fe — Example Application
 
 A reference implementation demonstrating how to build a Defra digital service using [Hapi.js](https://hapi.dev/) (v21), [Nunjucks](https://mozilla.github.io/nunjucks/), and the [`waste-regulator-components-fe`](../README.md) component library.
 
@@ -79,7 +79,7 @@ examples/
 
 ### 1. Compile stylesheets
 
-Compile the application stylesheet (combining GOV.UK Frontend and Defra Internal Frontend):
+Compile the application stylesheet (combining GOV.UK Frontend and `waste-regulator-components-fe`):
 
 ```bash
 node scripts/build-css.js
