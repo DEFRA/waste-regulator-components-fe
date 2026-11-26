@@ -1,4 +1,4 @@
-# Waste Regulator Components Frontend
+# WCE internal design system
 
 The WCE internal design system contains the code you need to start building user interfaces for internal waste and circular economy services, built on top of [GOV.UK Frontend](https://github.com/alphagov/govuk-frontend) v6.
 
