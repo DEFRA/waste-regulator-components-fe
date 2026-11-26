@@ -283,6 +283,8 @@ Pull requests and pushes to `main` run SonarCloud analysis in `.github/workflows
 
 We welcome contributions to Defra Internal Frontend!
 
+Before starting work on a new component, read our [Contribution criteria](docs/contribution-criteria.md) and [Contributing guide](docs/contributing.md), or start a thread in [GitHub Discussions](https://github.com/DEFRA/waste-regulator-components-fe/discussions).
+
 1. Fork or branch from `main`.
 2. Ensure your changes follow functional JavaScript patterns, DRY, and KISS principles.
 3. Write unit tests in `tests/` covering all cases (maintaining 100% test coverage).

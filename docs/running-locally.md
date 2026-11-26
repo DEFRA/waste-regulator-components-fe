@@ -5,7 +5,7 @@ title: Running documentation locally
 
 # Running documentation locally
 
-How to build and preview the Defra Internal Design System documentation site locally without installing Ruby or Jekyll.
+How to build and preview the `waste-regulator-components-fe` documentation site locally without installing Ruby or Jekyll.
 
 ---
 
@@ -87,5 +87,6 @@ Or run the full test suite and coverage check with `npm test`.
 
 ## Related guides
 
-- [Contributing and semantic commits](./contributing.md)
-- [Defra Internal Design System home](./index.md)
+- [Contribution criteria](./contribution-criteria.md)
+- [Contributing guide](./contributing.md)
+- [waste-regulator-components-fe home](./index.md)

@@ -5,7 +5,40 @@ title: Contributing
 
 # Contributing
 
-We welcome contributions to `waste-regulator-components-fe`.
+We welcome contributions to `waste-regulator-components-fe`, from small documentation fixes and research findings to new components.
+
+---
+
+## Contribution process
+
+### 1. Check what already exists
+
+Before proposing a new component or change:
+
+- review the existing [Components](./components/index.md) and [GOV.UK Frontend](https://design-system.service.gov.uk/) to check whether something similar already exists
+- search [GitHub Discussions](https://github.com/DEFRA/waste-regulator-components-fe/discussions) and open issues to see if another team has raised the same need
+- read the [Contribution criteria](./contribution-criteria.md) so you know what evidence and quality standards apply
+
+### 2. Propose a component or share findings
+
+Anyone can propose a new component or share research findings before writing production code:
+
+- Start or join a thread in [GitHub Discussions](https://github.com/DEFRA/waste-regulator-components-fe/discussions) describing the user need, screenshots, prototype links, or research findings. If a discussion already covers your idea, add your team's examples to it.
+- To create a tracked proposal, bug report, or enhancement request, choose a template on [GitHub issues](https://github.com/DEFRA/waste-regulator-components-fe/issues/new/choose).
+
+At the proposal stage, focus on proving the component is **useful** and **unique** — you do not need final code or designs yet.
+
+### 3. Propose a change to a documentation page
+
+Every individual component page includes a **Help improve this page** section at the bottom with a **propose a change to this page on GitHub** link:
+
+1. Select the link to open the page's Markdown file on GitHub (if you do not have direct write access, GitHub will prompt you to fork the repository).
+2. Edit the Markdown file and explain why you are making the change in your pull request description.
+3. Submit the pull request for review by the maintainers.
+
+### 4. Develop and open a pull request
+
+Once you are ready to build a component or code change, check that it meets the **Before publishing** criteria (**usable**, **consistent**, and **versatile**) in the [Contribution criteria](./contribution-criteria.md), follow the **Development workflow** below, and complete the pull request template (including before and after screenshots for any visual change).
 
 ---
 

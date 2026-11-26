@@ -279,7 +279,12 @@ describe('Documentation build and structure', () => {
     )
     expect($('.wrc-docs-layout').length).toBe(1)
     expect($('nav.wrc-docs-sidebar').length).toBe(1)
-    expect($('article.wrc-docs-main > .wrc-docs-content').length).toBe(2)
+    expect($('article.wrc-docs-main > div.wrc-docs-content').length).toBe(2)
+    expect(
+      $(
+        'article.wrc-docs-main > section.wrc-docs-content[aria-labelledby="help-improve-this-page"]'
+      ).length
+    ).toBe(1)
     expect(layoutHtml).toContain('/assets/css/docs.css')
     expect($('body > footer.defra-internal-footer').length).toBe(1)
   })

@@ -9,6 +9,9 @@ primary:
     section_prefix: /components/
   - title: Contributing
     url: /contributing.html
+    section_urls:
+      - /contribution-criteria.html
+      - /running-locally.html
 
 sections:
   - heading: Get started
@@ -82,7 +85,9 @@ sections:
 
   - heading: Contributing
     items:
-      - title: Contributing & semantic commits
+      - title: Contributing guide
         url: /contributing.html
+      - title: Contribution criteria
+        url: /contribution-criteria.html
       - title: Running documentation locally
         url: /running-locally.html
