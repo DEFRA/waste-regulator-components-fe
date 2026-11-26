@@ -3,7 +3,7 @@ layout: default
 title: Home
 ---
 
-# Waste and circular economy - Internal component library
+# Waste and circular economy - Internal design system
 
 Components and styles for internal waste and circular economy services.
 

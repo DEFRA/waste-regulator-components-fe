@@ -5,7 +5,7 @@ title: Running documentation locally
 
 # Running documentation locally
 
-How to build and preview the WCE internal components frontend documentation site locally without installing Ruby or Jekyll.
+How to build and preview the WCE internal design system documentation site locally without installing Ruby or Jekyll.
 
 ---
 
@@ -88,4 +88,4 @@ Or run the full test suite and coverage check with `npm test`.
 ## Related guides
 
 - [Contributing and semantic commits](./contributing.md)
-- [WCE internal components frontend home](./index.md)
+- [WCE internal design system home](./index.md)
