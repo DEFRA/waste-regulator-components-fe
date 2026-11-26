@@ -5,13 +5,13 @@ title: Footer
 
 # Footer
 
-The Defra internal footer provides standard links, departmental meta information, support contact details, the Open Government Licence (OGL) v3.0 statement, and the Crown copyright crest.
+The WCE internal footer provides standard links, departmental meta information, support contact details, the Open Government Licence (OGL) v3.0 statement, and the Crown copyright crest.
 
 ---
 
 ## When to use this component
 
-Use the Defra internal footer at the bottom of every page in internal Defra services, typically placed inside the `footer` block of `page.njk`.
+Use the WCE internal footer at the bottom of every page in WCE internal services, typically placed inside the `footer` block of `page.njk`.
 
 ---
 

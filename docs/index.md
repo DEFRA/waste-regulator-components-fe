@@ -3,68 +3,63 @@ layout: default
 title: Home
 ---
 
-# Defra Internal Design System
+# Waste and circular economy - Internal design system
 
-Design and build consistent, accessible digital services for the Department for Environment, Food and Rural Affairs (Defra).
+Components and styles for internal waste and circular economy services.
 
-`waste-regulator-components-fe` provides reusable Nunjucks components, Sass stylesheets, and static assets built on top of [GOV.UK Frontend](https://design-system.service.gov.uk/) v6.
+This is not a Defra-wide design system. If your service is not an internal waste and circular economy service, use the [GOV.UK Design System](https://design-system.service.gov.uk/).
+
+It is built on [GOV.UK Frontend](https://frontend.design-system.service.gov.uk/) v6 and gives you Nunjucks components, Sass styles and static assets.
 
 ---
 
 ## Get started
 
-Install and configure `waste-regulator-components-fe` for either a prototype or a production service:
+### Prototypes
 
-### Prototyping
+- [**Install in the GOV.UK Prototype Kit**](./get-started/prototype-kit.md) — add it as a plugin to Prototype Kit v13 or later.
 
-- [**Prototype installation (GOV.UK Prototype Kit)**](./get-started/prototype-kit.md) — Install as a GOV.UK Prototype Kit v13+ plugin with automatic Sass, static assets, and `wrc*` macro registration.
+### Live services
 
-### Production
-
-- [**Production installation**](./get-started/installation.md) — Prerequisites, installing via npm, and package directory layout.
-- [**Project setup**](./get-started/project-setup.md) — Configuring Nunjucks search paths, Sass variables, and Vite / Webpack asset bundling.
-- [**Page template**](./get-started/page-template.md) — Creating a base `page.njk` layout extending `govuk/template.njk`.
+- [**Install**](./get-started/installation.md) — what you need and how to install from npm.
+- [**Set up your project**](./get-started/project-setup.md) — configure Nunjucks, Sass and your asset bundler.
+- [**Create a page template**](./get-started/page-template.md) — build a base layout from `govuk/template.njk`.
 
 ---
 
 ## Components
 
-Components are reusable user interface elements created specifically for Defra internal services.
-
-| Component                                                          | Description                                                                                   | Macro                                    |
-| ------------------------------------------------------------------ | --------------------------------------------------------------------------------------------- | ---------------------------------------- |
-| [**Header**](./components/header.md)                               | Top bar with Defra organisation lock-up, crest, and account navigation                        | `wrcHeader`                              |
-| [**Service header**](./components/service-header.md)               | Green service navigation band with regulator context slot and English/Welsh language switcher | `wrcServiceHeader`                       |
-| [**Cookie banner**](./components/cookie-banner.md)                 | Analytics cookie consent banner and confirmation alerts with CSRF tokens                      | `wrcCookieBanner`                        |
-| [**Footer**](./components/footer.md)                               | Footer with "Get help" block, support links, OGL v3.0 licence, and Crown copyright            | `wrcFooter`                              |
-| [**Google Analytics**](./components/google-analytics.md)           | GA4 (`gtag.js`), Consent Mode v2 defaults/updates, and GTM head scripts / `<noscript>` iframe | `wrcGoogleAnalytics`                     |
-| [**Heading**](./components/heading.md)                             | Page heading (`<h1>`) with optional caption                                                   | `wrcHeading`                             |
-| [**CSRF field**](./components/csrf-field.md)                       | Hidden input for cross-site request forgery tokens                                            | `wrcCsrfField`                           |
-| [**Search**](./components/search.md)                               | Search form panel with validation support and arbitrary `hiddenFields`                        | `wrcSearch`                              |
-| [**Subnavigation**](./components/subnavigation.md)                 | Subnavigation link bar accepting dynamic items and active link styles                         | `wrcSubnavigation`                       |
-| [**Tabs list**](./components/tabs-list.md)                         | GOV.UK tabs list (`<ul class="govuk-tabs__list">`) with dynamic items and active tab state    | `wrcTabsList`                            |
-| [**Pagination**](./components/pagination.md)                       | Numbered pagination with previous/next links and ellipsis truncation                          | `wrc/components/pagination/template.njk` |
-| [**Sorting column header**](./components/sorting-column-header.md) | Accessible sortable table header (`<th>`) with directional SVG arrows                         | `wrcSortingColumnHeader`                 |
-| [**Status tag**](./components/status-tag.md)                       | Green/red tag indicating binary or boolean state with fallback text                           | `wrcStatusTag`                           |
-| [**Submission status tag**](./components/submission-status-tag.md) | Colour-coded tag for compliance submission states (Pending, Accepted, Cancelled, etc.)        | `wrcSubmissionStatusTag`                 |
-| [**Organisation link**](./components/organisation-link.md)         | Localized link routing to an organisation summary or compliance document                      | `wrcOrganisationLink`                    |
-| [**Button group**](./components/button-group.md)                   | Aligns `<form>` submit buttons inline inside `.govuk-button-group`                            | CSS (`_index.scss`)                      |
-| [**Scrollable pane**](./components/moj-scrollable-pane.md)         | Enables normal text wrapping inside `.moj-scrollable-pane` tables                             | CSS (`_index.scss`)                      |
-| [**Notification banner**](./components/notification-banner.md)     | Adds `.wrc-notification-banner--cancelled` modifier styling                                   | CSS (`_index.scss`)                      |
-| [**Tab panel**](./components/tab-panel.md)                         | Provides `.v3-compact-table` compact table styling and normal `tbody th` weight               | CSS (`_index.scss`)                      |
+| Component                                                          | What it does                                                      | Macro                                    |
+| ------------------------------------------------------------------ | ----------------------------------------------------------------- | ---------------------------------------- |
+| [**Header**](./components/header.md)                               | Defra logo, crest and account menu                                | `wrcHeader`                              |
+| [**Service header**](./components/service-header.md)               | Service navigation, regulator name and English/Welsh switch       | `wrcServiceHeader`                       |
+| [**Cookie banner**](./components/cookie-banner.md)                 | Asks users to accept or reject analytics cookies                  | `wrcCookieBanner`                        |
+| [**Footer**](./components/footer.md)                               | Help links, licence and Crown copyright                           | `wrcFooter`                              |
+| [**Google Analytics**](./components/google-analytics.md)           | Adds Google Analytics and Tag Manager scripts with cookie consent | `wrcGoogleAnalytics`                     |
+| [**Heading**](./components/heading.md)                             | Page heading with an optional caption                             | `wrcHeading`                             |
+| [**CSRF field**](./components/csrf-field.md)                       | Hidden field for a CSRF token                                     | `wrcCsrfField`                           |
+| [**Search**](./components/search.md)                               | Search form with error messages                                   | `wrcSearch`                              |
+| [**Subnavigation**](./components/subnavigation.md)                 | Links to related pages, with the current page highlighted         | `wrcSubnavigation`                       |
+| [**Tabs list**](./components/tabs-list.md)                         | List of tabs, with the current tab highlighted                    | `wrcTabsList`                            |
+| [**Pagination**](./components/pagination.md)                       | Page numbers with previous and next links                         | `wrc/components/pagination/template.njk` |
+| [**Sorting column header**](./components/sorting-column-header.md) | Table header that sorts the column                                | `wrcSortingColumnHeader`                 |
+| [**Status tag**](./components/status-tag.md)                       | Green or red tag for yes or no states                             | `wrcStatusTag`                           |
+| [**Submission status tag**](./components/submission-status-tag.md) | Coloured tag for submission states, such as pending or accepted   | `wrcSubmissionStatusTag`                 |
+| [**Organisation link**](./components/organisation-link.md)         | Link to an organisation's summary or compliance document          | `wrcOrganisationLink`                    |
+| [**Button group**](./components/button-group.md)                   | Lines up form buttons in a row                                    | CSS (`_index.scss`)                      |
+| [**Scrollable pane**](./components/moj-scrollable-pane.md)         | Lets text wrap in scrollable tables                               | CSS (`_index.scss`)                      |
+| [**Notification banner**](./components/notification-banner.md)     | Adds a style for cancelled items                                  | CSS (`_index.scss`)                      |
+| [**Tab panel**](./components/tab-panel.md)                         | Compact tables inside tabs                                        | CSS (`_index.scss`)                      |
 
 [Browse all components &rarr;](./components/index.md)
 
 ---
 
-## Contact the team
+## Get help
 
-Defra Internal Frontend is maintained by the Defra EPR Regulators team.
+The Defra EPR Regulators team looks after this project. To ask a question or suggest a component:
 
-If you have questions, want to propose a new component, or need assistance:
+- contact the team on Slack
+- [open an issue or pull request](https://github.com/DEFRA/waste-regulator-components-fe) on GitHub
 
-- [open an issue or pull request](https://github.com/DEFRA/waste-regulator-components-fe) in the repository
-- get in touch with the team on Slack
-- read the [Contributing and semantic commits guide](./contributing.md) for local checks, commit conventions, and the automated release process
-
-See [Running documentation locally](./running-locally.md) to preview this documentation site at `http://localhost:1999` with `npm run docs:start`.
+To contribute, read the [contributing guide](./contributing.md). To preview this site on your computer, see [running the docs locally](./running-locally.md).

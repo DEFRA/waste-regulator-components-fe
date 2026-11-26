@@ -1,6 +1,6 @@
-# Waste Regulator Components Frontend
+# WCE internal design system
 
-Defra Internal Frontend contains the code you need to start building user interfaces for Defra internal platforms and services, built on top of [GOV.UK Frontend](https://github.com/alphagov/govuk-frontend) v6.
+The WCE internal design system contains the code you need to start building user interfaces for internal waste and circular economy services, built on top of [GOV.UK Frontend](https://github.com/alphagov/govuk-frontend) v6.
 
 See [live examples of components](docs/components/index.md), explore the [example application](examples/README.md), and read [guidance on when and how to use them](docs/index.md) in your service.
 
@@ -22,7 +22,7 @@ See [live examples of components](docs/components/index.md), explore the [exampl
 
 ## Contact the team
 
-Defra Internal Frontend is maintained by the Defra EPR Regulators team.
+The WCE internal design system is maintained by the Defra EPR Regulators team.
 
 If you have questions, want to propose a new component, or need assistance:
 
@@ -90,7 +90,7 @@ const env = nunjucks.configure(
 
 #### 2. Import styles in Sass
 
-In your application's main Sass file, import GOV.UK Frontend followed by Defra Internal Frontend:
+In your application's main Sass file, import GOV.UK Frontend followed by the WCE internal design system:
 
 ```scss
 @use 'govuk-frontend';
@@ -219,7 +219,7 @@ Browse the full [Components directory](docs/components/index.md) for individual 
 
 ## Browser and assistive technology support
 
-Defra Internal Frontend adheres to the browser and assistive technology support criteria defined by [GOV.UK Frontend](https://github.com/alphagov/govuk-frontend#browser-and-assistive-technology-support):
+The WCE internal design system adheres to the browser and assistive technology support criteria defined by [GOV.UK Frontend](https://github.com/alphagov/govuk-frontend#browser-and-assistive-technology-support):
 
 - **Modern browsers:** Recent versions of Chrome, Edge, Firefox, and Safari on desktop and mobile.
 - **Assistive technologies:** Screen readers including JAWS, NVDA, and VoiceOver.
@@ -281,7 +281,7 @@ Pull requests and pushes to `main` run SonarCloud analysis in `.github/workflows
 
 ## Contributing
 
-We welcome contributions to Defra Internal Frontend!
+We welcome contributions to the WCE internal design system!
 
 1. Fork or branch from `main`.
 2. Ensure your changes follow functional JavaScript patterns, DRY, and KISS principles.

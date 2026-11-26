@@ -5,7 +5,7 @@ title: Service header
 
 # Service header
 
-The Defra internal service header provides the green service navigation band (wrapping `govukServiceNavigation`) and an English/Welsh language toggle bar directly below it.
+The WCE internal service header provides the green service navigation band (wrapping `govukServiceNavigation`) and an English/Welsh language toggle bar directly below it.
 
 ---
 

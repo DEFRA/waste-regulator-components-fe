@@ -5,14 +5,14 @@ title: Components
 
 # Components
 
-Components are reusable user interface elements designed specifically for Defra internal digital services.
+Components are reusable user interface elements designed specifically for WCE internal services.
 
 ---
 
 ## Layout and Chrome
 
 - [**Header**](./header.md)  
-  The Defra top bar displaying the organisation lock-up, official crest, and user account menu.
+  The WCE internal top bar displaying the organisation lock-up, official crest, and user account menu.
 
 - [**Service header**](./service-header.md)  
   The green service navigation band paired with an English/Welsh language toggle bar and a regulator context slot.
@@ -21,7 +21,7 @@ Components are reusable user interface elements designed specifically for Defra 
   Analytics cookie consent banner and preference saved confirmation alert, with CSRF protection.
 
 - [**Footer**](./footer.md)  
-  The Defra footer with contact information, support links, OGL v3.0 licence, and Crown copyright.
+  The WCE internal footer with contact information, support links, OGL v3.0 licence, and Crown copyright.
 
 - [**Google Analytics**](./google-analytics.md)  
   Consent Mode v2 default setup, Google Analytics 4 (`gtag.js`), and Google Tag Manager scripts and `<noscript>` iframe.
