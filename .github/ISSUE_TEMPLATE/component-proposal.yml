@@ -42,5 +42,5 @@ body:
       options:
         - label: I have checked GOV.UK Frontend and existing components in this repository.
           required: true
-        - label: I have read the Contribution criteria (useful, unique, usable, consistent, versatile).
+        - label: I have read the Contribution criteria (useful and unique for proposals; usable, consistent, and versatile before publishing).
           required: true
