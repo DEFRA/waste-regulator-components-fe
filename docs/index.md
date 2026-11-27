@@ -3,7 +3,7 @@ layout: default
 title: Home
 ---
 
-# Defra Internal Design System
+# waste-regulator-components-fe
 
 Design and build consistent, accessible digital services for the Department for Environment, Food and Rural Affairs (Defra).
 
@@ -59,12 +59,13 @@ Components are reusable user interface elements created specifically for Defra i
 
 ## Contact the team
 
-Defra Internal Frontend is maintained by the Defra EPR Regulators team.
+`waste-regulator-components-fe` is maintained by the Defra EPR Regulators team.
 
 If you have questions, want to propose a new component, or need assistance:
 
+- start or join a thread in [GitHub Discussions](https://github.com/DEFRA/waste-regulator-components-fe/discussions)
 - [open an issue or pull request](https://github.com/DEFRA/waste-regulator-components-fe) in the repository
 - get in touch with the team on Slack
-- read the [Contributing and semantic commits guide](./contributing.md) for local checks, commit conventions, and the automated release process
+- read the [Contribution criteria](./contribution-criteria.md) and [Contributing guide](./contributing.md) for the proposal process, local checks, commit conventions, and automated releases
 
 See [Running documentation locally](./running-locally.md) to preview this documentation site at `http://localhost:1999` with `npm run docs:start`.

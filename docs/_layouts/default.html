@@ -52,6 +52,8 @@
                     {% assign is_current = true %}
                   {% elsif item.section_prefix and page.url contains item.section_prefix %}
                     {% assign is_active = true %}
+                  {% elsif item.section_urls and item.section_urls contains page.url %}
+                    {% assign is_active = true %}
                   {% endif %}
                   <li class="govuk-service-navigation__item{% if is_current or is_active %} govuk-service-navigation__item--active{% endif %}">
                     <a class="govuk-service-navigation__link" href="{{ item.url | relative_url }}"{% if is_current %} aria-current="page"{% elsif is_active %} aria-current="true"{% endif %}>
@@ -100,7 +102,11 @@
           </nav>
 
           {% assign example_slug = page.url | split: '/' | last | remove: '.html' %}
-          {% if page.url contains '/components/' %}{% assign example = site.data.examples[example_slug] %}{% endif %}
+          {% assign is_component_page = false %}
+          {% if page.url contains '/components/' and page.url != '/components/' and page.url != '/components/index.html' %}
+            {% assign is_component_page = true %}
+            {% assign example = site.data.examples[example_slug] %}
+          {% endif %}
           {%- comment -%} Built in two parts so HTML parsers don't read the delimiter as an hr tag {%- endcomment -%}
           {% assign hr_open = '<' | append: 'hr' %}
           {% assign content_intro = content | split: hr_open | first %}
@@ -142,6 +148,36 @@
             <div class="wrc-docs-content">
               {{ content_rest }}
             </div>
+
+            {% if is_component_page %}
+              {% assign component_doc_path = 'docs/components/' | append: example_slug | append: '.md' %}
+              {% assign edit_page_url = 'https://github.com/DEFRA/waste-regulator-components-fe/edit/main/' | append: component_doc_path %}
+              {% assign discussions_url = 'https://github.com/DEFRA/waste-regulator-components-fe/discussions' %}
+              {% assign improve_issue_url = 'https://github.com/DEFRA/waste-regulator-components-fe/issues/new?template=component-improvement.yml' %}
+              <section class="wrc-docs-content" aria-labelledby="help-improve-this-page">
+                <hr>
+                <h2 id="help-improve-this-page">Help improve this page</h2>
+                <p>To help make sure that this page is useful, relevant and up to date, you can:</p>
+                <ul>
+                  <li>
+                    <a href="{{ edit_page_url }}">propose a change to this page on GitHub</a>
+                    &ndash; edit <code>{{ component_doc_path }}</code> and open a pull request
+                  </li>
+                  <li>
+                    <a href="{{ discussions_url }}">discuss this component or share research findings in GitHub Discussions</a>
+                  </li>
+                  <li>
+                    <a href="{{ improve_issue_url }}">report a bug or suggest an improvement</a>
+                    using our GitHub issue template
+                  </li>
+                </ul>
+                <p>
+                  Read our <a href="{{ '/contribution-criteria.html' | relative_url }}">contribution criteria</a>
+                  and <a href="{{ '/contributing.html' | relative_url }}">contributing guide</a>
+                  to learn how proposals and pull requests are reviewed.
+                </p>
+              </section>
+            {% endif %}
           </article>
         </div>
       </main>

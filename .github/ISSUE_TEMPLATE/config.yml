@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Start a GitHub Discussion
+    url: https://github.com/DEFRA/waste-regulator-components-fe/discussions
+    about: Propose a new component idea, share user research findings, or ask questions before writing code.
+  - name: Read the contribution criteria
+    url: https://defra.github.io/waste-regulator-components-fe/contribution-criteria.html
+    about: Review what proposals (useful and unique) and published components (usable, consistent, and versatile) must meet.

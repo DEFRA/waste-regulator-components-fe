@@ -1,0 +1,46 @@
+name: Propose a new component
+description: Propose a new component or pattern that meets the waste-regulator-components-fe contribution criteria
+title: 'Proposal: '
+labels:
+  - proposal
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Before submitting a proposal, check existing components, [GOV.UK Frontend](https://design-system.service.gov.uk/), and [GitHub Discussions](https://github.com/DEFRA/waste-regulator-components-fe/discussions). You do not need production code at this stage — focus on evidence showing the component is **useful** and **unique** under our [Contribution criteria](https://defra.github.io/waste-regulator-components-fe/contribution-criteria.html).
+  - type: input
+    id: discussion-url
+    attributes:
+      label: Related GitHub Discussion (optional)
+      description: Link to any existing GitHub Discussion thread where this idea or research has been shared.
+      placeholder: https://github.com/DEFRA/waste-regulator-components-fe/discussions/...
+  - type: textarea
+    id: user-need
+    attributes:
+      label: What user need does this address?
+      description: Explain who the users are, what they are trying to do, and why this problem needs solving.
+    validations:
+      required: true
+  - type: textarea
+    id: useful-evidence
+    attributes:
+      label: Why is this useful across Defra services?
+      description: Share evidence (screenshots, prototype links, or examples of teams/services needing this) showing wider value beyond a single page or service.
+    validations:
+      required: true
+  - type: textarea
+    id: unique-rationale
+    attributes:
+      label: Why is this unique?
+      description: Confirm this is not covered by GOV.UK Frontend or an existing `waste-regulator-components-fe` component. If replacing or extending an existing component, explain why.
+    validations:
+      required: true
+  - type: checkboxes
+    id: criteria-checklist
+    attributes:
+      label: Proposal checklist
+      options:
+        - label: I have checked GOV.UK Frontend and existing components in this repository.
+          required: true
+        - label: I have read the Contribution criteria (useful and unique for proposals; usable, consistent, and versatile before publishing).
+          required: true

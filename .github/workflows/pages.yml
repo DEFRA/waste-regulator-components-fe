@@ -12,8 +12,9 @@ on:
       - 'scripts/sass-config.js'
       - 'tests/helpers/**' # build-docs.js renders examples with nunjucksTestEnv
       - '.github/workflows/pages.yml'
-  # Runs on the default branch (main) after Publish to npm succeeds so
-  # github-pages' main-only deployment policy passes without tag rules.
+  # Runs on the default branch (main) after a release-triggered Publish to npm
+  # run completes so github-pages' main-only deployment policy passes without
+  # tag rules and docs still update if npm publishing fails.
   # Must match the `name:` field in .github/workflows/publish.yml.
   workflow_run:
     workflows:
@@ -34,7 +35,7 @@ concurrency:
 jobs:
   build:
     name: Build Jekyll Documentation
-    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.event == 'release'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code

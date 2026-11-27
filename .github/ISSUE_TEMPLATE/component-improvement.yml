@@ -1,0 +1,41 @@
+name: Improve an existing component
+description: Report a bug, suggest an enhancement, propose a docs change, or share research findings for an existing component
+title: 'Improvement: '
+labels:
+  - enhancement
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for helping improve this library. For small documentation edits, you can also open the page's `.md` file in `docs/components/` and propose a pull request directly. For broader ideas or research discussions, feel free to post in [GitHub Discussions](https://github.com/DEFRA/waste-regulator-components-fe/discussions).
+  - type: input
+    id: component-name
+    attributes:
+      label: Component or page
+      description: Which component or documentation page does this relate to?
+      placeholder: e.g. Header, Service header, Tab panel
+    validations:
+      required: true
+  - type: dropdown
+    id: feedback-type
+    attributes:
+      label: Type of feedback
+      options:
+        - Bug or accessibility issue
+        - Enhancement or new option
+        - Documentation update
+        - User research findings
+    validations:
+      required: true
+  - type: textarea
+    id: details
+    attributes:
+      label: Details
+      description: Describe the issue, suggested change, or research findings. Include steps to reproduce or screenshots if relevant.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Supporting links or environment details (optional)
+      description: Link to a GitHub Discussion, Prototype Kit version, GOV.UK Frontend version, or assistive technology tested.

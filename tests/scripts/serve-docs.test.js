@@ -164,6 +164,10 @@ describe('Documentation local server', () => {
       filePath: path.join(docsDir, 'contributing.md'),
       pageUrl: '/contributing.html'
     })
+    expect(resolveDocsRoute('contribution-criteria', docsDir)).toEqual({
+      filePath: path.join(docsDir, 'contribution-criteria.md'),
+      pageUrl: '/contribution-criteria.html'
+    })
 
     expect(resolveDocsRoute('/components/missing.html', docsDir)).toBeNull()
     expect(resolveDocsRoute('/missing-dir/', docsDir)).toBeNull()
@@ -288,11 +292,117 @@ describe('Documentation local server', () => {
     expect(runningLocallyRes.statusCode).toBe(200)
     const $runningLocally = cheerio.load(runningLocallyRes.payload)
     expect(
+      $runningLocally(
+        '.govuk-service-navigation__link[aria-current="true"] strong'
+      ).text()
+    ).toBe('Contributing')
+    expect(
       $runningLocally('.wrc-docs-sidebar__link--current[aria-current="page"]')
         .text()
         .trim()
     ).toBe('Running documentation locally')
     expect(runningLocallyRes.payload).toContain('npm run docs:start')
+
+    const criteriaRes = await server.inject({
+      method: 'GET',
+      url: '/contribution-criteria.html'
+    })
+    expect(criteriaRes.statusCode).toBe(200)
+    const $criteria = cheerio.load(criteriaRes.payload)
+    expect(
+      $criteria(
+        '.govuk-service-navigation__link[aria-current="true"] strong'
+      ).text()
+    ).toBe('Contributing')
+    expect(
+      $criteria('.wrc-docs-sidebar__link--current[aria-current="page"]')
+        .text()
+        .trim()
+    ).toBe('Contribution criteria')
+    for (const criterion of [
+      'Useful',
+      'Unique',
+      'Usable',
+      'Consistent',
+      'Versatile'
+    ]) {
+      expect(criteriaRes.payload).toContain(criterion)
+    }
+    expect(criteriaRes.payload).toContain('href="./contributing.html"')
+    expect(criteriaRes.payload).toContain(
+      'href="https://github.com/DEFRA/waste-regulator-components-fe/discussions"'
+    )
+    expect($criteria('#help-improve-this-page').length).toBe(0)
+
+    const contributingRes = await server.inject({
+      method: 'GET',
+      url: '/contributing.html'
+    })
+    expect(contributingRes.statusCode).toBe(200)
+    const $contributing = cheerio.load(contributingRes.payload)
+    expect(
+      $contributing(
+        '.govuk-service-navigation__link[aria-current="page"] strong'
+      ).text()
+    ).toBe('Contributing')
+    expect(
+      $contributing('.wrc-docs-sidebar__link--current[aria-current="page"]')
+        .text()
+        .trim()
+    ).toBe('Contributing guide')
+    expect(contributingRes.payload).toContain(
+      'href="./contribution-criteria.html"'
+    )
+    expect(contributingRes.payload).toContain(
+      'href="https://github.com/DEFRA/waste-regulator-components-fe/discussions"'
+    )
+    expect($contributing('#help-improve-this-page').length).toBe(0)
+
+    const componentsIndexRes = await server.inject({
+      method: 'GET',
+      url: '/components/'
+    })
+    expect(componentsIndexRes.statusCode).toBe(200)
+    const $componentsIndex = cheerio.load(componentsIndexRes.payload)
+    expect($home('#help-improve-this-page').length).toBe(0)
+    expect($prototypeKit('#help-improve-this-page').length).toBe(0)
+    expect($componentsIndex('#help-improve-this-page').length).toBe(0)
+
+    const gaRes = await server.inject({
+      method: 'GET',
+      url: '/components/google-analytics.html'
+    })
+    expect(gaRes.statusCode).toBe(200)
+    const $ga = cheerio.load(gaRes.payload)
+    expect($ga('.wrc-docs-example-wrapper').length).toBe(0)
+
+    for (const [slug, $page] of [
+      ['header', $header],
+      ['google-analytics', $ga]
+    ]) {
+      const $help = $page('section[aria-labelledby="help-improve-this-page"]')
+      expect($help.length).toBe(1)
+      expect($help.find('h2#help-improve-this-page').text().trim()).toBe(
+        'Help improve this page'
+      )
+      expect(
+        $help.find(
+          `a[href="https://github.com/DEFRA/waste-regulator-components-fe/edit/main/docs/components/${slug}.md"]`
+        ).length
+      ).toBe(1)
+      expect(
+        $help.find(
+          'a[href="https://github.com/DEFRA/waste-regulator-components-fe/discussions"]'
+        ).length
+      ).toBe(1)
+      expect(
+        $help.find(
+          'a[href="https://github.com/DEFRA/waste-regulator-components-fe/issues/new?template=component-improvement.yml"]'
+        ).length
+      ).toBe(1)
+      expect($help.find('a[href="/contribution-criteria.html"]').length).toBe(1)
+      expect($help.find('a[href="/contributing.html"]').length).toBe(1)
+    }
 
     const redirectRes = await server.inject({
       method: 'GET',
