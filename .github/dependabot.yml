@@ -1,0 +1,100 @@
+version: 2
+
+updates:
+  # Update npm packages
+  - package-ecosystem: npm
+    directory: /
+    open-pull-requests-limit: 10
+    versioning-strategy: increase
+
+    commit-message:
+      prefix: chore
+      include: scope
+
+    # Schedule run every Monday, local time
+    schedule:
+      interval: weekly
+      day: monday
+      time: '10:30'
+      timezone: 'Europe/London'
+
+    groups:
+      govuk:
+        applies-to: version-updates
+        update-types:
+          - minor
+          - patch
+        patterns:
+          - 'govuk-frontend'
+          - 'govuk-prototype-kit'
+      lint-and-format:
+        applies-to: version-updates
+        update-types:
+          - minor
+          - patch
+        patterns:
+          - 'eslint'
+          - 'neostandard'
+          - 'prettier'
+          - 'stylelint'
+          - 'stylelint-*'
+      testing:
+        applies-to: version-updates
+        update-types:
+          - minor
+          - patch
+        patterns:
+          - 'vitest'
+          - '@vitest/*'
+          - 'vite'
+          - 'cheerio'
+      docs-and-server:
+        applies-to: version-updates
+        update-types:
+          - minor
+          - patch
+        patterns:
+          - '@hapi/*'
+          - 'clipboard'
+          - 'iframe-resizer'
+          - 'js-yaml'
+          - 'liquidjs'
+          - 'lodash'
+          - 'marked'
+          - 'nunjucks'
+      tooling:
+        applies-to: version-updates
+        update-types:
+          - minor
+          - patch
+        patterns:
+          - 'git-cliff'
+          - 'husky'
+          - 'sass-embedded'
+      npm-security:
+        applies-to: security-updates
+        patterns:
+          - '*'
+
+    allow:
+      - dependency-type: direct
+
+  # Update GitHub Actions
+  - package-ecosystem: github-actions
+    directory: /
+
+    commit-message:
+      prefix: chore
+      include: scope
+
+    # Schedule run every Monday, local time
+    schedule:
+      interval: weekly
+      day: monday
+      time: '10:30'
+      timezone: 'Europe/London'
+
+    groups:
+      github-actions:
+        patterns:
+          - '*'
